@@ -6,7 +6,7 @@
   <title>Ali Lenjani — Senior ML / Recommender Systems & Personalization</title>
   <meta name="description" content="Production recommender systems at scale. Two-tower retrieval, vector search, LLM evaluation. Stanford, NASA, Purdue PhD." />
   <meta property="og:title" content="Ali Lenjani — Senior ML / Recsys & Personalization" />
-  <meta property="og:description" content="I build production recommender systems that move metrics for tens of millions of users." />
+  <meta property="og:description" content="I work on recommender systems and personalization — production retrieval, evaluation, simulation." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://alenjani.github.io/" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,25 +16,29 @@
     :root {
       --bg: #fafaf9;
       --surface: #ffffff;
+      --surface-2: #f5f5f4;
       --ink: #0a0a0a;
       --muted: #525252;
       --line: #e7e5e4;
       --accent: #4f46e5;
       --accent-soft: #eef2ff;
+      --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
     }
     @media (prefers-color-scheme: dark) {
       :root {
         --bg: #0a0a0a;
         --surface: #141414;
+        --surface-2: #1c1c1c;
         --ink: #f5f5f4;
         --muted: #a3a3a3;
         --line: #262626;
         --accent: #a5b4fc;
         --accent-soft: #1e1b4b;
+        --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.3);
       }
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { -webkit-font-smoothing: antialiased; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
@@ -42,32 +46,87 @@
       line-height: 1.55;
       font-size: 17px;
     }
-    .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
-    header.top {
-      padding: 80px 0 24px;
+    a { color: inherit; text-decoration: none; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+    .wrap-narrow { max-width: 760px; margin: 0 auto; padding: 0 32px; }
+
+    /* ----- Top nav ----- */
+    .topnav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(250, 250, 249, 0.85);
+      backdrop-filter: saturate(140%) blur(10px);
+      -webkit-backdrop-filter: saturate(140%) blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    @media (prefers-color-scheme: dark) {
+      .topnav { background: rgba(10,10,10,0.85); }
+    }
+    .topnav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      font-size: 16px;
+    }
+    .brand .dot { color: var(--accent); }
+    .topnav nav {
+      display: flex;
+      gap: 22px;
+      font-size: 14.5px;
+      color: var(--muted);
+    }
+    .topnav nav a {
+      transition: color 0.15s;
+    }
+    .topnav nav a:hover { color: var(--ink); }
+    .topnav .cta {
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 7px;
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .topnav .cta:hover { transform: translateY(-1px); }
+    @media (max-width: 720px) {
+      .topnav nav { display: none; }
+    }
+
+    /* ----- Hero ----- */
+    .hero {
+      padding: 80px 0 64px;
       border-bottom: 1px solid var(--line);
     }
     .eyebrow {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       color: var(--accent);
       margin-bottom: 18px;
       font-family: 'JetBrains Mono', monospace;
     }
     h1 {
-      font-size: clamp(40px, 6vw, 64px);
+      font-size: clamp(40px, 6vw, 68px);
       font-weight: 800;
       letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-bottom: 20px;
+      line-height: 1.04;
+      margin-bottom: 22px;
     }
     .lede {
-      font-size: clamp(20px, 2.4vw, 26px);
+      font-size: clamp(19px, 2.2vw, 22px);
       color: var(--muted);
-      max-width: 660px;
-      line-height: 1.4;
+      max-width: 640px;
+      line-height: 1.5;
       font-weight: 400;
       margin-bottom: 28px;
     }
@@ -75,138 +134,212 @@
     .creds {
       display: flex;
       flex-wrap: wrap;
-      gap: 18px 24px;
+      gap: 14px 22px;
       align-items: center;
-      font-size: 14px;
-      color: var(--muted);
-      padding-bottom: 36px;
-    }
-    .creds span { display: inline-flex; align-items: center; gap: 8px; }
-    .creds .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); opacity: 0.5; }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 60px; }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 22px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 15px;
-      text-decoration: none;
-      transition: transform 0.1s ease, background 0.15s ease;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-primary {
-      background: var(--ink);
-      color: var(--bg);
-    }
-    .btn-secondary {
-      background: var(--surface);
-      color: var(--ink);
-      border: 1px solid var(--line);
-    }
-
-    section { padding: 64px 0; border-bottom: 1px solid var(--line); }
-    section:last-of-type { border-bottom: 0; }
-    h2 {
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
+      font-size: 13.5px;
       color: var(--muted);
       margin-bottom: 32px;
       font-family: 'JetBrains Mono', monospace;
     }
+    .creds .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--muted); opacity: 0.5; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14.5px;
+      transition: transform 0.1s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--ink); color: var(--bg); }
+    .btn-secondary { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+
+    /* ----- Section heading ----- */
+    section.block { padding: 72px 0; border-bottom: 1px solid var(--line); }
+    section.block:last-of-type { border-bottom: 0; }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+    .section-head h2 {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--ink);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .section-head .sub {
+      font-size: 13.5px;
+      color: var(--muted);
+      max-width: 540px;
+    }
     h3 {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
       letter-spacing: -0.01em;
-      margin-bottom: 8px;
+      line-height: 1.3;
     }
 
-    /* Stat strip */
-    .stats {
+    /* ----- Featured strip ----- */
+    .featured-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 16px;
     }
-    @media (max-width: 720px) { .stats { grid-template-columns: repeat(2, 1fr); } }
-    .stat {
-      padding: 28px 24px;
+    @media (max-width: 900px) { .featured-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .featured-grid { grid-template-columns: 1fr; } }
+    .featured-card {
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: 12px;
+      padding: 14px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    .stat .num {
-      font-size: clamp(28px, 4.5vw, 40px);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-      line-height: 1;
-      margin-bottom: 8px;
-      font-feature-settings: "tnum";
+    .featured-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
     }
-    .stat .num span.unit { color: var(--accent); }
-    .stat .label {
+    .featured-card .thumb {
+      aspect-ratio: 4 / 3;
+      background: var(--surface-2);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .featured-card .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .featured-card .meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.05em; }
+    .featured-card .title { font-size: 15px; font-weight: 600; line-height: 1.35; }
+
+    /* ----- Capability tags ----- */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
       font-size: 13px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
-    /* Capability cards */
-    .caps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    @media (max-width: 720px) { .caps { grid-template-columns: 1fr; } }
-    .cap {
-      padding: 26px;
+      padding: 6px 12px;
       background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
     }
-    .cap h3 { margin-bottom: 10px; font-size: 17px; }
-    .cap p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+    .tag.accent { background: var(--accent-soft); border-color: transparent; color: var(--accent); }
 
-    /* Work entries */
-    .work { display: flex; flex-direction: column; gap: 28px; }
-    .work-item { padding: 0; }
-    .work-item h3 { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
-    .work-item h3 .org { color: var(--muted); font-weight: 500; font-size: 15px; }
-    .work-item h3 .when { color: var(--muted); font-weight: 500; font-size: 13px; margin-left: auto; font-family: 'JetBrains Mono', monospace; }
-    .work-item ul { list-style: none; padding: 0; margin-top: 12px; }
-    .work-item li {
-      padding: 8px 0 8px 22px;
-      position: relative;
-      color: var(--muted);
-      font-size: 15.5px;
-      line-height: 1.55;
+    /* ----- Card grid (Things & Papers) ----- */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
     }
-    .work-item li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 16px;
-      width: 10px;
-      height: 1px;
-      background: var(--accent);
+    @media (max-width: 760px) { .card-grid { grid-template-columns: 1fr; } }
+
+    details.card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .work-item li strong { color: var(--ink); font-weight: 600; }
-    .prose {
+    details.card[open] {
+      grid-column: 1 / -1;
+      box-shadow: var(--shadow);
+      border-color: var(--accent);
+    }
+    details.card summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    details.card summary::-webkit-details-marker { display: none; }
+    details.card .thumb {
+      flex: 0 0 96px;
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      background: var(--surface-2);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    details.card .thumb img,
+    details.card .thumb svg { width: 100%; height: 100%; object-fit: cover; }
+    details.card.no-thumb .thumb { display: none; }
+    details.card .card-summary { flex: 1; min-width: 0; }
+    details.card .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+    details.card .card-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.32; margin-bottom: 8px; }
+    details.card .card-teaser { font-size: 14.5px; color: var(--muted); line-height: 1.5; }
+    details.card .card-toggle {
+      flex: 0 0 28px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--muted);
-      font-size: 16.5px;
+      font-size: 14px;
+      transition: transform 0.15s;
+    }
+    details.card[open] .card-toggle { transform: rotate(45deg); color: var(--accent); }
+
+    details.card .card-body {
+      padding: 0 24px 24px 24px;
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    .card-body .prose {
+      color: var(--muted);
+      font-size: 16px;
       line-height: 1.65;
-      max-width: 660px;
+      max-width: 720px;
       margin-top: 12px;
     }
-    .prose + .prose { margin-top: 14px; }
-    .prose em { color: var(--ink); font-style: normal; font-weight: 500; }
-    .work-item { padding-bottom: 8px; }
-    .work-item + .work-item { padding-top: 12px; border-top: 1px dashed var(--line); }
+    .card-body .prose + .prose { margin-top: 12px; }
+    .card-body .prose em { color: var(--ink); font-style: normal; font-weight: 500; }
+    .card-body .figure {
+      margin-top: 22px;
+      max-width: 760px;
+    }
+    .card-body .figure img,
+    .card-body .figure video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-2);
+    }
+    .card-body .figure video { background: #000; }
+    .card-body .figure figcaption {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .card-body .figref { color: var(--accent); }
+
+    /* SVG viz */
     .viz {
       width: 100%;
-      max-width: 660px;
       height: auto;
-      margin: 22px 0 4px;
-      color: var(--ink);
       display: block;
+      color: var(--ink);
+      max-width: 720px;
+      margin: 16px 0;
     }
     .viz text { font-family: 'Inter', sans-serif; }
     .viz .mono { font-family: 'JetBrains Mono', monospace; }
@@ -216,91 +349,35 @@
     .viz .muted { fill: var(--muted); }
     .viz .grid { stroke: var(--line); }
     .viz .fill-soft { fill: var(--accent-soft); }
-    .figure {
-      margin: 22px 0 6px;
-      max-width: 720px;
-    }
-    .figure img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--surface);
-    }
-    .figure figcaption {
-      margin-top: 10px;
-      font-size: 13px;
+
+    /* About */
+    .about-prose {
+      font-size: 17.5px;
       color: var(--muted);
-      line-height: 1.5;
-      font-family: 'JetBrains Mono', monospace;
-      letter-spacing: -0.01em;
+      line-height: 1.7;
+      max-width: 700px;
     }
-    .figure figcaption .figref { color: var(--accent); }
-    .figure video {
-      width: 100%;
-      height: auto;
-      display: block;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: #000;
-    }
+    .about-prose strong { color: var(--ink); font-weight: 600; }
+    .about-prose + .about-prose { margin-top: 18px; }
 
-    /* Background timeline */
-    .timeline { display: flex; flex-direction: column; gap: 18px; }
-    .tl-item {
-      display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 24px;
-      padding-bottom: 18px;
-      border-bottom: 1px dashed var(--line);
-    }
-    .tl-item:last-child { border-bottom: 0; }
-    .tl-when { color: var(--muted); font-size: 13px; font-family: 'JetBrains Mono', monospace; padding-top: 4px; }
-    .tl-what strong { display: block; font-size: 16px; margin-bottom: 2px; }
-    .tl-what span { color: var(--muted); font-size: 14px; }
-
-    /* Publications */
-    .pubs ol { list-style: none; counter-reset: pub; padding: 0; }
-    .pubs li {
-      counter-increment: pub;
-      padding: 14px 0 14px 38px;
-      position: relative;
-      border-bottom: 1px dashed var(--line);
-      font-size: 15px;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-    .pubs li:last-child { border-bottom: 0; }
-    .pubs li::before {
-      content: counter(pub, decimal-leading-zero);
-      position: absolute;
-      left: 0;
-      top: 14px;
-      color: var(--accent);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .pubs em { color: var(--ink); font-style: normal; font-weight: 500; }
-
-    /* Contact / footer */
-    .contact-cta {
+    /* Contact */
+    .contact-card {
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: 16px;
-      padding: 40px;
+      padding: 44px;
       text-align: center;
-      margin: 24px 0 60px;
     }
-    .contact-cta h3 {
+    .contact-card h3 {
       font-size: 26px;
       letter-spacing: -0.02em;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
-    .contact-cta p { color: var(--muted); margin-bottom: 24px; font-size: 16px; }
+    .contact-card p { color: var(--muted); margin-bottom: 24px; font-size: 16px; max-width: 540px; margin-left: auto; margin-right: auto; }
+
+    /* Footer */
     footer {
-      padding: 32px 0 60px;
+      padding: 36px 0 56px;
       color: var(--muted);
       font-size: 13px;
       display: flex;
@@ -308,23 +385,49 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    footer a { color: var(--muted); text-decoration: none; }
+    footer a { color: var(--muted); }
     footer a:hover { color: var(--ink); }
 
-    a.inline { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
-    a.inline:hover { color: var(--accent); }
+    /* Sub-cluster pill */
+    .cluster-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      padding: 6px 14px;
+      background: var(--surface-2);
+      border-radius: 999px;
+      margin: 28px 0 12px;
+    }
   </style>
 </head>
 <body>
 
-<header class="top">
+<!-- ===================== TOP NAV ===================== -->
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="#" class="brand">Ali Lenjani<span class="dot">.</span></a>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#papers">Papers</a>
+      <a href="#about">About</a>
+    </nav>
+    <a href="mailto:lenjani.a@gmail.com" class="cta">Contact</a>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
   <div class="wrap">
-    <div class="eyebrow">Senior ML / Recommender Systems & Personalization</div>
+    <div class="eyebrow">Senior ML · Recommender Systems · Personalization</div>
     <h1>Ali Lenjani</h1>
     <p class="lede">
-      I work on recommender systems and personalization — the production side,
-      where retrieval has a latency budget and offline metrics have to predict
-      the online ones. Lately, also LLM-based evaluation.
+      I work on recommender systems and personalization — the production side, where retrieval
+      has a latency budget and offline metrics have to predict the online ones. Lately, also
+      LLM-based evaluation.
     </p>
     <div class="creds">
       <span>Stanford</span>
@@ -334,509 +437,588 @@
       <span>San Francisco Bay Area</span>
     </div>
     <div class="cta-row">
-      <a class="btn btn-primary" href="mailto:lenjani.a@gmail.com">Get in touch →</a>
+      <a class="btn btn-primary" href="#work">See the work →</a>
+      <a class="btn btn-secondary" href="mailto:lenjani.a@gmail.com">Get in touch</a>
     </div>
   </div>
-</header>
+</section>
 
-<section>
+<!-- ===================== FEATURED ===================== -->
+<section class="block" style="padding-top: 56px; padding-bottom: 56px;">
   <div class="wrap">
-    <h2>Things I've built</h2>
-    <div class="work">
+    <div class="section-head">
+      <h2>Featured</h2>
+      <p class="sub">Highlights across recsys, evaluation, and risk-informed simulation.</p>
+    </div>
+    <div class="featured-grid">
+      <a href="#thing-recsys" class="featured-card">
+        <div class="thumb" style="background: linear-gradient(135deg, #eef2ff 0%, #c7d2fe 100%);">
+          <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" style="width:70%;height:70%;color:#4f46e5;">
+            <rect x="10" y="15" width="22" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="10" y="46" width="22" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            <rect x="68" y="30" width="22" height="14" rx="2" fill="currentColor" opacity="0.85"/>
+            <line x1="32" y1="22" x2="68" y2="36" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
+            <line x1="32" y1="53" x2="68" y2="38" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
+          </svg>
+        </div>
+        <div class="meta">RECSYS · PRODUCTION</div>
+        <div class="title">Two-tower retrieval at sub-10ms</div>
+      </a>
 
-      <div class="work-item">
-        <h3>A two-tower recommender that has to answer in 10 milliseconds</h3>
-
-        <svg class="viz" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-tower recommender architecture">
-          <!-- User row -->
-          <g>
-            <rect x="20" y="30" width="120" height="40" rx="6" class="stroke" fill="none" stroke-width="1.5" />
-            <text x="80" y="55" text-anchor="middle" fill="currentColor" font-size="13">User features</text>
-            <line x1="140" y1="50" x2="170" y2="50" class="stroke" stroke-width="1.5" />
-            <polygon points="166,46 172,50 166,54" fill="currentColor" />
-
-            <rect x="170" y="20" width="130" height="60" rx="6" class="stroke" fill="none" stroke-width="1.5" />
-            <text x="235" y="44" text-anchor="middle" fill="currentColor" font-size="13" font-weight="600">User Tower</text>
-            <line x1="190" y1="56" x2="280" y2="56" class="grid" stroke-width="1" />
-            <line x1="190" y1="64" x2="280" y2="64" class="grid" stroke-width="1" />
-            <line x1="190" y1="72" x2="280" y2="72" class="grid" stroke-width="1" />
-
-            <line x1="300" y1="50" x2="330" y2="50" class="stroke" stroke-width="1.5" />
-            <polygon points="326,46 332,50 326,54" fill="currentColor" />
-
-            <g transform="translate(338, 42)">
-              <circle cx="6" cy="8" r="4" class="accent" />
-              <circle cx="20" cy="8" r="4" class="accent" opacity="0.6" />
-              <circle cx="34" cy="8" r="4" class="accent" />
-              <circle cx="48" cy="8" r="4" class="accent" opacity="0.5" />
-              <circle cx="62" cy="8" r="4" class="accent" />
-              <circle cx="76" cy="8" r="4" class="accent" opacity="0.7" />
-              <circle cx="90" cy="8" r="4" class="accent" />
-              <circle cx="104" cy="8" r="4" class="accent" opacity="0.4" />
-              <circle cx="118" cy="8" r="4" class="accent" />
-              <circle cx="132" cy="8" r="4" class="accent" opacity="0.6" />
+      <a href="#thing-judge" class="featured-card">
+        <div class="thumb" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
+          <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" style="width:75%;height:75%;color:#92400e;">
+            <g transform="translate(50,38)">
+              <circle r="22" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+              <circle r="14" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+              <polygon points="0,-20 17,-6 13,15 -13,15 -17,-6" fill="currentColor" fill-opacity="0.5" stroke="currentColor" stroke-width="1.5"/>
             </g>
-            <text x="408" y="74" text-anchor="middle" class="mono muted" font-size="10">user vector</text>
-          </g>
+          </svg>
+        </div>
+        <div class="meta">EVALUATION · LLM</div>
+        <div class="title">LLM-as-judge for recsys quality gates</div>
+      </a>
 
-          <!-- Item row -->
-          <g>
-            <rect x="20" y="155" width="120" height="40" rx="6" class="stroke" fill="none" stroke-width="1.5" />
-            <text x="80" y="180" text-anchor="middle" fill="currentColor" font-size="13">Item features</text>
-            <line x1="140" y1="175" x2="170" y2="175" class="stroke" stroke-width="1.5" />
-            <polygon points="166,171 172,175 166,179" fill="currentColor" />
+      <a href="#paper-pareto" class="featured-card">
+        <div class="thumb">
+          <img src="figures/inspection-pareto-front.png" alt="" />
+        </div>
+        <div class="meta">PAPER · NATURAL HAZARDS '20</div>
+        <div class="title">Inspection triage as a Pareto problem</div>
+      </a>
 
-            <rect x="170" y="145" width="130" height="60" rx="6" class="stroke" fill="none" stroke-width="1.5" />
-            <text x="235" y="169" text-anchor="middle" fill="currentColor" font-size="13" font-weight="600">Item Tower</text>
-            <line x1="190" y1="181" x2="280" y2="181" class="grid" stroke-width="1" />
-            <line x1="190" y1="189" x2="280" y2="189" class="grid" stroke-width="1" />
-            <line x1="190" y1="197" x2="280" y2="197" class="grid" stroke-width="1" />
+      <a href="#paper-cdcm" class="featured-card">
+        <div class="thumb">
+          <img src="figures/cdcm-trade-study.png" alt="" />
+        </div>
+        <div class="meta">PAPER · ASME 2022</div>
+        <div class="title">Habitat design as portfolio management</div>
+      </a>
+    </div>
+  </div>
+</section>
 
-            <line x1="300" y1="175" x2="330" y2="175" class="stroke" stroke-width="1.5" />
-            <polygon points="326,171 332,175 326,179" fill="currentColor" />
+<!-- ===================== WHAT I WORK ON (TAGS) ===================== -->
+<section class="block" style="padding-top: 48px; padding-bottom: 48px;">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What I work on</h2>
+    </div>
+    <div class="tags">
+      <span class="tag accent">Recommender systems</span>
+      <span class="tag">Two-tower retrieval</span>
+      <span class="tag">Vector search · HNSW</span>
+      <span class="tag">ONNX serving</span>
+      <span class="tag accent">LLM-based evaluation</span>
+      <span class="tag">Chain-of-Thought judging</span>
+      <span class="tag accent">Counterfactual offline simulation</span>
+      <span class="tag">Bayesian fusion</span>
+      <span class="tag">Computer vision · Faster R-CNN</span>
+      <span class="tag">Structure-from-Motion</span>
+      <span class="tag accent">Digital twins · Markov modeling</span>
+      <span class="tag">Monte Carlo trade studies</span>
+      <span class="tag">Resilience-based design</span>
+    </div>
+  </div>
+</section>
 
-            <g transform="translate(338, 167)">
-              <circle cx="6" cy="8" r="4" class="accent" opacity="0.7" />
-              <circle cx="20" cy="8" r="4" class="accent" />
-              <circle cx="34" cy="8" r="4" class="accent" opacity="0.5" />
-              <circle cx="48" cy="8" r="4" class="accent" />
-              <circle cx="62" cy="8" r="4" class="accent" opacity="0.6" />
-              <circle cx="76" cy="8" r="4" class="accent" />
-              <circle cx="90" cy="8" r="4" class="accent" opacity="0.5" />
-              <circle cx="104" cy="8" r="4" class="accent" />
-              <circle cx="118" cy="8" r="4" class="accent" opacity="0.7" />
-              <circle cx="132" cy="8" r="4" class="accent" />
+<!-- ===================== THINGS I'VE BUILT ===================== -->
+<section class="block" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Things I've built</h2>
+      <p class="sub">Click any card to expand.</p>
+    </div>
+    <div class="card-grid">
+
+      <details class="card" id="thing-recsys">
+        <summary>
+          <div class="thumb" style="background: linear-gradient(135deg, #eef2ff 0%, #c7d2fe 100%);">
+            <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" style="width:70%;height:70%;color:#4f46e5;">
+              <rect x="10" y="15" width="22" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="10" y="46" width="22" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
+              <rect x="68" y="30" width="22" height="14" rx="2" fill="currentColor" opacity="0.85"/>
+              <line x1="32" y1="22" x2="68" y2="36" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
+              <line x1="32" y1="53" x2="68" y2="38" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
+            </svg>
+          </div>
+          <div class="card-summary">
+            <div class="card-meta">Production recsys</div>
+            <div class="card-title">A two-tower recommender that has to answer in 10 milliseconds</div>
+            <p class="card-teaser">InfoNCE + same-taxonomy hard negatives, ONNX serving, HNSW retrieval. The lift came from the negatives, not the architecture.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+
+          <svg class="viz" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two-tower architecture">
+            <g>
+              <rect x="20" y="30" width="120" height="40" rx="6" class="stroke" fill="none" stroke-width="1.5" />
+              <text x="80" y="55" text-anchor="middle" fill="currentColor" font-size="13">User features</text>
+              <line x1="140" y1="50" x2="170" y2="50" class="stroke" stroke-width="1.5" />
+              <polygon points="166,46 172,50 166,54" fill="currentColor" />
+              <rect x="170" y="20" width="130" height="60" rx="6" class="stroke" fill="none" stroke-width="1.5" />
+              <text x="235" y="44" text-anchor="middle" fill="currentColor" font-size="13" font-weight="600">User Tower</text>
+              <line x1="190" y1="56" x2="280" y2="56" class="grid" stroke-width="1" />
+              <line x1="190" y1="64" x2="280" y2="64" class="grid" stroke-width="1" />
+              <line x1="190" y1="72" x2="280" y2="72" class="grid" stroke-width="1" />
+              <line x1="300" y1="50" x2="330" y2="50" class="stroke" stroke-width="1.5" />
+              <polygon points="326,46 332,50 326,54" fill="currentColor" />
+              <g transform="translate(338, 42)">
+                <circle cx="6" cy="8" r="4" class="accent" />
+                <circle cx="20" cy="8" r="4" class="accent" opacity="0.6" />
+                <circle cx="34" cy="8" r="4" class="accent" />
+                <circle cx="48" cy="8" r="4" class="accent" opacity="0.5" />
+                <circle cx="62" cy="8" r="4" class="accent" />
+                <circle cx="76" cy="8" r="4" class="accent" opacity="0.7" />
+                <circle cx="90" cy="8" r="4" class="accent" />
+                <circle cx="104" cy="8" r="4" class="accent" opacity="0.4" />
+                <circle cx="118" cy="8" r="4" class="accent" />
+                <circle cx="132" cy="8" r="4" class="accent" opacity="0.6" />
+              </g>
+              <text x="408" y="74" text-anchor="middle" class="mono muted" font-size="10">user vector</text>
             </g>
-            <text x="408" y="199" text-anchor="middle" class="mono muted" font-size="10">item vector</text>
-          </g>
+            <g>
+              <rect x="20" y="155" width="120" height="40" rx="6" class="stroke" fill="none" stroke-width="1.5" />
+              <text x="80" y="180" text-anchor="middle" fill="currentColor" font-size="13">Item features</text>
+              <line x1="140" y1="175" x2="170" y2="175" class="stroke" stroke-width="1.5" />
+              <polygon points="166,171 172,175 166,179" fill="currentColor" />
+              <rect x="170" y="145" width="130" height="60" rx="6" class="stroke" fill="none" stroke-width="1.5" />
+              <text x="235" y="169" text-anchor="middle" fill="currentColor" font-size="13" font-weight="600">Item Tower</text>
+              <line x1="190" y1="181" x2="280" y2="181" class="grid" stroke-width="1" />
+              <line x1="190" y1="189" x2="280" y2="189" class="grid" stroke-width="1" />
+              <line x1="190" y1="197" x2="280" y2="197" class="grid" stroke-width="1" />
+              <line x1="300" y1="175" x2="330" y2="175" class="stroke" stroke-width="1.5" />
+              <polygon points="326,171 332,175 326,179" fill="currentColor" />
+              <g transform="translate(338, 167)">
+                <circle cx="6" cy="8" r="4" class="accent" opacity="0.7" />
+                <circle cx="20" cy="8" r="4" class="accent" />
+                <circle cx="34" cy="8" r="4" class="accent" opacity="0.5" />
+                <circle cx="48" cy="8" r="4" class="accent" />
+                <circle cx="62" cy="8" r="4" class="accent" opacity="0.6" />
+                <circle cx="76" cy="8" r="4" class="accent" />
+                <circle cx="90" cy="8" r="4" class="accent" opacity="0.5" />
+                <circle cx="104" cy="8" r="4" class="accent" />
+                <circle cx="118" cy="8" r="4" class="accent" opacity="0.7" />
+                <circle cx="132" cy="8" r="4" class="accent" />
+              </g>
+              <text x="408" y="199" text-anchor="middle" class="mono muted" font-size="10">item vector</text>
+            </g>
+            <path d="M 480 50 Q 540 50 560 95" class="accent-stroke" fill="none" stroke-width="1.5" stroke-dasharray="4 3" />
+            <path d="M 480 175 Q 540 175 560 130" class="accent-stroke" fill="none" stroke-width="1.5" stroke-dasharray="4 3" />
+            <text x="540" y="32" text-anchor="middle" class="mono accent" font-size="11">similarity</text>
+            <rect x="555" y="92" width="145" height="40" rx="6" class="accent-stroke" fill="none" stroke-width="1.5" />
+            <text x="627" y="110" text-anchor="middle" fill="currentColor" font-size="13" font-weight="600">HNSW index</text>
+            <text x="627" y="124" text-anchor="middle" class="mono accent" font-size="11">&lt; 10 ms p99</text>
+          </svg>
 
-          <!-- Convergence to similarity + HNSW -->
-          <path d="M 480 50 Q 540 50 560 95" class="accent-stroke" fill="none" stroke-width="1.5" stroke-dasharray="4 3" />
-          <path d="M 480 175 Q 540 175 560 130" class="accent-stroke" fill="none" stroke-width="1.5" stroke-dasharray="4 3" />
+          <p class="prose">
+            One tower for users, one for items, both trained with InfoNCE — the textbook setup.
+            The interesting part was the hard negatives: random negatives let the model coast on macro
+            categories ("food vs. household"), which looks great on offline metrics and adds nothing
+            online. Sampling negatives from <em>the same taxonomy node</em> (Greek yogurt vs. plain yogurt)
+            forced fine-grained attribute discrimination, and the lift came from there.
+          </p>
+          <p class="prose">
+            Serving was the other half. ONNX over PyTorch for the user tower because the
+            PyTorch graph had branches the runtime didn't need. HNSW for the item index — the recall/latency
+            frontier on a couple hundred thousand items lets you get sub-10ms p99 if the index is
+            warm and the network isn't lying to you.
+          </p>
+          <p class="prose">
+            Training compute went sideways before it went down. MosaicML Streaming for sharded reads
+            on 8× A100s fixed the I/O bottleneck. Then the bigger win: a bi-weekly warm-start strategy.
+            Embeddings drift slowly, and you don't need to relearn that yogurt is dairy every two weeks.
+          </p>
+        </div>
+      </details>
 
-          <text x="540" y="32" text-anchor="middle" class="mono accent" font-size="11">similarity</text>
+      <details class="card" id="thing-judge">
+        <summary>
+          <div class="thumb" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
+            <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" style="width:75%;height:75%;color:#92400e;">
+              <g transform="translate(50,38)">
+                <circle r="22" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+                <circle r="14" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+                <polygon points="0,-20 17,-6 13,15 -13,15 -17,-6" fill="currentColor" fill-opacity="0.5" stroke="currentColor" stroke-width="1.5"/>
+              </g>
+            </svg>
+          </div>
+          <div class="card-summary">
+            <div class="card-meta">Evaluation · LLM</div>
+            <div class="card-title">An LLM judge for the question offline metrics can't answer</div>
+            <p class="card-teaser">Precision@k can't tell you if a cart of 8 items hangs together. A CoT judge across 7 latent dimensions can.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
 
-          <rect x="555" y="92" width="145" height="40" rx="6" class="accent-stroke" fill="none" stroke-width="1.5" />
-          <text x="627" y="110" text-anchor="middle" fill="currentColor" font-size="13" font-weight="600">HNSW index</text>
-          <text x="627" y="124" text-anchor="middle" class="mono accent" font-size="11">&lt; 10 ms p99</text>
-        </svg>
+          <svg class="viz" viewBox="0 0 660 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LLM judge radar">
+            <g transform="translate(330, 180)">
+              <circle cx="0" cy="0" r="40" class="grid" fill="none" stroke-width="1" />
+              <circle cx="0" cy="0" r="80" class="grid" fill="none" stroke-width="1" />
+              <circle cx="0" cy="0" r="120" class="grid" fill="none" stroke-width="1" />
+              <circle cx="0" cy="0" r="135" class="grid" fill="none" stroke-width="1" stroke-dasharray="2 3" />
+              <line x1="0" y1="0" x2="0" y2="-135" class="grid" stroke-width="1" />
+              <line x1="0" y1="0" x2="105.6" y2="-84.2" class="grid" stroke-width="1" />
+              <line x1="0" y1="0" x2="131.5" y2="30" class="grid" stroke-width="1" />
+              <line x1="0" y1="0" x2="58.5" y2="121.7" class="grid" stroke-width="1" />
+              <line x1="0" y1="0" x2="-58.5" y2="121.7" class="grid" stroke-width="1" />
+              <line x1="0" y1="0" x2="-131.5" y2="30" class="grid" stroke-width="1" />
+              <line x1="0" y1="0" x2="-105.6" y2="-84.2" class="grid" stroke-width="1" />
+              <polygon
+                points="0,-114.75 87.74,-69.95 121,27.6 32.18,66.94 -46.8,97.36 -92.05,21 -82.37,-65.68"
+                class="accent fill-soft accent-stroke"
+                fill-opacity="0.45"
+                stroke-width="2"
+              />
+              <circle cx="0" cy="-114.75" r="3.5" class="accent" />
+              <circle cx="87.74" cy="-69.95" r="3.5" class="accent" />
+              <circle cx="121" cy="27.6" r="3.5" class="accent" />
+              <circle cx="32.18" cy="66.94" r="3.5" class="accent" />
+              <circle cx="-46.8" cy="97.36" r="3.5" class="accent" />
+              <circle cx="-92.05" cy="21" r="3.5" class="accent" />
+              <circle cx="-82.37" cy="-65.68" r="3.5" class="accent" />
+              <text x="0" y="-150" text-anchor="middle" fill="currentColor" font-size="12">complementarity</text>
+              <text x="125" y="-95" text-anchor="middle" fill="currentColor" font-size="12">taxonomy fit</text>
+              <text x="158" y="38" text-anchor="middle" fill="currentColor" font-size="12">occasion fit</text>
+              <text x="68" y="148" text-anchor="middle" fill="currentColor" font-size="12">freshness</text>
+              <text x="-68" y="148" text-anchor="middle" fill="currentColor" font-size="12">diversity</text>
+              <text x="-158" y="38" text-anchor="middle" fill="currentColor" font-size="12">novelty</text>
+              <text x="-125" y="-95" text-anchor="middle" fill="currentColor" font-size="12">relevance</text>
+            </g>
+          </svg>
 
-        <p class="prose">
-          One tower for users, one for items, both trained with InfoNCE — the textbook setup.
-          The interesting part was the hard negatives: random negatives let the model coast on macro
-          categories ("food vs. household"), which looks great on offline metrics and adds nothing
-          online. Sampling negatives from <em>the same taxonomy node</em> (Greek yogurt vs. plain yogurt)
-          forced fine-grained attribute discrimination, and the lift came from there.
-        </p>
-        <p class="prose">
-          Serving was the other half. ONNX over PyTorch for the user tower because the
-          PyTorch graph had branches the runtime didn't need. HNSW for the item index — the recall/latency
-          frontier on a couple hundred thousand items lets you get sub-10ms p99 if the index is
-          warm and the network isn't lying to you.
-        </p>
-        <p class="prose">
-          Training compute went sideways before it went down. MosaicML Streaming for sharded reads
-          on 8× A100s fixed the I/O bottleneck. Then the bigger win: a bi-weekly warm-start strategy.
-          Embeddings drift slowly, and you don't need to relearn that yogurt is dairy every two weeks.
-        </p>
-      </div>
+          <p class="prose">
+            Precision@k tells you whether the items are individually relevant. It can't tell you whether
+            the bundle of 8 items hangs together as a coherent shopping cart. That's a semantic call
+            a human can make in five seconds and offline metrics can't make at all.
+          </p>
+          <p class="prose">
+            So the judge: an LLM scoring orthogonal dimensions with Chain-of-Thought — complementarity,
+            taxonomy coherence, occasion fit, and a few others — calibrated against a small panel of
+            human raters. It isn't replacing the panel. It's letting the panel's judgment run across
+            millions of cart variants per release as a quality gate. The interesting design choice was
+            making the prompts <em>declarative</em>, so the dimensions can be audited, swapped, or
+            retired independently without reshipping the whole evaluator.
+          </p>
+        </div>
+      </details>
 
-      <div class="work-item">
-        <h3>An LLM judge for the question offline metrics can't answer</h3>
+      <details class="card no-thumb">
+        <summary>
+          <div class="thumb"></div>
+          <div class="card-summary">
+            <div class="card-meta">Simulation · counterfactual</div>
+            <div class="card-title">An offline simulator that's honest about online behavior</div>
+            <p class="card-teaser">Time-travel sampling, LLM user agents, and metrics that adapt when sim disagrees with online.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            The chronic problem in recsys is that offline metrics and online A/B tests rarely agree, and
+            the gap eats your release cadence. The sim replays historical state ("time-travel sampling")
+            and lets LLM-driven user agents react to a candidate model. The closing-the-loop part is the
+            self-adaptive metric tuning: when sim disagreed with online last release, the metric weights
+            shift toward whichever dimensions <em>actually predicted the gap</em>. It's not a perfect
+            oracle. It's a faster wrong answer that gets less wrong over time.
+          </p>
+        </div>
+      </details>
 
-        <svg class="viz" viewBox="0 0 660 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Radar chart of seven LLM-judge dimensions">
-          <g transform="translate(330, 180)">
-            <!-- Concentric reference rings -->
-            <circle cx="0" cy="0" r="40" class="grid" fill="none" stroke-width="1" />
-            <circle cx="0" cy="0" r="80" class="grid" fill="none" stroke-width="1" />
-            <circle cx="0" cy="0" r="120" class="grid" fill="none" stroke-width="1" />
-            <circle cx="0" cy="0" r="135" class="grid" fill="none" stroke-width="1" stroke-dasharray="2 3" />
-
-            <!-- Axes (7 dimensions, 360/7 degrees apart, starting at top) -->
-            <!-- Angles: -90, -38.57, 12.86, 64.29, 115.71, 167.14, 218.57 -->
-            <line x1="0" y1="0" x2="0" y2="-135" class="grid" stroke-width="1" />
-            <line x1="0" y1="0" x2="105.6" y2="-84.2" class="grid" stroke-width="1" />
-            <line x1="0" y1="0" x2="131.5" y2="30" class="grid" stroke-width="1" />
-            <line x1="0" y1="0" x2="58.5" y2="121.7" class="grid" stroke-width="1" />
-            <line x1="0" y1="0" x2="-58.5" y2="121.7" class="grid" stroke-width="1" />
-            <line x1="0" y1="0" x2="-131.5" y2="30" class="grid" stroke-width="1" />
-            <line x1="0" y1="0" x2="-105.6" y2="-84.2" class="grid" stroke-width="1" />
-
-            <!-- Sample score polygon (7 values, scaled to 135 max) -->
-            <!-- Scores: 0.85, 0.65, 0.92, 0.55, 0.80, 0.70, 0.78 -->
-            <polygon
-              points="0,-114.75 87.74,-69.95 121,27.6 32.18,66.94 -46.8,97.36 -92.05,21 -82.37,-65.68"
-              class="accent fill-soft accent-stroke"
-              fill-opacity="0.45"
-              stroke-width="2"
-            />
-
-            <!-- Score dots -->
-            <circle cx="0" cy="-114.75" r="3.5" class="accent" />
-            <circle cx="87.74" cy="-69.95" r="3.5" class="accent" />
-            <circle cx="121" cy="27.6" r="3.5" class="accent" />
-            <circle cx="32.18" cy="66.94" r="3.5" class="accent" />
-            <circle cx="-46.8" cy="97.36" r="3.5" class="accent" />
-            <circle cx="-92.05" cy="21" r="3.5" class="accent" />
-            <circle cx="-82.37" cy="-65.68" r="3.5" class="accent" />
-
-            <!-- Axis labels (positioned just past the outer ring) -->
-            <text x="0" y="-150" text-anchor="middle" fill="currentColor" font-size="12">complementarity</text>
-            <text x="125" y="-95" text-anchor="middle" fill="currentColor" font-size="12">taxonomy fit</text>
-            <text x="158" y="38" text-anchor="middle" fill="currentColor" font-size="12">occasion fit</text>
-            <text x="68" y="148" text-anchor="middle" fill="currentColor" font-size="12">freshness</text>
-            <text x="-68" y="148" text-anchor="middle" fill="currentColor" font-size="12">diversity</text>
-            <text x="-158" y="38" text-anchor="middle" fill="currentColor" font-size="12">novelty</text>
-            <text x="-125" y="-95" text-anchor="middle" fill="currentColor" font-size="12">relevance</text>
-          </g>
-
-          <!-- Title strip on the right -->
-          <g transform="translate(540, 80)">
-            <text x="0" y="0" class="mono accent" font-size="11">CART_07A.json</text>
-            <text x="0" y="20" fill="currentColor" font-size="13" font-weight="600">candidate score</text>
-            <line x1="0" y1="32" x2="100" y2="32" class="grid" stroke-width="1" />
-            <text x="0" y="52" class="muted" font-size="11">CoT-judged</text>
-            <text x="0" y="68" class="muted" font-size="11">7 dimensions</text>
-            <text x="0" y="84" class="muted" font-size="11">human-calibrated</text>
-          </g>
-        </svg>
-
-        <p class="prose">
-          Precision@k tells you whether the items are individually relevant. It can't tell you whether
-          the bundle of 8 items hangs together as a coherent shopping cart. That's a semantic call
-          a human can make in five seconds and offline metrics can't make at all.
-        </p>
-        <p class="prose">
-          So the judge: an LLM scoring orthogonal dimensions with Chain-of-Thought — complementarity,
-          taxonomy coherence, occasion fit, and a few others — calibrated against a small panel of
-          human raters. It isn't replacing the panel. It's letting the panel's judgment run across
-          millions of cart variants per release as a quality gate. The interesting design choice was
-          making the prompts <em>declarative</em>, so the dimensions can be audited, swapped, or
-          retired independently without reshipping the whole evaluator.
-        </p>
-      </div>
-
-      <div class="work-item">
-        <h3>An offline simulator that's honest about online behavior</h3>
-        <p class="prose">
-          The chronic problem in recsys is that offline metrics and online A/B tests rarely agree, and
-          the gap eats your release cadence. The sim replays historical state ("time-travel sampling")
-          and lets LLM-driven user agents react to a candidate model. The closing-the-loop part is the
-          self-adaptive metric tuning: when sim disagreed with online last release, the metric weights
-          shift toward whichever dimensions <em>actually predicted the gap</em>. It's not a perfect
-          oracle. It's a faster wrong answer that gets less wrong over time.
-        </p>
-      </div>
-
-      <div class="work-item">
-        <h3>Computer vision on a plant floor that wouldn't stop lying to us</h3>
-        <p class="prose">
-          Multi-class object detection on a real production line. The model trained beautifully and
-          collapsed in prod — false positives everywhere. Lighting changed station to station, parts
-          drifted out of alignment, and most parts were fine which made the imbalance brutal.
-        </p>
-        <p class="prose">
-          The fix was unglamorous. Leakage-safe data pipeline on GCP/GCS with Label Studio so we stopped
-          training on test-set parts. Hard negatives mined from the failure cases. Operational thresholds
-          tuned against the actual cost of a false alarm vs. a missed defect — they're not symmetric.
-          The model didn't get smarter. The decision logic around it did.
-        </p>
-      </div>
-
-      <div class="work-item">
-        <h3>A digital twin that asks "does the habitat survive?"</h3>
-        <p class="prose">
-          NASA STRI — the Resilient ExtraTerrestrial Habitats Institute. The CDCM platform couples
-          thermodynamics with structural physics so you can ask things like: <em>if a micrometeoroid hits
-          this panel and the active thermal control trips, do we lose the habitat?</em> Then run that
-          question several thousand times across mission scenarios, score each one on NPV and risk,
-          and the answer to "is this design worth it" stops being a vibe and starts being a distribution.
-        </p>
-      </div>
+      <details class="card no-thumb">
+        <summary>
+          <div class="thumb"></div>
+          <div class="card-summary">
+            <div class="card-meta">Computer vision · industrial</div>
+            <div class="card-title">CV on a plant floor that wouldn't stop lying to us</div>
+            <p class="card-teaser">The model trained beautifully and collapsed in prod. The fix was decision logic, not architecture.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Multi-class object detection on a real production line. The model trained beautifully and
+            collapsed in prod — false positives everywhere. Lighting changed station to station, parts
+            drifted out of alignment, and most parts were fine which made the imbalance brutal.
+          </p>
+          <p class="prose">
+            The fix was unglamorous. Leakage-safe data pipeline on GCP/GCS with Label Studio so we stopped
+            training on test-set parts. Hard negatives mined from the failure cases. Operational thresholds
+            tuned against the actual cost of a false alarm vs. a missed defect — they're not symmetric.
+            The model didn't get smarter. The decision logic around it did.
+          </p>
+        </div>
+      </details>
 
     </div>
   </div>
 </section>
 
-<section>
+<!-- ===================== PAPERS ===================== -->
+<section class="block" id="papers">
   <div class="wrap">
-    <h2>About</h2>
-    <p style="font-size: 17.5px; color: var(--muted); line-height: 1.65; max-width: 660px;">
+    <div class="section-head">
+      <h2>Papers</h2>
+      <p class="sub">Each card opens to the full piece — figures, technical contribution, what was actually implemented.</p>
+    </div>
+
+    <div class="cluster-pill">Disaster CV / built-environment risk</div>
+    <div class="card-grid">
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/pre-post-fusion-pipeline.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">Eng. Structures · 2020</div>
+            <div class="card-title">Pre-event and post-event imagery fusion</div>
+            <p class="card-teaser">Faster R-CNN + depth-aware homography. Fuse Street View pre-event with drone post-event.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            End-to-end pipeline. Input: a building's address. Output: a damage state. Google Street View for
+            pre-event imagery, drone or satellite for post-event, Faster R-CNN to find the building in each
+            frame, a depth model to disambiguate which of several visible buildings is <em>the</em> building,
+            and a homography step to align them. The fusion is the part everyone underestimates — pre-event
+            Street View is sharp but oblique; post-event drone is overhead and noisy; matching them requires
+            a depth-aware registration that the obvious affine transform fails at.
+          </p>
+          <figure class="figure">
+            <img src="figures/pre-post-fusion-pipeline.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 1</span> &nbsp; Two parallel streams. Red extracts pre-event imagery from Street View and infers attributes (story count, material, elevation). Blue detects the same building in post-event reconnaissance and infers damage state. They meet at the output.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/pre-event-detail-stream.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 6</span> &nbsp; The pre-event stream in detail. Multi-view fusion across n panoramas: per-image attribute classifier outputs are fused into a single posterior <code>p(c<sub>k</sub>|x<sub>1..n</sub>)</code>. The move that makes it robust to occlusion / glare / wrong-building frames.</figcaption>
+          </figure>
+          <figure class="figure">
+            <video controls preload="metadata" muted playsinline>
+              <source src="media/panorama-timeline.mp4" type="video/mp4" />
+            </video>
+            <figcaption><span class="figref">Clip 1</span> &nbsp; Historical Street View timeline at one GPS point — pre-event imagery sourcing, in motion.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card" id="paper-pareto">
+        <summary>
+          <div class="thumb"><img src="figures/inspection-pareto-front.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">Natural Hazards · 2020</div>
+            <div class="card-title">Triaging post-disaster inspections as resource allocation</div>
+            <p class="card-teaser">Constrained optimization, simulated annealing, and a Pareto frontier that turns triage into a decision rule.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Cities have finite inspectors and infinite buildings after a disaster. The status quo is intuition.
+            We modeled it as constrained resource allocation: which inspections, in what order, restore the
+            most community function per inspector-hour? Closed-form for small graphs, simulated annealing for
+            real city-scale ones, with uncertainty propagated from the damage estimates.
+          </p>
+          <figure class="figure">
+            <img src="figures/inspection-pareto-front.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 6</span> &nbsp; Decision space framed as a portfolio problem. Each point is an inspection plan; the Pareto frontier is what you'd actually consider. From there it's a risk-preference call.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/inspection-non-exceedance.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 8</span> &nbsp; Probability the realized cost stays below a threshold, per policy. The shape tells you exactly how much tail risk you're trading off for expected cost.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/panorama-building-extraction.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">CACAIE · 2019</div>
+            <div class="card-title">Buildings out of 360° panoramas</div>
+            <p class="card-teaser">Panorama-aware detection plus geometric reasoning. The piece that makes pre-event extraction work.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Panoramas are messy: multiple buildings per frame, occlusions, perspective distortion at the
+            seams. The detector is panorama-aware — it reasons about which face of the sphere corresponds
+            to which side of the street, so the same building doesn't get detected twice across the seam,
+            and the geometry of the camera position constrains which detections are even plausible.
+          </p>
+          <figure class="figure">
+            <img src="figures/panorama-building-extraction.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 1</span> &nbsp; Twelve-step pipeline. Steps 5–8 are the interesting ones: match 2D features across panoramas, estimate projection matrices, triangulate the building's 3D location, transform from camera frame to GPS frame.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/info-fusion-workflow.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">Eng. Structures · 2022</div>
+            <div class="card-title">Stacking classifier outputs across views</div>
+            <p class="card-teaser">Per-image probabilities → RC and M lists → iterative thresholding → final damage state.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Same problem as the 2020 fusion paper, harder data: the Subject of Interest arrives as
+            <em>a set of images, not one</em>. Per-image classifiers produce class-conditional
+            probabilities for two materials (RC and masonry), then a probability-list filter and an
+            iterative thresholding scheme combine those into a single overall damage state.
+          </p>
+          <figure class="figure">
+            <img src="figures/info-fusion-workflow.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 2</span> &nbsp; Three stages: per-image classifier outputs → RC and M probability lists → iterative thresholding criterion (error history converging at K = 0.01).</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/indoor-localization-overview.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">MDPI Sensors · 2020</div>
+            <div class="card-title">Localizing indoor reconnaissance photos onto building drawings</div>
+            <p class="card-teaser">Structure-from-Motion plus a 2D projective transform onto the structural drawing.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Indoor images don't get clean GPS — the signal drops, multipaths, and you can't tell which
+            room an image was shot in just from metadata. The pipeline runs Structure-from-Motion across
+            a stream of "PathImgs" walked through the building, reconstructs a 3D point cloud, and then
+            solves a 2D projective transform that maps the SfM coordinate frame onto the structural
+            drawing. Once that map exists, every "InspImg" — the targeted close-ups engineers actually
+            care about — is grounded against a drawing location.
+          </p>
+          <figure class="figure">
+            <img src="figures/indoor-localization-overview.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 1</span> &nbsp; Three stages: (a) collect PathImgs and InspImgs, (b) SfM to build a 3D point cloud + camera poses, (c) align onto the drawing via 2D projective transform.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+    </div>
+
+    <div class="cluster-pill">Space habitat resilience &amp; digital twin</div>
+    <div class="card-grid">
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/resilience-design-element.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">AIAA · 2019</div>
+            <div class="card-title">Resilience as passive + active capacity</div>
+            <p class="card-teaser">Decompose resilience into what the system absorbs and what operators can do once it's hit.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            How do you design for resilience without it being a vibes-based adjective? This paper splits
+            the concept into two components: <em>passive capacity</em> (redundancy, margin, robust design)
+            and <em>active capacity</em> (repair, reconfigure, mitigate). Then the case study runs at 90%,
+            63%, and 40% passive capacity to see how the trade space behaves.
+          </p>
+          <figure class="figure">
+            <img src="figures/resilience-design-element.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Figs. 8–9</span> &nbsp; System performance recovery curves under 90% (left) and 63% (right) passive capacity. The shaded bands are 5/95 percentiles. Different shapes, different stories.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card" id="paper-cdcm">
+        <summary>
+          <div class="thumb"><img src="figures/cdcm-trade-study.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">ASME IDETC · 2022</div>
+            <div class="card-title">Habitat design as portfolio management (CDCM)</div>
+            <p class="card-teaser">Markov subsystem nodes, value metric, risk-return trade studies the way a portfolio manager runs them.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Each subsystem is a coarse input/output Markov node — power, structural, life support,
+            environment, agent, intelligent health management — wired together into configurations.
+            Disturbances drive state transitions; a reflexive health-management subsystem prioritizes
+            recovery actions given limited robotic-agent availability. The output is a value metric
+            decomposing system performance into mission-value and crew-value over the design lifecycle.
+            Then trade studies run as risk-return scatter for every candidate configuration.
+          </p>
+          <figure class="figure">
+            <img src="figures/cdcm-habitat-architecture.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 4</span> &nbsp; The example habitat as wired Markov nodes. Disturbances (meteorite impact, solar radiation, dust) feed in; agent + IHM (dashed) close the loop with repair and cleaning actions.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/cdcm-trade-study.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Figs. 7–8</span> &nbsp; Trade study outputs as risk-return plots. Mean-of-value vs. std-of-value, colored by candidate parameter. Pareto-efficient designs are the lower-right points.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/cyber-physical-architecture.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">ASCE Earth &amp; Space · 2021</div>
+            <div class="card-title">Cyber-physical testing for habitat control loops</div>
+            <p class="card-teaser">Real hardware-in-the-loop coupled to a simulated habitat through sensor/actuator interfaces.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Pure simulation is cheap but lies. Pure physical testing is expensive and slow. Cyber-physical
+            testing splits the difference: real hardware sits in a test cell while the rest of the habitat
+            is simulated in real time, coupled through sensor and actuator interfaces. The control law sees
+            the physical hardware's actual response and the simulated environment reacts accordingly.
+          </p>
+          <figure class="figure">
+            <img src="figures/cyber-physical-architecture.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 3</span> &nbsp; The hybrid loop. Real hardware-in-the-loop on the left, simulated habitat on the right, sensor/actuator interface coupling them in real time.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+    </div>
+
+    <p style="margin-top: 28px; color: var(--muted); font-size: 13.5px;">Full list on <a href="https://scholar.google.com/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">Google Scholar</a>.</p>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="block" id="about">
+  <div class="wrap-narrow">
+    <div class="section-head"><h2>About</h2></div>
+    <p class="about-prose">
       Mechanical engineer who took a left turn into ML and never went back. PhD at Purdue on
-      decision-making under uncertainty in physical systems, then postdocs at
-      <strong style="color: var(--ink); font-weight: 600;">Stanford</strong> on multimodal ML
-      for global health, and <strong style="color: var(--ink); font-weight: 600;">NASA STRI / Purdue</strong>
-      on a space-habitat digital twin. Different domains, same job: build something that has to
-      make a fast decision on real data without any of the inputs being clean.
+      decision-making under uncertainty in physical systems, then postdocs at <strong>Stanford</strong>
+      on multimodal ML for global health, and <strong>NASA STRI / Purdue</strong> on a space-habitat
+      digital twin. Different domains, same job: build something that has to make a fast decision on
+      real data without any of the inputs being clean.
     </p>
-    <p style="font-size: 17.5px; color: var(--muted); line-height: 1.65; max-width: 660px; margin-top: 16px;">
-      Lately the work is mostly recommender systems and the evaluation problem around them —
-      what to actually measure, how to use LLMs as judges without fooling yourself, and how to
-      keep offline simulators honest about online behavior. Based in the SF Bay Area.
+    <p class="about-prose">
+      Lately the work is mostly recommender systems and the evaluation problem around them — what to
+      actually measure, how to use LLMs as judges without fooling yourself, and how to keep offline
+      simulators honest about online behavior. Based in the SF Bay Area.
     </p>
   </div>
 </section>
 
-<section class="pubs">
-  <div class="wrap">
-    <h2>Papers — what's actually inside them</h2>
-
-    <div class="work-item">
-      <h3>Pre-event and post-event imagery fusion for disaster damage</h3>
-      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">Engineering Structures, 2020</p>
-      <p class="prose">
-        End-to-end pipeline. Input: a building's address. Output: a damage state. In between:
-        Google Street View for the pre-event imagery, drone or satellite for the post-event,
-        Faster R-CNN to find the building in each frame, a depth model to disambiguate which
-        of several visible buildings is <em>the</em> building, and a homography step to align
-        them. The fusion is the part everyone underestimates — pre-event Street View is sharp
-        but oblique; post-event drone is overhead and noisy; matching them requires a
-        depth-aware registration that the obvious affine transform completely fails at.
-      </p>
-
-      <figure class="figure">
-        <img src="figures/pre-post-fusion-pipeline.png" alt="Two parallel data streams — pre-event from street view, post-event from disaster reconnaissance — feeding into a final building attribute and damage state output." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 1</span> &nbsp; The system runs two streams in parallel: the
-          red one extracts pre-event imagery from Street View and infers the building's physical
-          attributes (story count, material, elevation), and the blue one detects the same
-          building in post-event reconnaissance imagery and infers its damage state. They meet
-          at the output: physical attributes paired with damage condition, per building.
-        </figcaption>
-      </figure>
-
-      <figure class="figure">
-        <img src="figures/pre-event-detail-stream.png" alt="Detailed pre-event analysis stream: download nearby panoramas, reproject to optimal-angle rectilinear images, detect target views, then fuse classifier probabilities across views to a final per-attribute decision." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 6</span> &nbsp; A drill-down on the pre-event stream. From a
-          single GPS point, the system pulls multiple panoramas and reprojects each to the
-          optimal angle. Each rectilinear view goes to a per-attribute classifier, and the
-          per-image probabilities <code>p(c<sub>k</sub>|x<sub>i</sub>)</code> are fused into a
-          single posterior <code>p(c<sub>k</sub>|x<sub>1..n</sub>)</code> before the final
-          decision. Multi-view fusion is the move that lets the system handle individual bad
-          frames (occlusion, glare, the wrong building partially in shot).
-        </figcaption>
-      </figure>
-
-      <figure class="figure">
-        <video controls preload="metadata" muted playsinline>
-          <source src="media/panorama-timeline.mp4" type="video/mp4" />
-          Your browser doesn't support inline video.
-          <a href="media/panorama-timeline.mp4">Download the clip</a>.
-        </video>
-        <figcaption>
-          <span class="figref">Clip 1</span> &nbsp; Historical Street View timeline at a single
-          building location, played as a sequence. This is the pre-event imagery sourcing
-          step in practice — for a given GPS point, query every available historical panorama,
-          stack them in time, and pick the cleanest pre-event view to fuse against the
-          post-event drone or satellite image.
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="work-item">
-      <h3>Triaging post-disaster inspections as resource allocation</h3>
-      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">Natural Hazards, 2020</p>
-      <p class="prose">
-        Cities have finite inspectors and infinite buildings after a disaster. The status quo
-        is intuition. We modeled it as constrained resource allocation: which inspections, in
-        what order, restore the most community function per inspector-hour? Closed-form for
-        small graphs, simulated annealing for the real city-scale ones, with uncertainty
-        propagated from the damage estimates. The output is a priority list a coordinator can
-        actually execute against — not a heatmap that requires its own interpretation.
-      </p>
-
-      <figure class="figure">
-        <img src="figures/inspection-pareto-front.png" alt="Pareto frontier of expected cost vs. cost variance, with sample points colored by inspection budget; markers indicate min-Sharpe, min-volatility, and risk-averse policies." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 6</span> &nbsp; The decision space, framed as a portfolio problem.
-          Each point is a candidate inspection plan; x-axis is the volatility of the cost outcome,
-          y-axis is the expected cost, color is the inspection budget. The Pareto frontier is the set
-          of plans you'd actually consider. From there it's a risk-preference call: minimum Sharpe,
-          minimum volatility, or explicitly risk-averse.
-        </figcaption>
-      </figure>
-
-      <figure class="figure">
-        <img src="figures/inspection-non-exceedance.png" alt="Non-exceedance probability curves for unprepared, risk-neutral, risk-averse, and extremely-risk-averse policies under two different inspection rates." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 8</span> &nbsp; What the policy choice actually buys. Each curve
-          is the probability that the realized cost stays below a given threshold, under a different
-          decision rule. The "Unprepared" curve is what happens without a triage plan. The shape and
-          position of the other three curves tell you exactly how much tail risk you're trading off
-          for expected cost — which is the conversation a coordinator should be having before the
-          disaster, not during it.
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="work-item">
-      <h3>Buildings out of 360° panoramas</h3>
-      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">Computer-Aided Civil and Infrastructure Engineering, 2019</p>
-      <p class="prose">
-        The piece that made the first paper possible. Panoramas are messy: multiple buildings
-        per frame, occlusions, perspective distortion at the seams. The detector is panorama-aware
-        — it reasons about which face of the sphere corresponds to which side of the street, so
-        the same building doesn't get detected twice across the seam, and the geometry of the
-        camera position constrains which detections are even plausible.
-      </p>
-
-      <figure class="figure">
-        <img src="figures/panorama-building-extraction.png" alt="Twelve-step pipeline: GPS to panorama download, rectilinear projection, Faster R-CNN building detection, 2D feature matching, projection-matrix estimation, coordinate transform, optimal-view selection, and final building image localization." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 1</span> &nbsp; The full pipeline. Input: a single GPS coordinate.
-          Output: a clean, building-localized rectilinear image. The interesting steps are 5–8:
-          match 2D visual features across nearby panoramas, estimate projection matrices, triangulate
-          the building's 3D location, then transform from camera frame to GPS frame. Steps 9–10 then
-          pick the panorama and heading that produce the cleanest view.
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="work-item">
-      <h3>Stacking classifier outputs across views to nail down a building's damage state</h3>
-      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">Engineering Structures, 2022</p>
-      <p class="prose">
-        Follow-up to the 2020 fusion paper. Same problem — classify a building's post-event damage
-        state from reconnaissance imagery — but the "Subject of Interest" arrives as <em>a set of
-        images, not one</em>. The classifiers run per-image to produce class-conditional probabilities
-        for two materials (RC and masonry), and then a probability-list filter and an iterative
-        thresholding scheme combine those into a single overall damage state. The math is unsexy and
-        the diagram is the whole point: it's how you keep the system honest when each individual
-        image is a weak signal.
-      </p>
-      <figure class="figure">
-        <img src="figures/info-fusion-workflow.png" alt="Workflow figure showing the three-step pipeline: per-image classifier outputs, probability-list filtering, and iterative thresholding to produce overall RC and masonry damage states." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 2</span> &nbsp; Three-stage pipeline. Step 1 runs a binary
-          classifier schema across each image to estimate per-image attribute probabilities. Step 2
-          aggregates those into RC and M probability lists for the building. Step 3 picks an
-          iterative thresholding criterion (an error history converging at <em>K = 0.01</em>) to
-          collapse the lists into a final damage state.
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="work-item">
-      <h3>Localizing indoor reconnaissance photos onto building drawings</h3>
-      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">MDPI Sensors, 2020</p>
-      <p class="prose">
-        Indoor images don't get clean GPS — the signal drops, multipaths, and you can't tell which
-        room an image was shot in just from metadata. The pipeline runs Structure-from-Motion across
-        a stream of "PathImgs" walked through the building, reconstructs a 3D point cloud, and then
-        solves a 2D projective transform that maps the SfM coordinate frame onto the structural
-        drawing. Once that map exists, every "InspImg" — the targeted close-ups engineers actually
-        care about — is grounded against a drawing location. SfM is the part everyone reaches for;
-        the unobvious move is the global alignment via point correspondences with a small set of
-        operator-clicked anchors on the drawing.
-      </p>
-      <figure class="figure">
-        <img src="figures/indoor-localization-overview.png" alt="Overview of indoor image localization technique: image streams are processed through structure-from-motion to produce a 3D point cloud and camera path, then projected onto a 2D structural drawing." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 1</span> &nbsp; Three stages: (a) collect PathImgs and InspImgs as
-          you walk; (b) run Structure-from-Motion on PathImgs to build a 3D point cloud and recover
-          camera poses; (c) align that frame onto the structural drawing via a 2D projective transform.
-          Each InspImg now has a drawing location it can be filed against.
-        </figcaption>
-      </figure>
-    </div>
-
-    <p style="margin-top: 32px; margin-bottom: 8px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace;">Space habitat resilience &amp; digital twin</p>
-
-    <div class="work-item">
-      <h3>Resilience as passive + active capacity, made calculable</h3>
-      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">AIAA Propulsion and Energy Forum, 2019</p>
-      <p class="prose">
-        How do you design for resilience without it being a vibes-based adjective? This paper splits
-        the concept into two components: <em>passive capacity</em> (what the system absorbs without
-        intervention — redundancy, margin, robust design) and <em>active capacity</em> (what
-        operators or controllers can do once a disturbance hits — repair, reconfigure, mitigate).
-        The case study is an interconnected environmental control and life support system. We model
-        a 3D plasticity-style state space — the system enters degraded states under disturbance and
-        the recovery trajectory depends on the active/passive split. Then we run cases at 90%, 63%,
-        and 40% passive capacity to see how the trade space behaves. Reliability-based design
-        assumes the disruption never happens. Resilience-based design assumes it does.
-      </p>
-      <figure class="figure">
-        <img src="figures/resilience-design-element.png" alt="A generic element of the control-oriented computational platform showing block-diagram structure of the interconnected life support system." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 6</span> &nbsp; The atomic unit of the simulation: each element
-          carries inputs, outputs, internal state, and a controller. Wire enough of these together
-          and you get an interconnected life-support system you can simulate end-to-end under
-          disturbances and recovery actions.
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="work-item">
-      <h3>Treating habitat design as a portfolio-management problem</h3>
-      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">ASME IDETC-CIE, 2022 (DETC2022-89132)</p>
-      <p class="prose">
-        The CDCM platform. Each subsystem is modeled as a coarse input/output Markov node — power,
-        structural, life support, environment, agent, intelligent health management — and configurations
-        are built by wiring nodes together. Disturbances (meteorite impact, temperature swings, dust)
-        drive state transitions; a reflexive health-management subsystem prioritizes which recovery
-        actions a robotic agent takes, given limited availability. The output is a value metric
-        decomposing system performance into mission-value and crew-value components over the design
-        lifecycle. Once that metric exists, you can run trade studies the same way a portfolio manager
-        runs them — risk-return scatter for every candidate configuration.
-      </p>
-      <figure class="figure">
-        <img src="figures/cdcm-habitat-architecture.png" alt="Block diagram of an example habitat system: structural system, interior environment, power system, environmental control + life support, agent, and intelligent health management — coupled via temperature, power, and command flows; external disturbances (meteorite impact, solar radiation, dust) shown as inputs." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 4</span> &nbsp; The example habitat system as wired Markov nodes.
-          External disturbances (meteorite impact, solar radiation, dust) feed into the structural and
-          power subsystems. The agent and intelligent-health-management nodes (dashed) close the loop
-          by issuing repair and cleaning actions. Each subsystem has internal state, so the global
-          system is a product of subsystem state spaces — large, but tractable as a Markov chain
-          because the topology is fixed at configuration time.
-        </figcaption>
-      </figure>
-      <figure class="figure">
-        <img src="figures/cdcm-trade-study.png" alt="Trade study results presented as risk-return scatter plots: standard deviation of value vs. mean value, with points colored by nuclear reactor capacity and power storage capacity respectively." loading="lazy" />
-        <figcaption>
-          <span class="figref">Figs. 7–8</span> &nbsp; Trade study outputs framed as risk-return plots.
-          x-axis is the mean of the value metric; y-axis is its standard deviation across simulated
-          mission scenarios; color is the candidate parameter (reactor capacity, then storage capacity).
-          The Pareto-efficient designs are the lower-right points — high mean, low variance. This is
-          the framing that makes "is this design worth it" a quantifiable comparison instead of a
-          stakeholder argument.
-        </figcaption>
-      </figure>
-    </div>
-
-    <div class="work-item">
-      <h3>Cyber-physical testing for habitat control loops</h3>
-      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">ASCE Earth and Space, 2021</p>
-      <p class="prose">
-        Pure simulation is cheap but lies. Pure physical testing is expensive and slow. Cyber-physical
-        testing splits the difference: a real piece of habitat hardware sits in a test cell, while the
-        rest of the habitat is simulated in real time and the two are coupled through sensor and
-        actuator interfaces. The control law sees the physical hardware's actual response and the
-        simulated environment reacts accordingly. That's how you validate a controller against
-        scenarios you can't recreate in a lab — meteorite strikes, off-nominal thermal cycling,
-        cascaded subsystem failures — without having to build a full habitat to test against.
-      </p>
-      <figure class="figure">
-        <img src="figures/cyber-physical-architecture.png" alt="Cyber-physical testing architecture for habitat control validation: physical hardware coupled in real time to a simulated habitat environment via sensor and actuator interfaces, closed by a control law." loading="lazy" />
-        <figcaption>
-          <span class="figref">Fig. 3</span> &nbsp; The hybrid loop. Real hardware-in-the-loop on the
-          left, simulated habitat environment on the right, sensor/actuator interface coupling them
-          in real time. Control laws are validated against scenarios that pure simulation can't be
-          trusted on and pure physical testing can't reproduce.
-        </figcaption>
-      </figure>
-    </div>
-
-    <p style="margin-top: 22px; color: var(--muted); font-size: 14px;">Full list on <a class="inline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>.</p>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="contact-cta">
+<!-- ===================== CONTACT ===================== -->
+<section class="block" id="contact">
+  <div class="wrap-narrow">
+    <div class="contact-card">
       <h3>Get in touch</h3>
-      <p>Happy to talk recsys, evaluation, or anything in this neighborhood.</p>
+      <p>Happy to talk recsys, evaluation, simulation — or anything in this neighborhood.</p>
       <a class="btn btn-primary" href="mailto:lenjani.a@gmail.com">lenjani.a@gmail.com →</a>
     </div>
   </div>
