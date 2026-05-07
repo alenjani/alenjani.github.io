@@ -216,6 +216,27 @@
     .viz .muted { fill: var(--muted); }
     .viz .grid { stroke: var(--line); }
     .viz .fill-soft { fill: var(--accent-soft); }
+    .figure {
+      margin: 22px 0 6px;
+      max-width: 720px;
+    }
+    .figure img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface);
+    }
+    .figure figcaption {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: -0.01em;
+    }
+    .figure figcaption .figref { color: var(--accent); }
 
     /* Background timeline */
     .timeline { display: flex; flex-direction: column; gap: 18px; }
@@ -589,6 +610,17 @@
         the same building doesn't get detected twice across the seam, and the geometry of the
         camera position constrains which detections are even plausible.
       </p>
+
+      <figure class="figure">
+        <img src="figures/panorama-building-extraction.png" alt="Twelve-step pipeline: GPS to panorama download, rectilinear projection, Faster R-CNN building detection, 2D feature matching, projection-matrix estimation, coordinate transform, optimal-view selection, and final building image localization." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 1</span> &nbsp; The full pipeline. Input: a single GPS coordinate.
+          Output: a clean, building-localized rectilinear image. The interesting steps are 5–8:
+          match 2D visual features across nearby panoramas, estimate projection matrices, triangulate
+          the building's 3D location, then transform from camera frame to GPS frame. Steps 9–10 then
+          pick the panorama and heading that produce the cleanest view.
+        </figcaption>
+      </figure>
     </div>
 
     <p style="margin-top: 22px; color: var(--muted); font-size: 14px;">Full list on <a class="inline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>.</p>
