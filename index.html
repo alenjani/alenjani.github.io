@@ -693,6 +693,104 @@
       </figure>
     </div>
 
+    <div class="work-item">
+      <h3>Stacking classifier outputs across views to nail down a building's damage state</h3>
+      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">Engineering Structures, 2022</p>
+      <p class="prose">
+        Follow-up to the 2020 fusion paper. Same problem — classify a building's post-event damage
+        state from reconnaissance imagery — but the "Subject of Interest" arrives as <em>a set of
+        images, not one</em>. The classifiers run per-image to produce class-conditional probabilities
+        for two materials (RC and masonry), and then a probability-list filter and an iterative
+        thresholding scheme combine those into a single overall damage state. The math is unsexy and
+        the diagram is the whole point: it's how you keep the system honest when each individual
+        image is a weak signal.
+      </p>
+      <figure class="figure">
+        <img src="figures/info-fusion-workflow.png" alt="Workflow figure showing the three-step pipeline: per-image classifier outputs, probability-list filtering, and iterative thresholding to produce overall RC and masonry damage states." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 2</span> &nbsp; Three-stage pipeline. Step 1 runs a binary
+          classifier schema across each image to estimate per-image attribute probabilities. Step 2
+          aggregates those into RC and M probability lists for the building. Step 3 picks an
+          iterative thresholding criterion (an error history converging at <em>K = 0.01</em>) to
+          collapse the lists into a final damage state.
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="work-item">
+      <h3>Localizing indoor reconnaissance photos onto building drawings</h3>
+      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">MDPI Sensors, 2020</p>
+      <p class="prose">
+        Indoor images don't get clean GPS — the signal drops, multipaths, and you can't tell which
+        room an image was shot in just from metadata. The pipeline runs Structure-from-Motion across
+        a stream of "PathImgs" walked through the building, reconstructs a 3D point cloud, and then
+        solves a 2D projective transform that maps the SfM coordinate frame onto the structural
+        drawing. Once that map exists, every "InspImg" — the targeted close-ups engineers actually
+        care about — is grounded against a drawing location. SfM is the part everyone reaches for;
+        the unobvious move is the global alignment via point correspondences with a small set of
+        operator-clicked anchors on the drawing.
+      </p>
+      <figure class="figure">
+        <img src="figures/indoor-localization-overview.png" alt="Overview of indoor image localization technique: image streams are processed through structure-from-motion to produce a 3D point cloud and camera path, then projected onto a 2D structural drawing." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 1</span> &nbsp; Three stages: (a) collect PathImgs and InspImgs as
+          you walk; (b) run Structure-from-Motion on PathImgs to build a 3D point cloud and recover
+          camera poses; (c) align that frame onto the structural drawing via a 2D projective transform.
+          Each InspImg now has a drawing location it can be filed against.
+        </figcaption>
+      </figure>
+    </div>
+
+    <p style="margin-top: 32px; margin-bottom: 8px; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace;">Space habitat resilience &amp; digital twin</p>
+
+    <div class="work-item">
+      <h3>Resilience as passive + active capacity, made calculable</h3>
+      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">AIAA Propulsion and Energy Forum, 2019</p>
+      <p class="prose">
+        How do you design for resilience without it being a vibes-based adjective? This paper splits
+        the concept into two components: <em>passive capacity</em> (what the system absorbs without
+        intervention — redundancy, margin, robust design) and <em>active capacity</em> (what
+        operators or controllers can do once a disturbance hits — repair, reconfigure, mitigate).
+        The case study is an interconnected environmental control and life support system. We model
+        a 3D plasticity-style state space — the system enters degraded states under disturbance and
+        the recovery trajectory depends on the active/passive split. Then we run cases at 90%, 63%,
+        and 40% passive capacity to see how the trade space behaves. Reliability-based design
+        assumes the disruption never happens. Resilience-based design assumes it does.
+      </p>
+      <figure class="figure">
+        <img src="figures/resilience-design-element.png" alt="A generic element of the control-oriented computational platform showing block-diagram structure of the interconnected life support system." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 6</span> &nbsp; The atomic unit of the simulation: each element
+          carries inputs, outputs, internal state, and a controller. Wire enough of these together
+          and you get an interconnected life-support system you can simulate end-to-end under
+          disturbances and recovery actions.
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="work-item">
+      <h3>Cyber-physical testing for habitat control loops</h3>
+      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">ASCE Earth and Space, 2021</p>
+      <p class="prose">
+        Pure simulation is cheap but lies. Pure physical testing is expensive and slow. Cyber-physical
+        testing splits the difference: a real piece of habitat hardware sits in a test cell, while the
+        rest of the habitat is simulated in real time and the two are coupled through sensor and
+        actuator interfaces. The control law sees the physical hardware's actual response and the
+        simulated environment reacts accordingly. That's how you validate a controller against
+        scenarios you can't recreate in a lab — meteorite strikes, off-nominal thermal cycling,
+        cascaded subsystem failures — without having to build a full habitat to test against.
+      </p>
+      <figure class="figure">
+        <img src="figures/cyber-physical-architecture.png" alt="Cyber-physical testing architecture for habitat control validation: physical hardware coupled in real time to a simulated habitat environment via sensor and actuator interfaces, closed by a control law." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 3</span> &nbsp; The hybrid loop. Real hardware-in-the-loop on the
+          left, simulated habitat environment on the right, sensor/actuator interface coupling them
+          in real time. Control laws are validated against scenarios that pure simulation can't be
+          trusted on and pure physical testing can't reproduce.
+        </figcaption>
+      </figure>
+    </div>
+
     <p style="margin-top: 22px; color: var(--muted); font-size: 14px;">Full list on <a class="inline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>.</p>
   </div>
 </section>
