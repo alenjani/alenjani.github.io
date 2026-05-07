@@ -266,13 +266,11 @@
     <div class="eyebrow">Senior ML / Recommender Systems & Personalization</div>
     <h1>Ali Lenjani</h1>
     <p class="lede">
-      I build production recommender systems and ML platforms that move
-      <strong>real metrics</strong> for <strong>tens of millions of users</strong> —
-      under hard latency budgets, in real grocery and retail systems.
+      I work on recommender systems and personalization — the production side,
+      where retrieval has a latency budget and offline metrics have to predict
+      the online ones. Lately, also LLM-based evaluation.
     </p>
     <div class="creds">
-      <span>Senior ML/DS at a Fortune 50 retailer</span>
-      <span class="dot"></span>
       <span>Stanford</span>
       <span class="dot"></span>
       <span>NASA / Purdue PhD</span>
@@ -280,8 +278,7 @@
       <span>San Francisco Bay Area</span>
     </div>
     <div class="cta-row">
-      <a class="btn btn-primary" href="mailto:lenjani.a@gmail.com?subject=Consulting%20inquiry">Book a consulting call →</a>
-      <a class="btn btn-secondary" href="resume.pdf">Download resume (PDF)</a>
+      <a class="btn btn-primary" href="mailto:lenjani.a@gmail.com">Get in touch →</a>
     </div>
   </div>
 </header>
@@ -312,50 +309,50 @@
 
 <section>
   <div class="wrap">
-    <h2>Selected work</h2>
+    <h2>Things I've built</h2>
     <div class="work">
 
       <div class="work-item">
-        <h3>End-to-End Real-Time Recommendation Platform <span class="org">— Fortune 50 retailer (15M+ users)</span><span class="when">2022 — Present</span></h3>
+        <h3>Real-time recommendation platform</h3>
         <ul>
-          <li>Built and productionized a <strong>latency-critical two-tower recsys</strong> serving 15M+ active users, trained on 1.5B+ interactions.</li>
-          <li>Designed a <strong>sub-10ms retrieval pipeline</strong> indexing 500K+ items in Azure AI Search (HNSW). Optimized User Tower inference with ONNX Runtime for a 3–5× speedup over native PyTorch.</li>
-          <li>Designed a <strong>Ranking-Aware Contrastive Loss</strong> combining InfoNCE with same-taxonomy hard-negative mining to force fine-grained attribute discrimination.</li>
-          <li>Solved data bottlenecks with <strong>MosaicML Streaming</strong> for sharded reads across 8× A100s. A bi-weekly warm-start training strategy <strong>cut compute cost by 5×</strong>.</li>
+          <li>Two-tower retrieval at production scale, trained on billions of interactions.</li>
+          <li>Sub-10ms retrieval over hundreds of thousands of items in HNSW vector search; ONNX serving for several-times-faster inference vs. native PyTorch.</li>
+          <li>Ranking-aware contrastive loss (InfoNCE + same-taxonomy hard-negative mining) for fine-grained attribute discrimination.</li>
+          <li>MosaicML Streaming for sharded reads across 8× A100s; warm-start training to cut compute cost down to a fraction of cold-start runs.</li>
         </ul>
       </div>
 
       <div class="work-item">
-        <h3>LLM-as-a-Judge for Recommendation Systems </h3>
+        <h3>LLM-as-a-judge for recommendations</h3>
         <ul>
-          <li>Designed and shipped a multi-dimensional evaluation platform that quantifies semantic complementarity for recsys outputs.</li>
-          <li>Engineered a declarative <strong>"Human-Proxy" judging pipeline</strong> scoring 7 orthogonal latent dimensions via Chain-of-Thought reasoning to automate quality gating before release.</li>
+          <li>Multi-dimensional evaluation pipeline that quantifies semantic complementarity in recsys outputs.</li>
+          <li>Declarative "human-proxy" judging across orthogonal latent dimensions with Chain-of-Thought reasoning — automated quality gating before release.</li>
         </ul>
       </div>
 
       <div class="work-item">
-        <h3>Counterfactual Offline Simulation Platform </h3>
+        <h3>Counterfactual offline simulation</h3>
         <ul>
-          <li>Built a <strong>high-fidelity offline simulator</strong> integrated with LLM agents for autonomous user behavior.</li>
-          <li>Features include "time-travel" historical sampling and self-adaptive metric tuning to <strong>minimize the sim-to-real gap</strong> for production deployment decisions.</li>
+          <li>High-fidelity simulator integrated with LLM agents for autonomous user behavior.</li>
+          <li>Time-travel historical sampling and self-adaptive metric tuning to keep the sim-to-real gap honest before production deployment decisions.</li>
         </ul>
       </div>
 
       <div class="work-item">
-        <h3>Vision AI for Manufacturing Quality Control </h3>
+        <h3>Computer vision for industrial inspection</h3>
         <ul>
-          <li>Architected an end-to-end <strong>computer vision inspection framework</strong> across multiple CTQ checkpoints for automated defect detection and station health monitoring.</li>
-          <li>Trained multi-class object detection models in PyTorch; engineered operational decision logic and inference thresholds to minimize false positives in high-throughput environments.</li>
-          <li>Built a <strong>leakage-safe data workflow</strong> on GCP/GCS + Label Studio, overcoming physical manufacturing constraints (lighting, misalignment, class imbalance) with targeted hard-negative mining.</li>
+          <li>End-to-end CV inspection across CTQ checkpoints — automated defect detection and station health monitoring.</li>
+          <li>Multi-class object detection in PyTorch with operational decision logic tuned to minimize false positives in high-throughput environments.</li>
+          <li>Leakage-safe data workflow on GCP/GCS + Label Studio; targeted hard-negative mining to handle lighting, misalignment, and class imbalance from real plant floors.</li>
         </ul>
       </div>
 
       <div class="work-item">
-        <h3>Space Habitat Digital Twin <span class="org">— NASA STRI / Purdue</span><span class="when">2020 — 2021</span></h3>
+        <h3>Space habitat digital twin (NASA STRI)</h3>
         <ul>
-          <li>Spearheaded the <strong>CDCM platform</strong>, integrating thermodynamic and structural models to simulate deep-space habitat resilience.</li>
-          <li>Modeled coupled active thermal control, power generation, and structural integrity under stochastic disturbances (micrometeoroid impacts, thermal cycling).</li>
-          <li>Executed large-scale Monte Carlo simulations to optimize design configurations against NPV & risk metrics — enabling risk-informed mission planning.</li>
+          <li>The CDCM platform — thermodynamic and structural models coupled to simulate deep-space habitat resilience.</li>
+          <li>Active thermal control, power, and structural integrity under stochastic disturbances (micrometeoroid impacts, thermal cycling).</li>
+          <li>Large-scale Monte Carlo trade studies against NPV and risk metrics for mission planning.</li>
         </ul>
       </div>
 
@@ -365,29 +362,19 @@
 
 <section>
   <div class="wrap">
-    <h2>Background</h2>
-    <div class="timeline">
-      <div class="tl-item">
-        <div class="tl-when">2022 — now</div>
-        <div class="tl-what"><strong>Senior ML / Data Scientist</strong><span>Fortune 50 retailer — San Francisco Bay Area</span></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-when">2021 — 2022</div>
-        <div class="tl-what"><strong>Postdoctoral Research Scholar, Human-Centered AI</strong><span>Stanford University — Multimodal ML for global health monitoring</span></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-when">2020 — 2021</div>
-        <div class="tl-what"><strong>Postdoctoral Research Associate</strong><span>NASA STRI / Purdue — Space Habitat Digital Twin</span></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-when">2016 — 2020</div>
-        <div class="tl-what"><strong>Ph.D., Mechanical Engineering</strong><span>Purdue University — AI-based platform for risk-informed decision making in socio-technical systems</span></div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-when">2015 — 2016</div>
-        <div class="tl-what"><strong>M.Sc., Mechanical Engineering</strong><span>Northern Illinois University — RL & DDP for 2D dynamics simulation</span></div>
-      </div>
-    </div>
+    <h2>About</h2>
+    <p style="font-size: 17.5px; color: var(--muted); line-height: 1.65; max-width: 660px;">
+      Mechanical engineer turned ML person. PhD at Purdue on AI-based decision-making in socio-technical systems
+      (computer vision, deep learning, stochastic simulation), then postdocs at <strong style="color: var(--ink); font-weight: 600;">Stanford</strong>
+      (multimodal ML for global health) and <strong style="color: var(--ink); font-weight: 600;">NASA STRI / Purdue</strong>
+      (space habitat digital twin). The thread through all of it has been the same: building systems
+      that have to make good decisions under uncertainty, fast, on real data.
+    </p>
+    <p style="font-size: 17.5px; color: var(--muted); line-height: 1.65; max-width: 660px; margin-top: 16px;">
+      These days I spend most of my time on production recommender systems and the evaluation
+      problem around them — what to actually measure, how to use LLMs as judges without
+      fooling yourself, and how to keep offline simulators honest about online behavior.
+    </p>
   </div>
 </section>
 
@@ -406,9 +393,9 @@
 <section>
   <div class="wrap">
     <div class="contact-cta">
-      <h3>Have a recsys, personalization, or LLM-eval problem?</h3>
-      <p>I take on a small number of advisory and consulting engagements each quarter.</p>
-      <a class="btn btn-primary" href="mailto:lenjani.a@gmail.com?subject=Consulting%20inquiry">lenjani.a@gmail.com →</a>
+      <h3>Get in touch</h3>
+      <p>Happy to talk recsys, evaluation, or anything in this neighborhood.</p>
+      <a class="btn btn-primary" href="mailto:lenjani.a@gmail.com">lenjani.a@gmail.com →</a>
     </div>
   </div>
 </section>
