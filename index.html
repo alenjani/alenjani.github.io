@@ -277,7 +277,9 @@
     details.card .thumb svg { width: 100%; height: 100%; object-fit: cover; }
     details.card.no-thumb .thumb { display: none; }
     details.card .card-summary { flex: 1; min-width: 0; }
-    details.card .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; }
+    details.card .card-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .role-tag { font-size: 10px; padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--muted); letter-spacing: 0.06em; }
+    .role-tag.first { background: var(--accent-soft); color: var(--accent); }
     details.card .card-title { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.32; margin-bottom: 8px; }
     details.card .card-teaser { font-size: 14.5px; color: var(--muted); line-height: 1.5; }
     details.card .card-toggle {
@@ -613,22 +615,18 @@
           </svg>
 
           <p class="prose">
-            One tower for users, one for items, both trained with InfoNCE — the textbook setup.
-            The interesting part was the hard negatives: random negatives let the model coast on macro
-            categories ("food vs. household"), which looks great on offline metrics and adds nothing
-            online. Sampling negatives from <em>the same taxonomy node</em> (Greek yogurt vs. plain yogurt)
-            forced fine-grained attribute discrimination, and the lift came from there.
+            One tower for users, one for items, both trained with InfoNCE plus
+            same-taxonomy hard-negative mining — random negatives only push the model to learn coarse
+            categories, so the negatives have to come from inside the same taxonomy node to force
+            fine-grained attribute discrimination.
           </p>
           <p class="prose">
-            Serving was the other half. ONNX over PyTorch for the user tower because the
-            PyTorch graph had branches the runtime didn't need. HNSW for the item index — the recall/latency
-            frontier on a couple hundred thousand items lets you get sub-10ms p99 if the index is
-            warm and the network isn't lying to you.
+            Serving: ONNX Runtime for the user tower (3–5× faster than native PyTorch) and
+            an HNSW index over the item embeddings for sub-10ms retrieval at production scale.
           </p>
           <p class="prose">
-            Training compute went sideways before it went down. MosaicML Streaming for sharded reads
-            on 8× A100s fixed the I/O bottleneck. Then the bigger win: a bi-weekly warm-start strategy.
-            Embeddings drift slowly, and you don't need to relearn that yogurt is dairy every two weeks.
+            Training: MosaicML Streaming for sharded reads across 8× A100s, plus a bi-weekly
+            warm-start strategy that cut training compute by 5× compared to cold-start runs.
           </p>
         </div>
       </details>
@@ -647,60 +645,19 @@
           <div class="card-summary">
             <div class="card-meta">Evaluation · LLM</div>
             <div class="card-title">An LLM judge for the question offline metrics can't answer</div>
-            <p class="card-teaser">Precision@k can't tell you if a cart of 8 items hangs together. A CoT judge across 7 latent dimensions can.</p>
+            <p class="card-teaser">A multi-dimensional CoT judging pipeline scoring 7 orthogonal latent dimensions to automate quality gating before release.</p>
           </div>
           <div class="card-toggle">+</div>
         </summary>
         <div class="card-body">
 
-          <svg class="viz" viewBox="0 0 660 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="LLM judge radar">
-            <g transform="translate(330, 180)">
-              <circle cx="0" cy="0" r="40" class="grid" fill="none" stroke-width="1" />
-              <circle cx="0" cy="0" r="80" class="grid" fill="none" stroke-width="1" />
-              <circle cx="0" cy="0" r="120" class="grid" fill="none" stroke-width="1" />
-              <circle cx="0" cy="0" r="135" class="grid" fill="none" stroke-width="1" stroke-dasharray="2 3" />
-              <line x1="0" y1="0" x2="0" y2="-135" class="grid" stroke-width="1" />
-              <line x1="0" y1="0" x2="105.6" y2="-84.2" class="grid" stroke-width="1" />
-              <line x1="0" y1="0" x2="131.5" y2="30" class="grid" stroke-width="1" />
-              <line x1="0" y1="0" x2="58.5" y2="121.7" class="grid" stroke-width="1" />
-              <line x1="0" y1="0" x2="-58.5" y2="121.7" class="grid" stroke-width="1" />
-              <line x1="0" y1="0" x2="-131.5" y2="30" class="grid" stroke-width="1" />
-              <line x1="0" y1="0" x2="-105.6" y2="-84.2" class="grid" stroke-width="1" />
-              <polygon
-                points="0,-114.75 87.74,-69.95 121,27.6 32.18,66.94 -46.8,97.36 -92.05,21 -82.37,-65.68"
-                class="accent fill-soft accent-stroke"
-                fill-opacity="0.45"
-                stroke-width="2"
-              />
-              <circle cx="0" cy="-114.75" r="3.5" class="accent" />
-              <circle cx="87.74" cy="-69.95" r="3.5" class="accent" />
-              <circle cx="121" cy="27.6" r="3.5" class="accent" />
-              <circle cx="32.18" cy="66.94" r="3.5" class="accent" />
-              <circle cx="-46.8" cy="97.36" r="3.5" class="accent" />
-              <circle cx="-92.05" cy="21" r="3.5" class="accent" />
-              <circle cx="-82.37" cy="-65.68" r="3.5" class="accent" />
-              <text x="0" y="-150" text-anchor="middle" fill="currentColor" font-size="12">complementarity</text>
-              <text x="125" y="-95" text-anchor="middle" fill="currentColor" font-size="12">taxonomy fit</text>
-              <text x="158" y="38" text-anchor="middle" fill="currentColor" font-size="12">occasion fit</text>
-              <text x="68" y="148" text-anchor="middle" fill="currentColor" font-size="12">freshness</text>
-              <text x="-68" y="148" text-anchor="middle" fill="currentColor" font-size="12">diversity</text>
-              <text x="-158" y="38" text-anchor="middle" fill="currentColor" font-size="12">novelty</text>
-              <text x="-125" y="-95" text-anchor="middle" fill="currentColor" font-size="12">relevance</text>
-            </g>
-          </svg>
-
           <p class="prose">
-            Precision@k tells you whether the items are individually relevant. It can't tell you whether
-            the bundle of 8 items hangs together as a coherent shopping cart. That's a semantic call
-            a human can make in five seconds and offline metrics can't make at all.
-          </p>
-          <p class="prose">
-            So the judge: an LLM scoring orthogonal dimensions with Chain-of-Thought — complementarity,
-            taxonomy coherence, occasion fit, and a few others — calibrated against a small panel of
-            human raters. It isn't replacing the panel. It's letting the panel's judgment run across
-            millions of cart variants per release as a quality gate. The interesting design choice was
-            making the prompts <em>declarative</em>, so the dimensions can be audited, swapped, or
-            retired independently without reshipping the whole evaluator.
+            A multi-dimensional evaluation platform that quantifies semantic complementarity for
+            recommender outputs — the kind of judgment that's hard to capture with point-wise offline
+            metrics. The pipeline scores 7 orthogonal latent dimensions per candidate using
+            Chain-of-Thought reasoning, structured as a declarative "human-proxy" judging schema so
+            that individual dimensions can be audited, swapped, or retired without reshipping the
+            evaluator.
           </p>
         </div>
       </details>
@@ -717,12 +674,9 @@
         </summary>
         <div class="card-body">
           <p class="prose">
-            The chronic problem in recsys is that offline metrics and online A/B tests rarely agree, and
-            the gap eats your release cadence. The sim replays historical state ("time-travel sampling")
-            and lets LLM-driven user agents react to a candidate model. The closing-the-loop part is the
-            self-adaptive metric tuning: when sim disagreed with online last release, the metric weights
-            shift toward whichever dimensions <em>actually predicted the gap</em>. It's not a perfect
-            oracle. It's a faster wrong answer that gets less wrong over time.
+            A high-fidelity counterfactual offline simulation platform integrated with LLM agents.
+            Features include "time-travel" historical sampling and self-adaptive metric tuning,
+            built to minimize the sim-to-real gap before production deployment decisions.
           </p>
         </div>
       </details>
@@ -739,15 +693,15 @@
         </summary>
         <div class="card-body">
           <p class="prose">
-            Multi-class object detection on a real production line. The model trained beautifully and
-            collapsed in prod — false positives everywhere. Lighting changed station to station, parts
-            drifted out of alignment, and most parts were fine which made the imbalance brutal.
+            An end-to-end computer vision inspection framework across multiple CTQ checkpoints —
+            automated defect detection and station health monitoring. Multi-class object detection
+            models in PyTorch, with operational decision logic and inference thresholds tuned to
+            minimize false positives in high-throughput environments.
           </p>
           <p class="prose">
-            The fix was unglamorous. Leakage-safe data pipeline on GCP/GCS with Label Studio so we stopped
-            training on test-set parts. Hard negatives mined from the failure cases. Operational thresholds
-            tuned against the actual cost of a false alarm vs. a missed defect — they're not symmetric.
-            The model didn't get smarter. The decision logic around it did.
+            On the data side: a leakage-safe workflow on GCP/GCS + Label Studio, with targeted
+            hard-negative mining to handle the physical-environment constraints (lighting drift,
+            misalignment, class imbalance).
           </p>
         </div>
       </details>
@@ -771,7 +725,7 @@
         <summary>
           <div class="thumb"><img src="figures/pre-post-fusion-pipeline.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
-            <div class="card-meta">Eng. Structures · 2020</div>
+            <div class="card-meta">Eng. Structures · 2020 <span class="role-tag first">First author</span></div>
             <div class="card-title">Pre-event and post-event imagery fusion</div>
             <p class="card-teaser">Faster R-CNN + depth-aware homography. Fuse Street View pre-event with drone post-event.</p>
           </div>
@@ -807,18 +761,18 @@
         <summary>
           <div class="thumb"><img src="figures/inspection-pareto-front.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
-            <div class="card-meta">Natural Hazards · 2020</div>
-            <div class="card-title">Triaging post-disaster inspections as resource allocation</div>
+            <div class="card-meta">Natural Hazards · 2020 <span class="role-tag first">First author</span></div>
+            <div class="card-title">A resilience-based method for prioritizing post-event building inspections</div>
             <p class="card-teaser">Constrained optimization, simulated annealing, and a Pareto frontier that turns triage into a decision rule.</p>
           </div>
           <div class="card-toggle">+</div>
         </summary>
         <div class="card-body">
           <p class="prose">
-            Cities have finite inspectors and infinite buildings after a disaster. The status quo is intuition.
-            We modeled it as constrained resource allocation: which inspections, in what order, restore the
-            most community function per inspector-hour? Closed-form for small graphs, simulated annealing for
-            real city-scale ones, with uncertainty propagated from the damage estimates.
+            A resilience-based method for prioritizing post-event building inspections. The method
+            allocates limited inspection resources by ordering buildings to maximize recovery of
+            community function per inspector-hour, with damage-state uncertainty propagated through
+            the prioritization.
           </p>
           <figure class="figure">
             <img src="figures/inspection-pareto-front.png" alt="" loading="lazy" />
@@ -835,8 +789,8 @@
         <summary>
           <div class="thumb"><img src="figures/panorama-building-extraction.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
-            <div class="card-meta">CACAIE · 2019</div>
-            <div class="card-title">Buildings out of 360° panoramas</div>
+            <div class="card-meta">CACAIE · 2019 <span class="role-tag first">First author</span></div>
+            <div class="card-title">Automated building image extraction from 360° panoramas</div>
             <p class="card-teaser">Panorama-aware detection plus geometric reasoning. The piece that makes pre-event extraction work.</p>
           </div>
           <div class="card-toggle">+</div>
@@ -859,8 +813,8 @@
         <summary>
           <div class="thumb"><img src="figures/info-fusion-workflow.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
-            <div class="card-meta">Eng. Structures · 2022</div>
-            <div class="card-title">Stacking classifier outputs across views</div>
+            <div class="card-meta">Eng. Structures · 2022 <span class="role-tag">Co-author</span></div>
+            <div class="card-title">Information fusion to classify post-event building damage state</div>
             <p class="card-teaser">Per-image probabilities → RC and M lists → iterative thresholding → final damage state.</p>
           </div>
           <div class="card-toggle">+</div>
@@ -883,20 +837,19 @@
         <summary>
           <div class="thumb"><img src="figures/indoor-localization-overview.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
-            <div class="card-meta">MDPI Sensors · 2020</div>
-            <div class="card-title">Localizing indoor reconnaissance photos onto building drawings</div>
+            <div class="card-meta">MDPI Sensors · 2020 <span class="role-tag">Co-author</span></div>
+            <div class="card-title">Automated indoor image localization for post-event assessment</div>
             <p class="card-teaser">Structure-from-Motion plus a 2D projective transform onto the structural drawing.</p>
           </div>
           <div class="card-toggle">+</div>
         </summary>
         <div class="card-body">
           <p class="prose">
-            Indoor images don't get clean GPS — the signal drops, multipaths, and you can't tell which
-            room an image was shot in just from metadata. The pipeline runs Structure-from-Motion across
-            a stream of "PathImgs" walked through the building, reconstructs a 3D point cloud, and then
-            solves a 2D projective transform that maps the SfM coordinate frame onto the structural
-            drawing. Once that map exists, every "InspImg" — the targeted close-ups engineers actually
-            care about — is grounded against a drawing location.
+            Indoor images don't get clean GPS. The pipeline runs Structure-from-Motion across a
+            stream of "PathImgs" walked through the building to reconstruct a 3D point cloud and
+            recover camera poses, then aligns the SfM frame onto the structural drawing via a 2D
+            projective transform. Once that map exists, every "InspImg" — the targeted close-up
+            engineers care about — is grounded against a drawing location.
           </p>
           <figure class="figure">
             <img src="figures/indoor-localization-overview.png" alt="" loading="lazy" />
@@ -914,8 +867,8 @@
         <summary>
           <div class="thumb"><img src="figures/resilience-design-element.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
-            <div class="card-meta">AIAA · 2019</div>
-            <div class="card-title">Resilience as passive + active capacity</div>
+            <div class="card-meta">AIAA · 2019 <span class="role-tag">Co-author</span></div>
+            <div class="card-title">Resilience-oriented design of extraterrestrial habitat systems</div>
             <p class="card-teaser">Decompose resilience into what the system absorbs and what operators can do once it's hit.</p>
           </div>
           <div class="card-toggle">+</div>
@@ -938,8 +891,8 @@
         <summary>
           <div class="thumb"><img src="figures/cdcm-trade-study.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
-            <div class="card-meta">ASME IDETC · 2022</div>
-            <div class="card-title">Habitat design as portfolio management (CDCM)</div>
+            <div class="card-meta">ASME IDETC · 2022 <span class="role-tag">Co-author</span></div>
+            <div class="card-title">Computational platform for trade studies in deep space habitat systems (CDCM)</div>
             <p class="card-teaser">Markov subsystem nodes, value metric, risk-return trade studies the way a portfolio manager runs them.</p>
           </div>
           <div class="card-toggle">+</div>
@@ -968,8 +921,8 @@
         <summary>
           <div class="thumb"><img src="figures/cyber-physical-architecture.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
-            <div class="card-meta">ASCE Earth &amp; Space · 2021</div>
-            <div class="card-title">Cyber-physical testing for habitat control loops</div>
+            <div class="card-meta">ASCE Earth &amp; Space · 2021 <span class="role-tag">Co-author</span></div>
+            <div class="card-title">Role of cyber-physical testing in developing resilient extraterrestrial habitats</div>
             <p class="card-teaser">Real hardware-in-the-loop coupled to a simulated habitat through sensor/actuator interfaces.</p>
           </div>
           <div class="card-toggle">+</div>
