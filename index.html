@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ali Lenjani — Lead ML / Recommender Systems & Personalization</title>
+  <meta name="description" content="Production recommender systems at scale. Two-tower retrieval, vector search, LLM evaluation. Stanford, NASA, Purdue PhD. Currently Lead ML at Albertsons." />
+  <meta property="og:title" content="Ali Lenjani — Lead ML / Recsys & Personalization" />
+  <meta property="og:description" content="I build production recommender systems that move metrics for tens of millions of users." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://alenjani.github.io/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --ink: #0a0a0a;
+      --muted: #525252;
+      --line: #e7e5e4;
+      --accent: #4f46e5;
+      --accent-soft: #eef2ff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0a0a;
+        --surface: #141414;
+        --ink: #f5f5f4;
+        --muted: #a3a3a3;
+        --line: #262626;
+        --accent: #a5b4fc;
+        --accent-soft: #1e1b4b;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 17px;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; padding: 0 28px; }
+    header.top {
+      padding: 80px 0 24px;
+      border-bottom: 1px solid var(--line);
+    }
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 18px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    h1 {
+      font-size: clamp(40px, 6vw, 64px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .lede {
+      font-size: clamp(20px, 2.4vw, 26px);
+      color: var(--muted);
+      max-width: 660px;
+      line-height: 1.4;
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+    .lede strong { color: var(--ink); font-weight: 600; }
+    .creds {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px 24px;
+      align-items: center;
+      font-size: 14px;
+      color: var(--muted);
+      padding-bottom: 36px;
+    }
+    .creds span { display: inline-flex; align-items: center; gap: 8px; }
+    .creds .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); opacity: 0.5; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 60px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: transform 0.1s ease, background 0.15s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+    section:last-of-type { border-bottom: 0; }
+    h2 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 32px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    /* Stat strip */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 720px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+    .stat {
+      padding: 28px 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .stat .num {
+      font-size: clamp(28px, 4.5vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 8px;
+      font-feature-settings: "tnum";
+    }
+    .stat .num span.unit { color: var(--accent); }
+    .stat .label {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* Capability cards */
+    .caps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    @media (max-width: 720px) { .caps { grid-template-columns: 1fr; } }
+    .cap {
+      padding: 26px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .cap h3 { margin-bottom: 10px; font-size: 17px; }
+    .cap p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+
+    /* Work entries */
+    .work { display: flex; flex-direction: column; gap: 28px; }
+    .work-item { padding: 0; }
+    .work-item h3 { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+    .work-item h3 .org { color: var(--muted); font-weight: 500; font-size: 15px; }
+    .work-item h3 .when { color: var(--muted); font-weight: 500; font-size: 13px; margin-left: auto; font-family: 'JetBrains Mono', monospace; }
+    .work-item ul { list-style: none; padding: 0; margin-top: 12px; }
+    .work-item li {
+      padding: 8px 0 8px 22px;
+      position: relative;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.55;
+    }
+    .work-item li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 10px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .work-item li strong { color: var(--ink); font-weight: 600; }
+
+    /* Background timeline */
+    .timeline { display: flex; flex-direction: column; gap: 18px; }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px dashed var(--line);
+    }
+    .tl-item:last-child { border-bottom: 0; }
+    .tl-when { color: var(--muted); font-size: 13px; font-family: 'JetBrains Mono', monospace; padding-top: 4px; }
+    .tl-what strong { display: block; font-size: 16px; margin-bottom: 2px; }
+    .tl-what span { color: var(--muted); font-size: 14px; }
+
+    /* Publications */
+    .pubs ol { list-style: none; counter-reset: pub; padding: 0; }
+    .pubs li {
+      counter-increment: pub;
+      padding: 14px 0 14px 38px;
+      position: relative;
+      border-bottom: 1px dashed var(--line);
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .pubs li:last-child { border-bottom: 0; }
+    .pubs li::before {
+      content: counter(pub, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 14px;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pubs em { color: var(--ink); font-style: normal; font-weight: 500; }
+
+    /* Contact / footer */
+    .contact-cta {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      margin: 24px 0 60px;
+    }
+    .contact-cta h3 {
+      font-size: 26px;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .contact-cta p { color: var(--muted); margin-bottom: 24px; font-size: 16px; }
+    footer {
+      padding: 32px 0 60px;
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--ink); }
+
+    a.inline { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+    a.inline:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Lead ML / Recommender Systems & Personalization</div>
+    <h1>Ali Lenjani</h1>
+    <p class="lede">
+      I build production recommender systems and ML platforms that move
+      <strong>real metrics</strong> for <strong>tens of millions of users</strong> —
+      under hard latency budgets, in real grocery and retail systems.
+    </p>
+    <div class="creds">
+      <span>Currently Lead ML/DS at Albertsons</span>
+      <span class="dot"></span>
+      <span>Stanford</span>
+      <span class="dot"></span>
+      <span>NASA / Purdue PhD</span>
+      <span class="dot"></span>
+      <span>San Francisco Bay Area</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="mailto:lenjani.a@gmail.com?subject=Consulting%20inquiry">Book a consulting call →</a>
+      <a class="btn btn-secondary" href="resume.pdf">Download resume (PDF)</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Production impact</h2>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">15M<span class="unit">+</span></div>
+        <div class="label">active users served by my recsys in production</div>
+      </div>
+      <div class="stat">
+        <div class="num"><span class="unit">&lt;</span>10ms</div>
+        <div class="label">retrieval latency over 500K+ items in HNSW vector search</div>
+      </div>
+      <div class="stat">
+        <div class="num">3–5<span class="unit">×</span></div>
+        <div class="label">inference speedup on User Tower via ONNX Runtime over native PyTorch</div>
+      </div>
+      <div class="stat">
+        <div class="num">5<span class="unit">×</span></div>
+        <div class="label">training compute cost reduction via warm-start strategy on 8× A100s</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What I work on</h2>
+    <div class="caps">
+      <div class="cap">
+        <h3>Production recommender systems</h3>
+        <p>End-to-end two-tower retrieval pipelines: model design, contrastive losses, hard negative mining, ONNX serving, HNSW vector indexes, A/B test design, online–offline metric alignment.</p>
+      </div>
+      <div class="cap">
+        <h3>LLM evaluation & quality gating</h3>
+        <p>Multi-dimensional human-proxy judging pipelines using Chain-of-Thought scoring across orthogonal latent dimensions to automate quality gates for recsys releases.</p>
+      </div>
+      <div class="cap">
+        <h3>Counterfactual offline simulation</h3>
+        <p>High-fidelity sim platforms with LLM agents, time-travel historical sampling, and self-adaptive metrics — built to minimize sim-to-real gap before deployment decisions.</p>
+      </div>
+      <div class="cap">
+        <h3>Digital twins & risk modeling</h3>
+        <p>Physics-informed simulation, Monte Carlo trade studies, computer vision for high-throughput inspection. NASA Space Habitat platform; published research on built-environment risk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Selected work</h2>
+    <div class="work">
+
+      <div class="work-item">
+        <h3>End-to-End Real-Time Recommendation Platform <span class="org">— Albertsons (15M+ users)</span><span class="when">2022 — Present</span></h3>
+        <ul>
+          <li>Built and productionized a <strong>latency-critical two-tower recsys</strong> serving 15M+ active users, trained on 1.5B+ interactions.</li>
+          <li>Designed a <strong>sub-10ms retrieval pipeline</strong> indexing 500K+ items in Azure AI Search (HNSW). Optimized User Tower inference with ONNX Runtime for a 3–5× speedup over native PyTorch.</li>
+          <li>Designed a <strong>Ranking-Aware Contrastive Loss</strong> combining InfoNCE with same-taxonomy hard-negative mining to force fine-grained attribute discrimination.</li>
+          <li>Solved data bottlenecks with <strong>MosaicML Streaming</strong> for sharded reads across 8× A100s. A bi-weekly warm-start training strategy <strong>cut compute cost by 5×</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="work-item">
+        <h3>LLM-as-a-Judge for Recommendation Systems <span class="org">— Albertsons</span></h3>
+        <ul>
+          <li>Designed and shipped a multi-dimensional evaluation platform that quantifies semantic complementarity for recsys outputs.</li>
+          <li>Engineered a declarative <strong>"Human-Proxy" judging pipeline</strong> scoring 7 orthogonal latent dimensions via Chain-of-Thought reasoning to automate quality gating before release.</li>
+        </ul>
+      </div>
+
+      <div class="work-item">
+        <h3>Counterfactual Offline Simulation Platform <span class="org">— Albertsons</span></h3>
+        <ul>
+          <li>Built a <strong>high-fidelity offline simulator</strong> integrated with LLM agents for autonomous user behavior.</li>
+          <li>Features include "time-travel" historical sampling and self-adaptive metric tuning to <strong>minimize the sim-to-real gap</strong> for production deployment decisions.</li>
+        </ul>
+      </div>
+
+      <div class="work-item">
+        <h3>Vision AI for Manufacturing Quality Control <span class="org">— Albertsons</span></h3>
+        <ul>
+          <li>Architected an end-to-end <strong>computer vision inspection framework</strong> across multiple CTQ checkpoints for automated defect detection and station health monitoring.</li>
+          <li>Trained multi-class object detection models in PyTorch; engineered operational decision logic and inference thresholds to minimize false positives in high-throughput environments.</li>
+          <li>Built a <strong>leakage-safe data workflow</strong> on GCP/GCS + Label Studio, overcoming physical manufacturing constraints (lighting, misalignment, class imbalance) with targeted hard-negative mining.</li>
+        </ul>
+      </div>
+
+      <div class="work-item">
+        <h3>Space Habitat Digital Twin <span class="org">— NASA STRI / Purdue</span><span class="when">2020 — 2021</span></h3>
+        <ul>
+          <li>Spearheaded the <strong>CDCM platform</strong>, integrating thermodynamic and structural models to simulate deep-space habitat resilience.</li>
+          <li>Modeled coupled active thermal control, power generation, and structural integrity under stochastic disturbances (micrometeoroid impacts, thermal cycling).</li>
+          <li>Executed large-scale Monte Carlo simulations to optimize design configurations against NPV & risk metrics — enabling risk-informed mission planning.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Background</h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-when">2022 — now</div>
+        <div class="tl-what"><strong>Lead ML / Data Scientist</strong><span>Albertsons Companies — San Francisco, CA</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-when">2021 — 2022</div>
+        <div class="tl-what"><strong>Postdoctoral Research Scholar, Human-Centered AI</strong><span>Stanford University — Multimodal ML for global health monitoring</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-when">2020 — 2021</div>
+        <div class="tl-what"><strong>Postdoctoral Research Associate</strong><span>NASA STRI / Purdue — Space Habitat Digital Twin</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-when">2016 — 2020</div>
+        <div class="tl-what"><strong>Ph.D., Mechanical Engineering</strong><span>Purdue University — AI-based platform for risk-informed decision making in socio-technical systems</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-when">2015 — 2016</div>
+        <div class="tl-what"><strong>M.Sc., Mechanical Engineering</strong><span>Northern Illinois University — RL & DDP for 2D dynamics simulation</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pubs">
+  <div class="wrap">
+    <h2>Selected publications</h2>
+    <ol>
+      <li>Lenjani, A., Dyke, S. J., Bilionis, I., Yeum, C. M., et al. (2020). <em>Towards fully automated post-event data collection and analysis: pre-event and post-event information fusion.</em> Engineering Structures, 208, 109884.</li>
+      <li>Lenjani, A., Bilionis, I., Dyke, S. J., Yeum, C. M., Monteiro, R. (2020). <em>A resilience-based method for prioritizing post-event building inspections.</em> Natural Hazards, 100(2), 877–896.</li>
+      <li>Lenjani, A., Yeum, C. M., Dyke, S., Bilionis, I. (2019). <em>Automated building image extraction from 360° panoramas for post-disaster evaluation.</em> Computer-Aided Civil and Infrastructure Engineering, 51.</li>
+    </ol>
+    <p style="margin-top: 18px; color: var(--muted); font-size: 14px;">Full list on <a class="inline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="contact-cta">
+      <h3>Have a recsys, personalization, or LLM-eval problem?</h3>
+      <p>I take on a small number of advisory and consulting engagements each quarter.</p>
+      <a class="btn btn-primary" href="mailto:lenjani.a@gmail.com?subject=Consulting%20inquiry">lenjani.a@gmail.com →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; width: 100%;">
+    <span>© Ali Lenjani 2026</span>
+    <span>
+      <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+      &nbsp;·&nbsp;
+      <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/alenjani" target="_blank" rel="noopener">GitHub</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
