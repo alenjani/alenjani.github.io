@@ -189,6 +189,17 @@
       background: var(--accent);
     }
     .work-item li strong { color: var(--ink); font-weight: 600; }
+    .prose {
+      color: var(--muted);
+      font-size: 16.5px;
+      line-height: 1.65;
+      max-width: 660px;
+      margin-top: 12px;
+    }
+    .prose + .prose { margin-top: 14px; }
+    .prose em { color: var(--ink); font-style: normal; font-weight: 500; }
+    .work-item { padding-bottom: 8px; }
+    .work-item + .work-item { padding-top: 12px; border-top: 1px dashed var(--line); }
 
     /* Background timeline */
     .timeline { display: flex; flex-direction: column; gap: 18px; }
@@ -285,75 +296,84 @@
 
 <section>
   <div class="wrap">
-    <h2>What I work on</h2>
-    <div class="caps">
-      <div class="cap">
-        <h3>Production recommender systems</h3>
-        <p>End-to-end two-tower retrieval pipelines: model design, contrastive losses, hard negative mining, ONNX serving, HNSW vector indexes, A/B test design, online–offline metric alignment.</p>
-      </div>
-      <div class="cap">
-        <h3>LLM evaluation & quality gating</h3>
-        <p>Multi-dimensional human-proxy judging pipelines using Chain-of-Thought scoring across orthogonal latent dimensions to automate quality gates for recsys releases.</p>
-      </div>
-      <div class="cap">
-        <h3>Counterfactual offline simulation</h3>
-        <p>High-fidelity sim platforms with LLM agents, time-travel historical sampling, and self-adaptive metrics — built to minimize sim-to-real gap before deployment decisions.</p>
-      </div>
-      <div class="cap">
-        <h3>Digital twins & risk modeling</h3>
-        <p>Physics-informed simulation, Monte Carlo trade studies, computer vision for high-throughput inspection. NASA Space Habitat platform; published research on built-environment risk.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
     <h2>Things I've built</h2>
     <div class="work">
 
       <div class="work-item">
-        <h3>Real-time recommendation platform</h3>
-        <ul>
-          <li>Two-tower retrieval at production scale, trained on billions of interactions.</li>
-          <li>Sub-10ms retrieval over hundreds of thousands of items in HNSW vector search; ONNX serving for several-times-faster inference vs. native PyTorch.</li>
-          <li>Ranking-aware contrastive loss (InfoNCE + same-taxonomy hard-negative mining) for fine-grained attribute discrimination.</li>
-          <li>MosaicML Streaming for sharded reads across 8× A100s; warm-start training to cut compute cost down to a fraction of cold-start runs.</li>
-        </ul>
+        <h3>A two-tower recommender that has to answer in 10 milliseconds</h3>
+        <p class="prose">
+          One tower for users, one for items, both trained with InfoNCE — the textbook setup.
+          The interesting part was the hard negatives: random negatives let the model coast on macro
+          categories ("food vs. household"), which looks great on offline metrics and adds nothing
+          online. Sampling negatives from <em>the same taxonomy node</em> (Greek yogurt vs. plain yogurt)
+          forced fine-grained attribute discrimination, and the lift came from there.
+        </p>
+        <p class="prose">
+          Serving was the other half. ONNX over PyTorch for the user tower because the
+          PyTorch graph had branches the runtime didn't need. HNSW for the item index — the recall/latency
+          frontier on a couple hundred thousand items lets you get sub-10ms p99 if the index is
+          warm and the network isn't lying to you.
+        </p>
+        <p class="prose">
+          Training compute went sideways before it went down. MosaicML Streaming for sharded reads
+          on 8× A100s fixed the I/O bottleneck. Then the bigger win: a bi-weekly warm-start strategy.
+          Embeddings drift slowly, and you don't need to relearn that yogurt is dairy every two weeks.
+        </p>
       </div>
 
       <div class="work-item">
-        <h3>LLM-as-a-judge for recommendations</h3>
-        <ul>
-          <li>Multi-dimensional evaluation pipeline that quantifies semantic complementarity in recsys outputs.</li>
-          <li>Declarative "human-proxy" judging across orthogonal latent dimensions with Chain-of-Thought reasoning — automated quality gating before release.</li>
-        </ul>
+        <h3>An LLM judge for the question offline metrics can't answer</h3>
+        <p class="prose">
+          Precision@k tells you whether the items are individually relevant. It can't tell you whether
+          the bundle of 8 items hangs together as a coherent shopping cart. That's a semantic call
+          a human can make in five seconds and offline metrics can't make at all.
+        </p>
+        <p class="prose">
+          So the judge: an LLM scoring orthogonal dimensions with Chain-of-Thought — complementarity,
+          taxonomy coherence, occasion fit, and a few others — calibrated against a small panel of
+          human raters. It isn't replacing the panel. It's letting the panel's judgment run across
+          millions of cart variants per release as a quality gate. The interesting design choice was
+          making the prompts <em>declarative</em>, so the dimensions can be audited, swapped, or
+          retired independently without reshipping the whole evaluator.
+        </p>
       </div>
 
       <div class="work-item">
-        <h3>Counterfactual offline simulation</h3>
-        <ul>
-          <li>High-fidelity simulator integrated with LLM agents for autonomous user behavior.</li>
-          <li>Time-travel historical sampling and self-adaptive metric tuning to keep the sim-to-real gap honest before production deployment decisions.</li>
-        </ul>
+        <h3>An offline simulator that's honest about online behavior</h3>
+        <p class="prose">
+          The chronic problem in recsys is that offline metrics and online A/B tests rarely agree, and
+          the gap eats your release cadence. The sim replays historical state ("time-travel sampling")
+          and lets LLM-driven user agents react to a candidate model. The closing-the-loop part is the
+          self-adaptive metric tuning: when sim disagreed with online last release, the metric weights
+          shift toward whichever dimensions <em>actually predicted the gap</em>. It's not a perfect
+          oracle. It's a faster wrong answer that gets less wrong over time.
+        </p>
       </div>
 
       <div class="work-item">
-        <h3>Computer vision for industrial inspection</h3>
-        <ul>
-          <li>End-to-end CV inspection across CTQ checkpoints — automated defect detection and station health monitoring.</li>
-          <li>Multi-class object detection in PyTorch with operational decision logic tuned to minimize false positives in high-throughput environments.</li>
-          <li>Leakage-safe data workflow on GCP/GCS + Label Studio; targeted hard-negative mining to handle lighting, misalignment, and class imbalance from real plant floors.</li>
-        </ul>
+        <h3>Computer vision on a plant floor that wouldn't stop lying to us</h3>
+        <p class="prose">
+          Multi-class object detection on a real production line. The model trained beautifully and
+          collapsed in prod — false positives everywhere. Lighting changed station to station, parts
+          drifted out of alignment, and most parts were fine which made the imbalance brutal.
+        </p>
+        <p class="prose">
+          The fix was unglamorous. Leakage-safe data pipeline on GCP/GCS with Label Studio so we stopped
+          training on test-set parts. Hard negatives mined from the failure cases. Operational thresholds
+          tuned against the actual cost of a false alarm vs. a missed defect — they're not symmetric.
+          The model didn't get smarter. The decision logic around it did.
+        </p>
       </div>
 
       <div class="work-item">
-        <h3>Space habitat digital twin (NASA STRI)</h3>
-        <ul>
-          <li>The CDCM platform — thermodynamic and structural models coupled to simulate deep-space habitat resilience.</li>
-          <li>Active thermal control, power, and structural integrity under stochastic disturbances (micrometeoroid impacts, thermal cycling).</li>
-          <li>Large-scale Monte Carlo trade studies against NPV and risk metrics for mission planning.</li>
-        </ul>
+        <h3>A digital twin that asks "does the habitat survive?"</h3>
+        <p class="prose">
+          NASA STRI — the Resilient ExtraTerrestrial Habitats Institute. The CDCM platform couples
+          thermodynamics with structural physics so you can ask things like: <em>if a micrometeoroid hits
+          this panel and the active thermal control trips, do we lose the habitat?</em> Then run that
+          question several thousand times across mission scenarios, score each one on NPV and risk,
+          and the answer to "is this design worth it" stops being a vibe and starts being a distribution.
+        </p>
       </div>
 
     </div>
@@ -364,29 +384,65 @@
   <div class="wrap">
     <h2>About</h2>
     <p style="font-size: 17.5px; color: var(--muted); line-height: 1.65; max-width: 660px;">
-      Mechanical engineer turned ML person. PhD at Purdue on AI-based decision-making in socio-technical systems
-      (computer vision, deep learning, stochastic simulation), then postdocs at <strong style="color: var(--ink); font-weight: 600;">Stanford</strong>
-      (multimodal ML for global health) and <strong style="color: var(--ink); font-weight: 600;">NASA STRI / Purdue</strong>
-      (space habitat digital twin). The thread through all of it has been the same: building systems
-      that have to make good decisions under uncertainty, fast, on real data.
+      Mechanical engineer who took a left turn into ML and never went back. PhD at Purdue on
+      decision-making under uncertainty in physical systems, then postdocs at
+      <strong style="color: var(--ink); font-weight: 600;">Stanford</strong> on multimodal ML
+      for global health, and <strong style="color: var(--ink); font-weight: 600;">NASA STRI / Purdue</strong>
+      on a space-habitat digital twin. Different domains, same job: build something that has to
+      make a fast decision on real data without any of the inputs being clean.
     </p>
     <p style="font-size: 17.5px; color: var(--muted); line-height: 1.65; max-width: 660px; margin-top: 16px;">
-      These days I spend most of my time on production recommender systems and the evaluation
-      problem around them — what to actually measure, how to use LLMs as judges without
-      fooling yourself, and how to keep offline simulators honest about online behavior.
+      Lately the work is mostly recommender systems and the evaluation problem around them —
+      what to actually measure, how to use LLMs as judges without fooling yourself, and how to
+      keep offline simulators honest about online behavior. Based in the SF Bay Area.
     </p>
   </div>
 </section>
 
 <section class="pubs">
   <div class="wrap">
-    <h2>Selected publications</h2>
-    <ol>
-      <li>Lenjani, A., Dyke, S. J., Bilionis, I., Yeum, C. M., et al. (2020). <em>Towards fully automated post-event data collection and analysis: pre-event and post-event information fusion.</em> Engineering Structures, 208, 109884.</li>
-      <li>Lenjani, A., Bilionis, I., Dyke, S. J., Yeum, C. M., Monteiro, R. (2020). <em>A resilience-based method for prioritizing post-event building inspections.</em> Natural Hazards, 100(2), 877–896.</li>
-      <li>Lenjani, A., Yeum, C. M., Dyke, S., Bilionis, I. (2019). <em>Automated building image extraction from 360° panoramas for post-disaster evaluation.</em> Computer-Aided Civil and Infrastructure Engineering, 51.</li>
-    </ol>
-    <p style="margin-top: 18px; color: var(--muted); font-size: 14px;">Full list on <a class="inline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>.</p>
+    <h2>Papers — what's actually inside them</h2>
+
+    <div class="work-item">
+      <h3>Pre-event and post-event imagery fusion for disaster damage</h3>
+      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">Engineering Structures, 2020</p>
+      <p class="prose">
+        End-to-end pipeline. Input: a building's address. Output: a damage state. In between:
+        Google Street View for the pre-event imagery, drone or satellite for the post-event,
+        Faster R-CNN to find the building in each frame, a depth model to disambiguate which
+        of several visible buildings is <em>the</em> building, and a homography step to align
+        them. The fusion is the part everyone underestimates — pre-event Street View is sharp
+        but oblique; post-event drone is overhead and noisy; matching them requires a
+        depth-aware registration that the obvious affine transform completely fails at.
+      </p>
+    </div>
+
+    <div class="work-item">
+      <h3>Triaging post-disaster inspections as resource allocation</h3>
+      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">Natural Hazards, 2020</p>
+      <p class="prose">
+        Cities have finite inspectors and infinite buildings after a disaster. The status quo
+        is intuition. We modeled it as constrained resource allocation: which inspections, in
+        what order, restore the most community function per inspector-hour? Closed-form for
+        small graphs, simulated annealing for the real city-scale ones, with uncertainty
+        propagated from the damage estimates. The output is a priority list a coordinator can
+        actually execute against — not a heatmap that requires its own interpretation.
+      </p>
+    </div>
+
+    <div class="work-item">
+      <h3>Buildings out of 360° panoramas</h3>
+      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">Computer-Aided Civil and Infrastructure Engineering, 2019</p>
+      <p class="prose">
+        The piece that made the first paper possible. Panoramas are messy: multiple buildings
+        per frame, occlusions, perspective distortion at the seams. The detector is panorama-aware
+        — it reasons about which face of the sphere corresponds to which side of the street, so
+        the same building doesn't get detected twice across the seam, and the geometry of the
+        camera position constrains which detections are even plausible.
+      </p>
+    </div>
+
+    <p style="margin-top: 22px; color: var(--muted); font-size: 14px;">Full list on <a class="inline" href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>.</p>
   </div>
 </section>
 
