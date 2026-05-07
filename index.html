@@ -769,6 +769,43 @@
     </div>
 
     <div class="work-item">
+      <h3>Treating habitat design as a portfolio-management problem</h3>
+      <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">ASME IDETC-CIE, 2022 (DETC2022-89132)</p>
+      <p class="prose">
+        The CDCM platform. Each subsystem is modeled as a coarse input/output Markov node — power,
+        structural, life support, environment, agent, intelligent health management — and configurations
+        are built by wiring nodes together. Disturbances (meteorite impact, temperature swings, dust)
+        drive state transitions; a reflexive health-management subsystem prioritizes which recovery
+        actions a robotic agent takes, given limited availability. The output is a value metric
+        decomposing system performance into mission-value and crew-value components over the design
+        lifecycle. Once that metric exists, you can run trade studies the same way a portfolio manager
+        runs them — risk-return scatter for every candidate configuration.
+      </p>
+      <figure class="figure">
+        <img src="figures/cdcm-habitat-architecture.png" alt="Block diagram of an example habitat system: structural system, interior environment, power system, environmental control + life support, agent, and intelligent health management — coupled via temperature, power, and command flows; external disturbances (meteorite impact, solar radiation, dust) shown as inputs." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 4</span> &nbsp; The example habitat system as wired Markov nodes.
+          External disturbances (meteorite impact, solar radiation, dust) feed into the structural and
+          power subsystems. The agent and intelligent-health-management nodes (dashed) close the loop
+          by issuing repair and cleaning actions. Each subsystem has internal state, so the global
+          system is a product of subsystem state spaces — large, but tractable as a Markov chain
+          because the topology is fixed at configuration time.
+        </figcaption>
+      </figure>
+      <figure class="figure">
+        <img src="figures/cdcm-trade-study.png" alt="Trade study results presented as risk-return scatter plots: standard deviation of value vs. mean value, with points colored by nuclear reactor capacity and power storage capacity respectively." loading="lazy" />
+        <figcaption>
+          <span class="figref">Figs. 7–8</span> &nbsp; Trade study outputs framed as risk-return plots.
+          x-axis is the mean of the value metric; y-axis is its standard deviation across simulated
+          mission scenarios; color is the candidate parameter (reactor capacity, then storage capacity).
+          The Pareto-efficient designs are the lower-right points — high mean, low variance. This is
+          the framing that makes "is this design worth it" a quantifiable comparison instead of a
+          stakeholder argument.
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="work-item">
       <h3>Cyber-physical testing for habitat control loops</h3>
       <p style="font-size: 13px; color: var(--muted); font-family: 'JetBrains Mono', monospace; margin-bottom: 8px;">ASCE Earth and Space, 2021</p>
       <p class="prose">
