@@ -237,6 +237,14 @@
       letter-spacing: -0.01em;
     }
     .figure figcaption .figref { color: var(--accent); }
+    .figure video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #000;
+    }
 
     /* Background timeline */
     .timeline { display: flex; flex-direction: column; gap: 18px; }
@@ -585,6 +593,45 @@
         but oblique; post-event drone is overhead and noisy; matching them requires a
         depth-aware registration that the obvious affine transform completely fails at.
       </p>
+
+      <figure class="figure">
+        <img src="figures/pre-post-fusion-pipeline.png" alt="Two parallel data streams — pre-event from street view, post-event from disaster reconnaissance — feeding into a final building attribute and damage state output." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 1</span> &nbsp; The system runs two streams in parallel: the
+          red one extracts pre-event imagery from Street View and infers the building's physical
+          attributes (story count, material, elevation), and the blue one detects the same
+          building in post-event reconnaissance imagery and infers its damage state. They meet
+          at the output: physical attributes paired with damage condition, per building.
+        </figcaption>
+      </figure>
+
+      <figure class="figure">
+        <img src="figures/pre-event-detail-stream.png" alt="Detailed pre-event analysis stream: download nearby panoramas, reproject to optimal-angle rectilinear images, detect target views, then fuse classifier probabilities across views to a final per-attribute decision." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 6</span> &nbsp; A drill-down on the pre-event stream. From a
+          single GPS point, the system pulls multiple panoramas and reprojects each to the
+          optimal angle. Each rectilinear view goes to a per-attribute classifier, and the
+          per-image probabilities <code>p(c<sub>k</sub>|x<sub>i</sub>)</code> are fused into a
+          single posterior <code>p(c<sub>k</sub>|x<sub>1..n</sub>)</code> before the final
+          decision. Multi-view fusion is the move that lets the system handle individual bad
+          frames (occlusion, glare, the wrong building partially in shot).
+        </figcaption>
+      </figure>
+
+      <figure class="figure">
+        <video controls preload="metadata" muted playsinline>
+          <source src="media/panorama-timeline.mp4" type="video/mp4" />
+          Your browser doesn't support inline video.
+          <a href="media/panorama-timeline.mp4">Download the clip</a>.
+        </video>
+        <figcaption>
+          <span class="figref">Clip 1</span> &nbsp; Historical Street View timeline at a single
+          building location, played as a sequence. This is the pre-event imagery sourcing
+          step in practice — for a given GPS point, query every available historical panorama,
+          stack them in time, and pick the cleanest pre-event view to fuse against the
+          post-event drone or satellite image.
+        </figcaption>
+      </figure>
     </div>
 
     <div class="work-item">
@@ -598,6 +645,29 @@
         propagated from the damage estimates. The output is a priority list a coordinator can
         actually execute against — not a heatmap that requires its own interpretation.
       </p>
+
+      <figure class="figure">
+        <img src="figures/inspection-pareto-front.png" alt="Pareto frontier of expected cost vs. cost variance, with sample points colored by inspection budget; markers indicate min-Sharpe, min-volatility, and risk-averse policies." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 6</span> &nbsp; The decision space, framed as a portfolio problem.
+          Each point is a candidate inspection plan; x-axis is the volatility of the cost outcome,
+          y-axis is the expected cost, color is the inspection budget. The Pareto frontier is the set
+          of plans you'd actually consider. From there it's a risk-preference call: minimum Sharpe,
+          minimum volatility, or explicitly risk-averse.
+        </figcaption>
+      </figure>
+
+      <figure class="figure">
+        <img src="figures/inspection-non-exceedance.png" alt="Non-exceedance probability curves for unprepared, risk-neutral, risk-averse, and extremely-risk-averse policies under two different inspection rates." loading="lazy" />
+        <figcaption>
+          <span class="figref">Fig. 8</span> &nbsp; What the policy choice actually buys. Each curve
+          is the probability that the realized cost stays below a given threshold, under a different
+          decision rule. The "Unprepared" curve is what happens without a triage plan. The shape and
+          position of the other three curves tell you exactly how much tail risk you're trading off
+          for expected cost — which is the conversation a coordinator should be having before the
+          disaster, not during it.
+        </figcaption>
+      </figure>
     </div>
 
     <div class="work-item">
