@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Allen Lenjani
+title: Ali Lenjani
 ---
 
-# Allen Lenjani
+# Ali Lenjani
 
 **Lead ML / Recsys & Personalization** — Stanford & NASA postdoc, Purdue PhD.
 
@@ -39,8 +39,6 @@ sub-10ms recommender serving 15M+ active users.
 - **M.Sc., Mechanical Engineering**, Northern Illinois University — 2016
 
 ## Selected publications
-
-Published under **Ali Lenjani**.
 
 1. Lenjani, A. et al. (2020). *Towards fully automated post-event data collection and analysis*. Engineering Structures, 208.
 2. Lenjani, A. et al. (2020). *A resilience-based method for prioritizing post-event building inspections*. Natural Hazards, 100(2).
