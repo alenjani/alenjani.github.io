@@ -1,0 +1,8 @@
+title: Ali Lenjani
+description: Lead ML / Recsys & Personalization. Stanford & NASA postdoc, Purdue PhD.
+author: Ali Lenjani
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-seo-tag
+
+show_downloads: false
