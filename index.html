@@ -436,6 +436,41 @@
     }
     .contact-card p { color: var(--muted); margin-bottom: 24px; font-size: 16px; max-width: 540px; margin-left: auto; margin-right: auto; }
 
+    /* Click-to-copy email widget */
+    .email-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      background: var(--ink);
+      color: var(--bg);
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 600;
+      font-size: 15.5px;
+      letter-spacing: -0.01em;
+      transition: transform 0.1s ease, background 0.15s;
+      position: relative;
+    }
+    .email-copy:hover { transform: translateY(-1px); }
+    .email-copy .email-text { font-family: 'JetBrains Mono', monospace; font-size: 14.5px; letter-spacing: 0; }
+    .email-copy .email-action {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      padding: 3px 8px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 4px;
+      transition: opacity 0.15s, border-color 0.15s;
+    }
+    .email-copy:hover .email-action { opacity: 0.9; border-color: rgba(255,255,255,0.5); }
+    .email-copy.copied { background: var(--accent); }
+    .email-copy.copied .email-action { opacity: 1; border-color: rgba(255,255,255,0.7); }
+
     /* Footer */
     footer {
       padding: 36px 0 56px;
@@ -496,7 +531,7 @@
       </div>
       <div class="cta-row">
         <a class="btn btn-primary" href="#work">See the work →</a>
-        <a class="btn btn-secondary" href="mailto:lenjani.a@gmail.com">Get in touch</a>
+        <a class="btn btn-secondary" href="#contact">Get in touch</a>
       </div>
     </div>
     <div class="hero-portrait">
@@ -1075,7 +1110,10 @@
     <div class="contact-card">
       <h3>Get in touch</h3>
       <p>Happy to talk recsys, evaluation, simulation — or anything in this neighborhood.</p>
-      <a class="btn btn-primary" href="mailto:lenjani.a@gmail.com">lenjani.a@gmail.com →</a>
+      <button type="button" class="email-copy" data-email="lenjani.a@gmail.com" aria-label="Copy email address to clipboard">
+        <span class="email-text">lenjani.a@gmail.com</span>
+        <span class="email-action">Copy</span>
+      </button>
     </div>
   </div>
 </section>
@@ -1092,6 +1130,48 @@
     </span>
   </div>
 </footer>
+
+<script>
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.email-copy');
+    if (!btn) return;
+    var email = btn.getAttribute('data-email');
+    var action = btn.querySelector('.email-action');
+    var original = action.textContent;
+    var done = function () {
+      action.textContent = 'Copied';
+      btn.classList.add('copied');
+      setTimeout(function () {
+        action.textContent = original;
+        btn.classList.remove('copied');
+      }, 1500);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(email).then(done).catch(function () {
+        // fallback to legacy
+        var ta = document.createElement('textarea');
+        ta.value = email;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'absolute';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (err) { /* noop */ }
+        document.body.removeChild(ta);
+      });
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = email;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'absolute';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); } catch (err) { /* noop */ }
+      document.body.removeChild(ta);
+    }
+  });
+</script>
 
 </body>
 </html>
