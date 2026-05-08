@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ali Lenjani — Senior ML / Recommender Systems & Personalization</title>
-  <meta name="description" content="Production recommender systems at scale. Two-tower retrieval, vector search, LLM evaluation. Stanford, NASA, Purdue PhD." />
-  <meta property="og:title" content="Ali Lenjani — Senior ML / Recsys & Personalization" />
-  <meta property="og:description" content="I work on recommender systems and personalization — production retrieval, evaluation, simulation." />
+  <title>Ali Lenjani — Senior ML</title>
+  <meta name="description" content="Production ML for ranking, detection, and decisions under real-world constraints. Recommender systems and ranking evaluation; multimodal vision and change-detection; digital twins for complex systems. Stanford, NASA, Purdue postdocs." />
+  <meta property="og:title" content="Ali Lenjani — Senior ML" />
+  <meta property="og:description" content="Production ML for ranking, detection, and decisions under real-world constraints. Recsys evaluation, multimodal vision, digital twins." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://alenjani.github.io/" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -175,11 +175,11 @@
       font-family: 'JetBrains Mono', monospace;
     }
     h1 {
-      font-size: clamp(40px, 6vw, 68px);
+      font-size: clamp(48px, 7.5vw, 92px);
       font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.04;
-      margin-bottom: 22px;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+      margin-bottom: 24px;
     }
     .lede {
       font-size: clamp(19px, 2.2vw, 22px);
@@ -484,6 +484,149 @@
     footer a { color: var(--muted); }
     footer a:hover { color: var(--ink); }
 
+    /* ----- Pillar TOC strip ----- */
+    .pillar-toc {
+      border-bottom: 1px solid var(--line);
+      padding: 32px 0;
+    }
+    .pillar-toc-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .pillar-toc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    @media (max-width: 820px) { .pillar-toc-grid { grid-template-columns: 1fr; } }
+    .pillar-toc-item {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 26px 26px 22px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      transition: background 0.15s, transform 0.1s;
+      position: relative;
+    }
+    .pillar-toc-item:hover { background: var(--surface); }
+    .pillar-toc-item .pillar-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+    }
+    .pillar-toc-item h3 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+    .pillar-toc-item .arrow {
+      margin-top: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .pillar-toc-item:hover .arrow { color: var(--accent); }
+
+    /* ----- Pillar sections ----- */
+    section.pillar { padding: 88px 0; border-bottom: 1px solid var(--line); }
+    section.pillar:last-of-type { border-bottom: 0; }
+    .pillar-head {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 32px;
+      align-items: start;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 720px) {
+      .pillar-head { grid-template-columns: 1fr; gap: 12px; }
+    }
+    .pillar-head .num-block {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 56px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      line-height: 1;
+      padding-top: 6px;
+    }
+    @media (max-width: 720px) { .pillar-head .num-block { font-size: 32px; } }
+    .pillar-head .pillar-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .pillar-head h2 {
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+      color: var(--ink);
+      margin-bottom: 14px;
+      max-width: 720px;
+    }
+    .pillar-head .pillar-tag {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 680px;
+    }
+    .pillar-narrative {
+      max-width: 720px;
+      margin: 28px 0 36px 120px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    @media (max-width: 720px) { .pillar-narrative { margin-left: 0; } }
+    .pillar-narrative p + p { margin-top: 12px; }
+    .pillar-narrative em { color: var(--ink); font-style: normal; font-weight: 500; }
+
+    .pillar-more {
+      margin-top: 24px;
+    }
+    .pillar-more > summary {
+      list-style: none;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.15s;
+    }
+    .pillar-more > summary::-webkit-details-marker { display: none; }
+    .pillar-more > summary::after {
+      content: '+';
+      margin-left: auto;
+      font-size: 16px;
+      color: var(--muted);
+      transition: transform 0.2s;
+    }
+    .pillar-more[open] > summary::after { transform: rotate(45deg); }
+    .pillar-more > summary:hover { color: var(--ink); }
+    .pillar-more[open] > summary { color: var(--ink); border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+    .pillar-more .card-grid { margin-top: 18px; }
+
     /* Sub-cluster pill */
     .cluster-pill {
       display: inline-block;
@@ -508,10 +651,10 @@
     <a href="#" class="brand">Ali Lenjani<span class="dot">.</span></a>
     <nav>
       <a href="#work">Work</a>
-      <a href="#papers">Papers</a>
       <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </nav>
-    <a href="mailto:lenjani.a@gmail.com" class="cta">Contact</a>
+    <a href="#contact" class="cta">Get in touch</a>
   </div>
 </header>
 
@@ -519,16 +662,16 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-text">
-      <div class="eyebrow">Senior ML · Recommender Systems · Personalization</div>
+      <div class="eyebrow">Senior ML · San Francisco Bay Area</div>
       <h1>Ali Lenjani</h1>
       <p class="lede">
-        I work on recommender systems and personalization — the production side, where retrieval
-        has a latency budget and offline metrics have to predict the online ones. Lately, also
-        LLM-based evaluation.
+        I build production ML systems where ranking, detection, and decisions
+        have to survive real-world data and operational constraints —
+        <strong>recommender systems and ranking evaluation</strong> at scale,
+        <strong>multimodal vision and change-detection</strong> across noisy
+        collection pipelines, <strong>digital-twin and trade-space modeling</strong>
+        for complex coupled systems.
       </p>
-      <div class="creds">
-        <span>San Francisco Bay Area</span>
-      </div>
       <div class="cta-row">
         <a class="btn btn-primary" href="#work">See the work →</a>
         <a class="btn btn-secondary" href="#contact">Get in touch</a>
@@ -559,91 +702,364 @@
   </div>
 </section>
 
-<!-- ===================== FEATURED ===================== -->
-<section class="block" style="padding-top: 56px; padding-bottom: 56px;">
+<!-- ===================== PILLAR TOC ===================== -->
+<section class="pillar-toc" id="work">
   <div class="wrap">
-    <div class="section-head">
-      <h2>Featured</h2>
-      <p class="sub">Highlights across recsys, evaluation, and risk-informed simulation.</p>
-    </div>
-    <div class="featured-grid">
-      <a href="#thing-recsys" class="featured-card">
-        <div class="thumb" style="background: linear-gradient(135deg, #eef2ff 0%, #c7d2fe 100%);">
-          <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" style="width:70%;height:70%;color:#4f46e5;">
-            <rect x="10" y="15" width="22" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-            <rect x="10" y="46" width="22" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-            <rect x="68" y="30" width="22" height="14" rx="2" fill="currentColor" opacity="0.85"/>
-            <line x1="32" y1="22" x2="68" y2="36" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
-            <line x1="32" y1="53" x2="68" y2="38" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
-          </svg>
-        </div>
-        <div class="meta">RECSYS · PRODUCTION</div>
-        <div class="title">Two-tower retrieval, served live</div>
+    <div class="pillar-toc-label">Work — three pillars</div>
+    <div class="pillar-toc-grid">
+      <a href="#pillar-1" class="pillar-toc-item">
+        <span class="pillar-num">I</span>
+        <h3>Multimodal detection &amp; change detection</h3>
+        <span class="arrow">↓ jump to pillar</span>
       </a>
-
-      <a href="#thing-judge" class="featured-card">
-        <div class="thumb" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);">
-          <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" style="width:75%;height:75%;color:#92400e;">
-            <g transform="translate(50,38)">
-              <circle r="22" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-              <circle r="14" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-              <polygon points="0,-20 17,-6 13,15 -13,15 -17,-6" fill="currentColor" fill-opacity="0.5" stroke="currentColor" stroke-width="1.5"/>
-            </g>
-          </svg>
-        </div>
-        <div class="meta">EVALUATION · LLM</div>
-        <div class="title">LLM-as-judge for recsys quality gates</div>
+      <a href="#pillar-2" class="pillar-toc-item">
+        <span class="pillar-num">II</span>
+        <h3>Digital twins &amp; risk-informed decisions for complex systems</h3>
+        <span class="arrow">↓ jump to pillar</span>
       </a>
-
-      <a href="#paper-pareto" class="featured-card">
-        <div class="thumb">
-          <img src="figures/inspection-pareto-full.png" alt="" />
-        </div>
-        <div class="meta">PAPER · NATURAL HAZARDS '20</div>
-        <div class="title">Inspection triage as a Pareto problem</div>
-      </a>
-
-      <a href="#paper-cdcm" class="featured-card">
-        <div class="thumb">
-          <img src="figures/habitat-architecture.png" alt="" />
-        </div>
-        <div class="meta">PAPER · ASME 2022</div>
-        <div class="title">Habitat design as portfolio management</div>
+      <a href="#pillar-3" class="pillar-toc-item">
+        <span class="pillar-num">III</span>
+        <h3>Personalization &amp; ranking in production</h3>
+        <span class="arrow">↓ jump to pillar</span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- ===================== WHAT I WORK ON (TAGS) ===================== -->
-<section class="block" style="padding-top: 48px; padding-bottom: 48px;">
+<!-- ===================== PILLAR I — VISION / DETECTION ===================== -->
+<section class="pillar" id="pillar-1">
   <div class="wrap">
-    <div class="section-head">
-      <h2>What I work on</h2>
+    <header class="pillar-head">
+      <div class="num-block">I</div>
+      <div>
+        <div class="pillar-eyebrow">Pillar I</div>
+        <h2>Multimodal detection &amp; change detection</h2>
+        <p class="pillar-tag">Deep-learning systems for automated condition assessment from imagery and other evidence streams — pre/post comparison, anomaly and defect detection, multi-stream fusion across heterogeneous data.</p>
+      </div>
+    </header>
+    <div class="pillar-narrative">
+      <p>The unifying problem: take noisy, heterogeneous, real-world data — often collected by a pipeline you also had to build — and produce a reliable detection, classification, or risk score. The systems below tackle this across post-event reconnaissance imagery, plant-floor inspection, and multimodal data in low-resource health settings. The methodological stack is the same — custom data collection, multi-stream fusion, calibrated thresholds, evaluation that matches the deployed conditions.</p>
+      <p>None of the work is domain-locked: the same fusion machinery that classifies hurricane damage from pre/post imagery would classify defects on a plant floor or risk in a clinical workup with different inputs, the same code paths.</p>
     </div>
-    <div class="tags">
-      <span class="tag accent">Recommender systems</span>
-      <span class="tag">Two-tower retrieval</span>
-      <span class="tag">Vector search · HNSW</span>
-      <span class="tag">ONNX serving</span>
-      <span class="tag accent">LLM-based evaluation</span>
-      <span class="tag">Chain-of-Thought judging</span>
-      <span class="tag accent">Counterfactual offline simulation</span>
-      <span class="tag">Bayesian fusion</span>
-      <span class="tag">Computer vision · Faster R-CNN</span>
-      <span class="tag">Structure-from-Motion</span>
-      <span class="tag accent">Digital twins · Markov modeling</span>
-      <span class="tag">Monte Carlo trade studies</span>
-      <span class="tag">Resilience-based design</span>
+    <div class="card-grid">
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/fusion-pipeline.jpg" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">Eng. Structures · 2020 <span class="role-tag first">First author</span></div>
+            <div class="card-title">Pre-event and post-event imagery fusion</div>
+            <p class="card-teaser">Faster R-CNN + depth-aware homography. Fuse Street View pre-event with drone post-event.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            End-to-end pipeline. Input: a building's address. Output: a damage state. Google Street View for
+            pre-event imagery, drone or satellite for post-event, Faster R-CNN to find the building in each
+            frame, a depth model to disambiguate which of several visible buildings is <em>the</em> building,
+            and a homography step to align them. The fusion is the part everyone underestimates — pre-event
+            Street View is sharp but oblique; post-event drone is overhead and noisy; matching them requires
+            a depth-aware registration that the obvious affine transform fails at.
+          </p>
+          <figure class="figure">
+            <img src="figures/harvey-irma-coverage.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Coverage</span> &nbsp; Reconnaissance across Hurricanes Harvey (Texas Gulf Coast) and Irma (Florida) — the field data this pipeline was built and validated against.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/fusion-pipeline.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 1</span> &nbsp; Two parallel streams. Red extracts pre-event imagery from Street View and infers attributes (story count, material, elevation). Blue detects the same building in post-event reconnaissance and infers damage state. They meet at the output.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/pre-post-streetview-pairs.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Pre/post pairs</span> &nbsp; Same buildings, before and after. Left: post-disaster reconnaissance frames. Right: the pre-disaster Google Street View imagery retrieved automatically by the pipeline. The fusion is what turns these pairs into a damage state.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/fusion-pre-stream.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 6</span> &nbsp; The pre-event stream in detail. Multi-view fusion across n panoramas: per-image attribute classifier outputs are fused into a single posterior <code>p(c<sub>k</sub>|x<sub>1..n</sub>)</code>. The move that makes it robust to occlusion / glare / wrong-building frames.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/fusion-post-stream.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 7</span> &nbsp; The post-event stream in detail. Overview classifier filters out close-ups; per-image damage classifier emits <code>p(c|x<sub>i</sub>)</code>; information fusion produces <code>p(c|x<sub>1..n</sub>)</code> and a final decision: ND / MD / NMD.</figcaption>
+          </figure>
+          <figure class="figure">
+            <video controls preload="metadata" muted playsinline>
+              <source src="media/panorama-timeline.mp4" type="video/mp4" />
+            </video>
+            <figcaption><span class="figref">Clip 1</span> &nbsp; Historical Street View timeline at one GPS point — pre-event imagery sourcing, in motion.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/panorama-pipeline.jpg" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">CACAIE · 2019 <span class="role-tag first">First author</span></div>
+            <div class="card-title">Automated building image extraction from 360° panoramas</div>
+            <p class="card-teaser">Panorama-aware detection plus geometric reasoning. The piece that makes pre-event extraction work.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Panoramas are messy: multiple buildings per frame, occlusions, perspective distortion at the
+            seams. The detector is panorama-aware — it reasons about which face of the sphere corresponds
+            to which side of the street, so the same building doesn't get detected twice across the seam,
+            and the geometry of the camera position constrains which detections are even plausible.
+          </p>
+          <figure class="figure">
+            <img src="figures/streetview-data-collection.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Data source</span> &nbsp; Street View capture vehicle and a representative spherical panorama, plus an aerial of Belaire Dr after Harvey: each red dot is a 360° image GPS location, the red box is the target building. The pipeline starts from this raw Street View input.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/panorama-pipeline.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 1</span> &nbsp; Twelve-step pipeline. Steps 5–8 are the interesting ones: match 2D features across panoramas, estimate projection matrices, triangulate the building's 3D location, transform from camera frame to GPS frame.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/house-detector-rectilinear.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Detector output</span> &nbsp; Once the panorama is reprojected to optimal-angle rectilinear images, a building detector trained on these views localizes the target across all available frames. The earlier steps exist to make this step easy.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card no-thumb">
+        <summary>
+          <div class="thumb"></div>
+          <div class="card-summary">
+            <div class="card-meta">Computer vision · industrial <span class="role-tag first">Shipped</span></div>
+            <div class="card-title">CV on a plant floor that wouldn't stop lying to us</div>
+            <p class="card-teaser">The model trained beautifully and collapsed in prod. The fix was decision logic, not architecture.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            An end-to-end computer vision inspection framework across multiple CTQ checkpoints —
+            automated defect detection and station health monitoring. Multi-class object detection
+            models in PyTorch, with operational decision logic and inference thresholds tuned to
+            minimize false positives in high-throughput environments.
+          </p>
+          <p class="prose">
+            On the data side: a leakage-safe workflow on GCP/GCS + Label Studio, with targeted
+            hard-negative mining to handle the physical-environment constraints (lighting drift,
+            misalignment, class imbalance).
+          </p>
+        </div>
+      </details>
+
     </div>
+
+    <details class="pillar-more">
+      <summary>More from this pillar (2)</summary>
+      <div class="card-grid">
+
+        <details class="card">
+          <summary>
+            <div class="thumb"><img src="figures/info-fusion-workflow.png" alt="" loading="lazy" /></div>
+            <div class="card-summary">
+              <div class="card-meta">Eng. Structures · 2022 <span class="role-tag">Co-author</span></div>
+              <div class="card-title">Information fusion to classify post-event building damage state</div>
+              <p class="card-teaser">Per-image probabilities → RC and M lists → iterative thresholding → final damage state.</p>
+            </div>
+            <div class="card-toggle">+</div>
+          </summary>
+          <div class="card-body">
+            <p class="prose">
+              Same problem as the 2020 fusion paper, harder data: the Subject of Interest arrives as
+              <em>a set of images, not one</em>. Per-image classifiers produce class-conditional
+              probabilities for two materials (RC and masonry), then a probability-list filter and an
+              iterative thresholding scheme combine those into a single overall damage state.
+            </p>
+            <figure class="figure">
+              <img src="figures/info-fusion-workflow.png" alt="" loading="lazy" />
+              <figcaption><span class="figref">Fig. 2</span> &nbsp; Three stages: per-image classifier outputs → RC and M probability lists → iterative thresholding criterion (error history converging at K = 0.01).</figcaption>
+            </figure>
+          </div>
+        </details>
+
+        <details class="card">
+          <summary>
+            <div class="thumb"><img src="figures/indoor-localization-overview.png" alt="" loading="lazy" /></div>
+            <div class="card-summary">
+              <div class="card-meta">MDPI Sensors · 2020 <span class="role-tag">Co-author</span></div>
+              <div class="card-title">Automated indoor image localization for post-event assessment</div>
+              <p class="card-teaser">Structure-from-Motion plus a 2D projective transform onto the structural drawing.</p>
+            </div>
+            <div class="card-toggle">+</div>
+          </summary>
+          <div class="card-body">
+            <p class="prose">
+              Indoor images don't get clean GPS. The pipeline runs Structure-from-Motion across a
+              stream of "PathImgs" walked through the building to reconstruct a 3D point cloud and
+              recover camera poses, then aligns the SfM frame onto the structural drawing via a 2D
+              projective transform. Once that map exists, every "InspImg" — the targeted close-up
+              engineers care about — is grounded against a drawing location.
+            </p>
+            <figure class="figure">
+              <img src="figures/indoor-localization-overview.png" alt="" loading="lazy" />
+              <figcaption><span class="figref">Fig. 1</span> &nbsp; Three stages: (a) collect PathImgs and InspImgs, (b) SfM to build a 3D point cloud + camera poses, (c) align onto the drawing via 2D projective transform.</figcaption>
+            </figure>
+          </div>
+        </details>
+
+      </div>
+    </details>
   </div>
 </section>
 
-<!-- ===================== THINGS I'VE BUILT ===================== -->
-<section class="block" id="work">
+<!-- ===================== PILLAR II — TWINS / DECISIONS ===================== -->
+<section class="pillar" id="pillar-2">
   <div class="wrap">
-    <div class="section-head">
-      <h2>Things I've built</h2>
-      <p class="sub">Click any card to expand.</p>
+    <header class="pillar-head">
+      <div class="num-block">II</div>
+      <div>
+        <div class="pillar-eyebrow">Pillar II</div>
+        <h2>Digital twins &amp; risk-informed decisions for complex systems</h2>
+        <p class="pillar-tag">Multi-objective optimization, trade-space analysis, and digital-twin modeling for coupled systems — ranking candidates and architectures when resources are limited, uncertainty is real, and the cost of being wrong matters.</p>
+      </div>
+    </header>
+    <div class="pillar-narrative">
+      <p>Build a model of the coupled system. Drive it with disturbances. Watch the configurations behave under uncertainty. Use the resulting risk-return surface to make a decision — which architecture, which inspection plan, which design margin. The same loop applies whether the "system" is an extraterrestrial habitat, a portfolio of inspections after a hurricane, or a hardware-in-the-loop testbed.</p>
+      <p>The work below sits at the intersection of two skill stacks that rarely overlap: <em>ML/optimization fluency</em> and <em>engineering complex-systems modeling</em>. It generalizes naturally to capital allocation, infrastructure investment, claims triage, A/B-test scheduling — anywhere candidates compete for limited slots under uncertainty.</p>
+    </div>
+    <div class="card-grid">
+
+      <details class="card" id="paper-cdcm">
+        <summary>
+          <div class="thumb"><img src="figures/habitat-architecture.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">ASME IDETC · 2022 <span class="role-tag">Co-author</span></div>
+            <div class="card-title">Computational platform for trade studies in deep space habitat systems (CDCM)</div>
+            <p class="card-teaser">Markov subsystem nodes, value metric, risk-return trade studies the way a portfolio manager runs them.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Each subsystem is a coarse input/output Markov node — power, structural, life support,
+            environment, agent, intelligent health management — wired together into configurations.
+            Disturbances drive state transitions; a reflexive health-management subsystem prioritizes
+            recovery actions given limited robotic-agent availability. The output is a value metric
+            decomposing system performance into mission-value and crew-value over the design lifecycle.
+            Then trade studies run as risk-return scatter for every candidate configuration.
+          </p>
+          <figure class="figure">
+            <img src="figures/habitat-architecture.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 4</span> &nbsp; The example habitat as wired Markov nodes. Disturbances (meteorite impact, solar radiation, dust) feed in; agent + IHM (dashed) close the loop with repair and cleaning actions.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/cdcm-trade-study.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Figs. 7–8</span> &nbsp; Trade study outputs as risk-return plots. Mean-of-value vs. std-of-value, colored by candidate parameter. Pareto-efficient designs are the lower-right points.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card" id="paper-pareto">
+        <summary>
+          <div class="thumb"><img src="figures/inspection-pareto-full.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">Natural Hazards · 2020 <span class="role-tag first">First author</span></div>
+            <div class="card-title">A resilience-based method for prioritizing post-event building inspections</div>
+            <p class="card-teaser">Constrained optimization, simulated annealing, and a Pareto frontier that turns triage into a decision rule.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            A resilience-based method for prioritizing post-event building inspections. The method
+            allocates limited inspection resources by ordering buildings to maximize recovery of
+            community function per inspector-hour, with damage-state uncertainty propagated through
+            the prioritization.
+          </p>
+          <figure class="figure">
+            <img src="figures/holiday-beach-field-site.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Field testbed</span> &nbsp; Holiday Beach, Texas — the case-study site after Hurricane Harvey. Each red dot is a building included in the inspection-prioritization study. The right panel shows the kind of post-disaster reconnaissance the method has to schedule against.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/inspection-pareto-full.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 6</span> &nbsp; Decision space framed as a portfolio problem. Each point is an inspection plan; the Pareto frontier is what you'd actually consider. From there it's a risk-preference call.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/inspection-pareto-zoom.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 6 (detail)</span> &nbsp; Zoom on the lower-left of the decision space — where the actual Pareto trade-off lives. The frontier separates risk-averse (top-left) from min-Sharpe (bottom-right) regimes; the colored cloud shows how budget moves you along it.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/cyber-physical-architecture.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">ASCE Earth &amp; Space · 2021 <span class="role-tag">Co-author</span></div>
+            <div class="card-title">Role of cyber-physical testing in developing resilient extraterrestrial habitats</div>
+            <p class="card-teaser">Real hardware-in-the-loop coupled to a simulated habitat through sensor/actuator interfaces.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Pure simulation is cheap but lies. Pure physical testing is expensive and slow. Cyber-physical
+            testing splits the difference: real hardware sits in a test cell while the rest of the habitat
+            is simulated in real time, coupled through sensor and actuator interfaces. The control law sees
+            the physical hardware's actual response and the simulated environment reacts accordingly.
+          </p>
+          <figure class="figure">
+            <img src="figures/cyber-physical-architecture.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 3</span> &nbsp; The hybrid loop. Real hardware-in-the-loop on the left, simulated habitat on the right, sensor/actuator interface coupling them in real time.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+    </div>
+
+    <details class="pillar-more">
+      <summary>More from this pillar (1)</summary>
+      <div class="card-grid">
+
+        <details class="card">
+          <summary>
+            <div class="thumb"><img src="figures/resilience-design-element.png" alt="" loading="lazy" /></div>
+            <div class="card-summary">
+              <div class="card-meta">AIAA · 2019 <span class="role-tag">Co-author</span></div>
+              <div class="card-title">Resilience-oriented design of extraterrestrial habitat systems</div>
+              <p class="card-teaser">Decompose resilience into what the system absorbs and what operators can do once it's hit.</p>
+            </div>
+            <div class="card-toggle">+</div>
+          </summary>
+          <div class="card-body">
+            <p class="prose">
+              How do you design for resilience without it being a vibes-based adjective? This paper splits
+              the concept into two components: <em>passive capacity</em> (redundancy, margin, robust design)
+              and <em>active capacity</em> (repair, reconfigure, mitigate). Then the case study runs at 90%,
+              63%, and 40% passive capacity to see how the trade space behaves.
+            </p>
+            <figure class="figure">
+              <img src="figures/resilience-design-element.png" alt="" loading="lazy" />
+              <figcaption><span class="figref">Figs. 8–9</span> &nbsp; System performance recovery curves under 90% (left) and 63% (right) passive capacity. The shaded bands are 5/95 percentiles. Different shapes, different stories.</figcaption>
+            </figure>
+          </div>
+        </details>
+
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ===================== PILLAR III — RECSYS / RANKING ===================== -->
+<section class="pillar" id="pillar-3">
+  <div class="wrap">
+    <header class="pillar-head">
+      <div class="num-block">III</div>
+      <div>
+        <div class="pillar-eyebrow">Pillar III</div>
+        <h2>Personalization &amp; ranking in production</h2>
+        <p class="pillar-tag">Large-scale ranking and retrieval systems and the evaluation discipline that comes with them — offline/online metric alignment, LLM-based judging, counterfactual simulation.</p>
+      </div>
+    </header>
+    <div class="pillar-narrative">
+      <p>Shipping a model isn't done until the latency budget, the retraining cadence, and the offline-online correlation are all solved. Most of the lift in production recsys comes after the architecture is settled — hard-negative mining for the right kind of discrimination, a serving stack that holds at scale, an evaluation layer that tells you whether a candidate model is <em>actually</em> better, not better-on-this-offline-metric.</p>
+      <p>The recurring move below: build a faithful enough offline simulator that decisions made there hold up online. That is digital-twin thinking applied to ranking — and the reason this pillar shares more DNA with Pillar II than it looks.</p>
     </div>
     <div class="card-grid">
 
@@ -659,8 +1075,8 @@
             </svg>
           </div>
           <div class="card-summary">
-            <div class="card-meta">Production recsys</div>
-            <div class="card-title">A two-tower recommender that has to answer in 10 milliseconds</div>
+            <div class="card-meta">Production recsys <span class="role-tag first">Shipped</span></div>
+            <div class="card-title">A two-tower recommender, served live</div>
             <p class="card-teaser">InfoNCE + same-taxonomy hard negatives, ONNX serving, HNSW retrieval. The lift came from the negatives, not the architecture.</p>
           </div>
           <div class="card-toggle">+</div>
@@ -757,7 +1173,7 @@
             </svg>
           </div>
           <div class="card-summary">
-            <div class="card-meta">Evaluation · LLM</div>
+            <div class="card-meta">Evaluation · LLM <span class="role-tag first">Shipped</span></div>
             <div class="card-title">An LLM judge for the question offline metrics can't answer</div>
             <p class="card-teaser">A multi-dimensional CoT judging pipeline scoring 7 orthogonal latent dimensions to automate quality gating before release.</p>
           </div>
@@ -780,7 +1196,7 @@
         <summary>
           <div class="thumb"></div>
           <div class="card-summary">
-            <div class="card-meta">Simulation · counterfactual</div>
+            <div class="card-meta">Simulation · counterfactual <span class="role-tag first">Shipped</span></div>
             <div class="card-title">An offline simulator that's honest about online behavior</div>
             <p class="card-teaser">Time-travel sampling, LLM user agents, and metrics that adapt when sim disagrees with online.</p>
           </div>
@@ -795,293 +1211,14 @@
         </div>
       </details>
 
-      <details class="card no-thumb">
-        <summary>
-          <div class="thumb"></div>
-          <div class="card-summary">
-            <div class="card-meta">Computer vision · industrial</div>
-            <div class="card-title">CV on a plant floor that wouldn't stop lying to us</div>
-            <p class="card-teaser">The model trained beautifully and collapsed in prod. The fix was decision logic, not architecture.</p>
-          </div>
-          <div class="card-toggle">+</div>
-        </summary>
-        <div class="card-body">
-          <p class="prose">
-            An end-to-end computer vision inspection framework across multiple CTQ checkpoints —
-            automated defect detection and station health monitoring. Multi-class object detection
-            models in PyTorch, with operational decision logic and inference thresholds tuned to
-            minimize false positives in high-throughput environments.
-          </p>
-          <p class="prose">
-            On the data side: a leakage-safe workflow on GCP/GCS + Label Studio, with targeted
-            hard-negative mining to handle the physical-environment constraints (lighting drift,
-            misalignment, class imbalance).
-          </p>
-        </div>
-      </details>
-
     </div>
   </div>
 </section>
 
-<!-- ===================== PAPERS ===================== -->
-<section class="block" id="papers">
+<!-- ===================== SCHOLAR LINK FOOTER ===================== -->
+<section class="block" style="padding-top: 24px; padding-bottom: 56px;">
   <div class="wrap">
-    <div class="section-head">
-      <h2>Papers</h2>
-      <p class="sub">Each card opens to the full piece — figures, technical contribution, what was actually implemented.</p>
-    </div>
-
-    <div class="cluster-pill">Disaster CV / built-environment risk</div>
-    <div class="card-grid">
-
-      <details class="card">
-        <summary>
-          <div class="thumb"><img src="figures/fusion-pipeline.jpg" alt="" loading="lazy" /></div>
-          <div class="card-summary">
-            <div class="card-meta">Eng. Structures · 2020 <span class="role-tag first">First author</span></div>
-            <div class="card-title">Pre-event and post-event imagery fusion</div>
-            <p class="card-teaser">Faster R-CNN + depth-aware homography. Fuse Street View pre-event with drone post-event.</p>
-          </div>
-          <div class="card-toggle">+</div>
-        </summary>
-        <div class="card-body">
-          <p class="prose">
-            End-to-end pipeline. Input: a building's address. Output: a damage state. Google Street View for
-            pre-event imagery, drone or satellite for post-event, Faster R-CNN to find the building in each
-            frame, a depth model to disambiguate which of several visible buildings is <em>the</em> building,
-            and a homography step to align them. The fusion is the part everyone underestimates — pre-event
-            Street View is sharp but oblique; post-event drone is overhead and noisy; matching them requires
-            a depth-aware registration that the obvious affine transform fails at.
-          </p>
-          <figure class="figure">
-            <img src="figures/harvey-irma-coverage.jpg" alt="" loading="lazy" />
-            <figcaption><span class="figref">Coverage</span> &nbsp; Reconnaissance across Hurricanes Harvey (Texas Gulf Coast) and Irma (Florida) — the field data this pipeline was built and validated against.</figcaption>
-          </figure>
-          <figure class="figure">
-            <img src="figures/fusion-pipeline.jpg" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 1</span> &nbsp; Two parallel streams. Red extracts pre-event imagery from Street View and infers attributes (story count, material, elevation). Blue detects the same building in post-event reconnaissance and infers damage state. They meet at the output.</figcaption>
-          </figure>
-          <figure class="figure">
-            <img src="figures/pre-post-streetview-pairs.jpg" alt="" loading="lazy" />
-            <figcaption><span class="figref">Pre/post pairs</span> &nbsp; Same buildings, before and after. Left: post-disaster reconnaissance frames. Right: the pre-disaster Google Street View imagery retrieved automatically by the pipeline. The fusion is what turns these pairs into a damage state.</figcaption>
-          </figure>
-          <figure class="figure">
-            <img src="figures/fusion-pre-stream.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 6</span> &nbsp; The pre-event stream in detail. Multi-view fusion across n panoramas: per-image attribute classifier outputs are fused into a single posterior <code>p(c<sub>k</sub>|x<sub>1..n</sub>)</code>. The move that makes it robust to occlusion / glare / wrong-building frames.</figcaption>
-          </figure>
-          <figure class="figure">
-            <img src="figures/fusion-post-stream.jpg" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 7</span> &nbsp; The post-event stream in detail. Overview classifier filters out close-ups; per-image damage classifier emits <code>p(c|x<sub>i</sub>)</code>; information fusion produces <code>p(c|x<sub>1..n</sub>)</code> and a final decision: ND / MD / NMD.</figcaption>
-          </figure>
-          <figure class="figure">
-            <video controls preload="metadata" muted playsinline>
-              <source src="media/panorama-timeline.mp4" type="video/mp4" />
-            </video>
-            <figcaption><span class="figref">Clip 1</span> &nbsp; Historical Street View timeline at one GPS point — pre-event imagery sourcing, in motion.</figcaption>
-          </figure>
-        </div>
-      </details>
-
-      <details class="card" id="paper-pareto">
-        <summary>
-          <div class="thumb"><img src="figures/inspection-pareto-full.png" alt="" loading="lazy" /></div>
-          <div class="card-summary">
-            <div class="card-meta">Natural Hazards · 2020 <span class="role-tag first">First author</span></div>
-            <div class="card-title">A resilience-based method for prioritizing post-event building inspections</div>
-            <p class="card-teaser">Constrained optimization, simulated annealing, and a Pareto frontier that turns triage into a decision rule.</p>
-          </div>
-          <div class="card-toggle">+</div>
-        </summary>
-        <div class="card-body">
-          <p class="prose">
-            A resilience-based method for prioritizing post-event building inspections. The method
-            allocates limited inspection resources by ordering buildings to maximize recovery of
-            community function per inspector-hour, with damage-state uncertainty propagated through
-            the prioritization.
-          </p>
-          <figure class="figure">
-            <img src="figures/holiday-beach-field-site.jpg" alt="" loading="lazy" />
-            <figcaption><span class="figref">Field testbed</span> &nbsp; Holiday Beach, Texas — the case-study site after Hurricane Harvey. Each red dot is a building included in the inspection-prioritization study. The right panel shows the kind of post-disaster reconnaissance the method has to schedule against.</figcaption>
-          </figure>
-          <figure class="figure">
-            <img src="figures/inspection-pareto-full.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 6</span> &nbsp; Decision space framed as a portfolio problem. Each point is an inspection plan; the Pareto frontier is what you'd actually consider. From there it's a risk-preference call.</figcaption>
-          </figure>
-          <figure class="figure">
-            <img src="figures/inspection-pareto-zoom.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 6 (detail)</span> &nbsp; Zoom on the lower-left of the decision space — where the actual Pareto trade-off lives. The frontier separates risk-averse (top-left) from min-Sharpe (bottom-right) regimes; the colored cloud shows how budget moves you along it.</figcaption>
-          </figure>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>
-          <div class="thumb"><img src="figures/panorama-pipeline.jpg" alt="" loading="lazy" /></div>
-          <div class="card-summary">
-            <div class="card-meta">CACAIE · 2019 <span class="role-tag first">First author</span></div>
-            <div class="card-title">Automated building image extraction from 360° panoramas</div>
-            <p class="card-teaser">Panorama-aware detection plus geometric reasoning. The piece that makes pre-event extraction work.</p>
-          </div>
-          <div class="card-toggle">+</div>
-        </summary>
-        <div class="card-body">
-          <p class="prose">
-            Panoramas are messy: multiple buildings per frame, occlusions, perspective distortion at the
-            seams. The detector is panorama-aware — it reasons about which face of the sphere corresponds
-            to which side of the street, so the same building doesn't get detected twice across the seam,
-            and the geometry of the camera position constrains which detections are even plausible.
-          </p>
-          <figure class="figure">
-            <img src="figures/streetview-data-collection.jpg" alt="" loading="lazy" />
-            <figcaption><span class="figref">Data source</span> &nbsp; Street View capture vehicle and a representative spherical panorama, plus an aerial of Belaire Dr after Harvey: each red dot is a 360° image GPS location, the red box is the target building. The pipeline starts from this raw Street View input.</figcaption>
-          </figure>
-          <figure class="figure">
-            <img src="figures/panorama-pipeline.jpg" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 1</span> &nbsp; Twelve-step pipeline. Steps 5–8 are the interesting ones: match 2D features across panoramas, estimate projection matrices, triangulate the building's 3D location, transform from camera frame to GPS frame.</figcaption>
-          </figure>
-          <figure class="figure">
-            <img src="figures/house-detector-rectilinear.jpg" alt="" loading="lazy" />
-            <figcaption><span class="figref">Detector output</span> &nbsp; Once the panorama is reprojected to optimal-angle rectilinear images, a building detector trained on these views localizes the target across all available frames. The earlier steps exist to make this step easy.</figcaption>
-          </figure>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>
-          <div class="thumb"><img src="figures/info-fusion-workflow.png" alt="" loading="lazy" /></div>
-          <div class="card-summary">
-            <div class="card-meta">Eng. Structures · 2022 <span class="role-tag">Co-author</span></div>
-            <div class="card-title">Information fusion to classify post-event building damage state</div>
-            <p class="card-teaser">Per-image probabilities → RC and M lists → iterative thresholding → final damage state.</p>
-          </div>
-          <div class="card-toggle">+</div>
-        </summary>
-        <div class="card-body">
-          <p class="prose">
-            Same problem as the 2020 fusion paper, harder data: the Subject of Interest arrives as
-            <em>a set of images, not one</em>. Per-image classifiers produce class-conditional
-            probabilities for two materials (RC and masonry), then a probability-list filter and an
-            iterative thresholding scheme combine those into a single overall damage state.
-          </p>
-          <figure class="figure">
-            <img src="figures/info-fusion-workflow.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 2</span> &nbsp; Three stages: per-image classifier outputs → RC and M probability lists → iterative thresholding criterion (error history converging at K = 0.01).</figcaption>
-          </figure>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>
-          <div class="thumb"><img src="figures/indoor-localization-overview.png" alt="" loading="lazy" /></div>
-          <div class="card-summary">
-            <div class="card-meta">MDPI Sensors · 2020 <span class="role-tag">Co-author</span></div>
-            <div class="card-title">Automated indoor image localization for post-event assessment</div>
-            <p class="card-teaser">Structure-from-Motion plus a 2D projective transform onto the structural drawing.</p>
-          </div>
-          <div class="card-toggle">+</div>
-        </summary>
-        <div class="card-body">
-          <p class="prose">
-            Indoor images don't get clean GPS. The pipeline runs Structure-from-Motion across a
-            stream of "PathImgs" walked through the building to reconstruct a 3D point cloud and
-            recover camera poses, then aligns the SfM frame onto the structural drawing via a 2D
-            projective transform. Once that map exists, every "InspImg" — the targeted close-up
-            engineers care about — is grounded against a drawing location.
-          </p>
-          <figure class="figure">
-            <img src="figures/indoor-localization-overview.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 1</span> &nbsp; Three stages: (a) collect PathImgs and InspImgs, (b) SfM to build a 3D point cloud + camera poses, (c) align onto the drawing via 2D projective transform.</figcaption>
-          </figure>
-        </div>
-      </details>
-
-    </div>
-
-    <div class="cluster-pill">Space habitat resilience &amp; digital twin</div>
-    <div class="card-grid">
-
-      <details class="card">
-        <summary>
-          <div class="thumb"><img src="figures/resilience-design-element.png" alt="" loading="lazy" /></div>
-          <div class="card-summary">
-            <div class="card-meta">AIAA · 2019 <span class="role-tag">Co-author</span></div>
-            <div class="card-title">Resilience-oriented design of extraterrestrial habitat systems</div>
-            <p class="card-teaser">Decompose resilience into what the system absorbs and what operators can do once it's hit.</p>
-          </div>
-          <div class="card-toggle">+</div>
-        </summary>
-        <div class="card-body">
-          <p class="prose">
-            How do you design for resilience without it being a vibes-based adjective? This paper splits
-            the concept into two components: <em>passive capacity</em> (redundancy, margin, robust design)
-            and <em>active capacity</em> (repair, reconfigure, mitigate). Then the case study runs at 90%,
-            63%, and 40% passive capacity to see how the trade space behaves.
-          </p>
-          <figure class="figure">
-            <img src="figures/resilience-design-element.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Figs. 8–9</span> &nbsp; System performance recovery curves under 90% (left) and 63% (right) passive capacity. The shaded bands are 5/95 percentiles. Different shapes, different stories.</figcaption>
-          </figure>
-        </div>
-      </details>
-
-      <details class="card" id="paper-cdcm">
-        <summary>
-          <div class="thumb"><img src="figures/habitat-architecture.png" alt="" loading="lazy" /></div>
-          <div class="card-summary">
-            <div class="card-meta">ASME IDETC · 2022 <span class="role-tag">Co-author</span></div>
-            <div class="card-title">Computational platform for trade studies in deep space habitat systems (CDCM)</div>
-            <p class="card-teaser">Markov subsystem nodes, value metric, risk-return trade studies the way a portfolio manager runs them.</p>
-          </div>
-          <div class="card-toggle">+</div>
-        </summary>
-        <div class="card-body">
-          <p class="prose">
-            Each subsystem is a coarse input/output Markov node — power, structural, life support,
-            environment, agent, intelligent health management — wired together into configurations.
-            Disturbances drive state transitions; a reflexive health-management subsystem prioritizes
-            recovery actions given limited robotic-agent availability. The output is a value metric
-            decomposing system performance into mission-value and crew-value over the design lifecycle.
-            Then trade studies run as risk-return scatter for every candidate configuration.
-          </p>
-          <figure class="figure">
-            <img src="figures/habitat-architecture.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 4</span> &nbsp; The example habitat as wired Markov nodes. Disturbances (meteorite impact, solar radiation, dust) feed in; agent + IHM (dashed) close the loop with repair and cleaning actions.</figcaption>
-          </figure>
-          <figure class="figure">
-            <img src="figures/cdcm-trade-study.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Figs. 7–8</span> &nbsp; Trade study outputs as risk-return plots. Mean-of-value vs. std-of-value, colored by candidate parameter. Pareto-efficient designs are the lower-right points.</figcaption>
-          </figure>
-        </div>
-      </details>
-
-      <details class="card">
-        <summary>
-          <div class="thumb"><img src="figures/cyber-physical-architecture.png" alt="" loading="lazy" /></div>
-          <div class="card-summary">
-            <div class="card-meta">ASCE Earth &amp; Space · 2021 <span class="role-tag">Co-author</span></div>
-            <div class="card-title">Role of cyber-physical testing in developing resilient extraterrestrial habitats</div>
-            <p class="card-teaser">Real hardware-in-the-loop coupled to a simulated habitat through sensor/actuator interfaces.</p>
-          </div>
-          <div class="card-toggle">+</div>
-        </summary>
-        <div class="card-body">
-          <p class="prose">
-            Pure simulation is cheap but lies. Pure physical testing is expensive and slow. Cyber-physical
-            testing splits the difference: real hardware sits in a test cell while the rest of the habitat
-            is simulated in real time, coupled through sensor and actuator interfaces. The control law sees
-            the physical hardware's actual response and the simulated environment reacts accordingly.
-          </p>
-          <figure class="figure">
-            <img src="figures/cyber-physical-architecture.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 3</span> &nbsp; The hybrid loop. Real hardware-in-the-loop on the left, simulated habitat on the right, sensor/actuator interface coupling them in real time.</figcaption>
-          </figure>
-        </div>
-      </details>
-
-    </div>
-
-    <p style="margin-top: 28px; color: var(--muted); font-size: 13.5px;">Full list on <a href="https://scholar.google.com/citations?user=vVPC7g0AAAAJ&hl=en" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">Google Scholar</a>.</p>
+    <p style="color: var(--muted); font-size: 14px;">Complete publication list on <a href="https://scholar.google.com/citations?user=vVPC7g0AAAAJ&hl=en" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline; text-underline-offset: 3px;">Google Scholar</a>.</p>
   </div>
 </section>
 
@@ -1092,14 +1229,18 @@
     <p class="about-prose">
       Mechanical engineer who took a left turn into ML and never went back. PhD at Purdue on
       decision-making under uncertainty in physical systems, then postdocs at <strong>Stanford</strong>
-      on multimodal ML for global health, and <strong>NASA STRI / Purdue</strong> on a space-habitat
-      digital twin. Different domains, same job: build something that has to make a fast decision on
-      real data without any of the inputs being clean.
+      on multimodal ML for global health, and <strong>NASA STRI / Purdue (RETHi)</strong> on a
+      space-habitat digital twin. Different domains, same job: build something that has to make a
+      fast decision on real data without any of the inputs being clean.
     </p>
     <p class="about-prose">
-      Lately the work is mostly recommender systems and the evaluation problem around them — what to
-      actually measure, how to use LLMs as judges without fooling yourself, and how to keep offline
-      simulators honest about online behavior. Based in the SF Bay Area.
+      The work splits into three lanes that share more DNA than they look. <strong>Multimodal
+      detection &amp; change-detection</strong> across vision and other evidence streams — fusion
+      pipelines, custom data collection, decisions calibrated to deployment. <strong>Digital twins
+      &amp; risk-informed decision-making</strong> for complex coupled systems — modeling,
+      trade-space analysis, portfolio-style ranking under uncertainty. And <strong>personalization
+      &amp; ranking systems in production</strong> — recsys at scale, LLM-based evaluation,
+      counterfactual simulation. Based in the SF Bay Area.
     </p>
   </div>
 </section>
