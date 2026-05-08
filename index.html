@@ -106,6 +106,65 @@
       padding: 80px 0 64px;
       border-bottom: 1px solid var(--line);
     }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 820px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-portrait { order: -1; max-width: 220px; }
+    }
+    .hero-portrait {
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--surface-2);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+    }
+    .hero-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ----- Proof bar (employer wordmarks) ----- */
+    .proofbar {
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+    .proofbar .wrap {
+      padding: 22px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px 28px;
+    }
+    .proofbar-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .logo-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      transition: transform 0.1s ease, border-color 0.15s;
+    }
+    .logo-pill:hover { transform: translateY(-1px); border-color: var(--accent); }
+    .logo-pill .swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .logo-pill.stanford .swatch { background: #8C1515; }
+    .logo-pill.nasa .swatch { background: #0B3D91; }
+    .logo-pill.purdue .swatch { background: #CEB888; border: 1px solid #8E6F3E; }
+    .logo-pill .sub { font-weight: 500; color: var(--muted); font-size: 12.5px; }
     .eyebrow {
       font-size: 12px;
       font-weight: 600;
@@ -423,25 +482,42 @@
 
 <!-- ===================== HERO ===================== -->
 <section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <div class="eyebrow">Senior ML · Recommender Systems · Personalization</div>
+      <h1>Ali Lenjani</h1>
+      <p class="lede">
+        I work on recommender systems and personalization — the production side, where retrieval
+        has a latency budget and offline metrics have to predict the online ones. Lately, also
+        LLM-based evaluation.
+      </p>
+      <div class="creds">
+        <span>San Francisco Bay Area</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#work">See the work →</a>
+        <a class="btn btn-secondary" href="mailto:lenjani.a@gmail.com">Get in touch</a>
+      </div>
+    </div>
+    <div class="hero-portrait">
+      <img src="figures/headshot.jpg" alt="Ali Lenjani" />
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROOF BAR ===================== -->
+<section class="proofbar">
   <div class="wrap">
-    <div class="eyebrow">Senior ML · Recommender Systems · Personalization</div>
-    <h1>Ali Lenjani</h1>
-    <p class="lede">
-      I work on recommender systems and personalization — the production side, where retrieval
-      has a latency budget and offline metrics have to predict the online ones. Lately, also
-      LLM-based evaluation.
-    </p>
-    <div class="creds">
-      <span>Stanford</span>
-      <span class="dot"></span>
-      <span>NASA / Purdue PhD</span>
-      <span class="dot"></span>
-      <span>San Francisco Bay Area</span>
-    </div>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="#work">See the work →</a>
-      <a class="btn btn-secondary" href="mailto:lenjani.a@gmail.com">Get in touch</a>
-    </div>
+    <div class="proofbar-label">Previously</div>
+    <a class="logo-pill stanford" href="https://www.stanford.edu/" target="_blank" rel="noopener">
+      <span class="swatch"></span>Stanford <span class="sub">Postdoc</span>
+    </a>
+    <a class="logo-pill nasa" href="https://www.nasa.gov/" target="_blank" rel="noopener">
+      <span class="swatch"></span>NASA <span class="sub">Postdoc</span>
+    </a>
+    <a class="logo-pill purdue" href="https://www.purdue.edu/rethi/" target="_blank" rel="noopener">
+      <span class="swatch"></span>Purdue · RETHi <span class="sub">PhD</span>
+    </a>
   </div>
 </section>
 
@@ -464,7 +540,7 @@
           </svg>
         </div>
         <div class="meta">RECSYS · PRODUCTION</div>
-        <div class="title">Two-tower retrieval at sub-10ms</div>
+        <div class="title">Two-tower retrieval, served live</div>
       </a>
 
       <a href="#thing-judge" class="featured-card">
@@ -611,7 +687,7 @@
             <text x="540" y="32" text-anchor="middle" class="mono accent" font-size="11">similarity</text>
             <rect x="555" y="92" width="145" height="40" rx="6" class="accent-stroke" fill="none" stroke-width="1.5" />
             <text x="627" y="110" text-anchor="middle" fill="currentColor" font-size="13" font-weight="600">HNSW index</text>
-            <text x="627" y="124" text-anchor="middle" class="mono accent" font-size="11">&lt; 10 ms p99</text>
+            <text x="627" y="124" text-anchor="middle" class="mono accent" font-size="11">low-latency ANN</text>
           </svg>
 
           <p class="prose">
@@ -621,12 +697,12 @@
             fine-grained attribute discrimination.
           </p>
           <p class="prose">
-            Serving: ONNX Runtime for the user tower (3–5× faster than native PyTorch) and
-            an HNSW index over the item embeddings for sub-10ms retrieval at production scale.
+            Serving: ONNX Runtime for the user tower and an HNSW index over the item embeddings
+            for low-latency retrieval at production scale.
           </p>
           <p class="prose">
-            Training: MosaicML Streaming for sharded reads across 8× A100s, plus a bi-weekly
-            warm-start strategy that cut training compute by 5× compared to cold-start runs.
+            Training: MosaicML Streaming for sharded reads across multiple GPUs, plus a bi-weekly
+            warm-start strategy that meaningfully cut training compute compared to cold-start runs.
           </p>
         </div>
       </details>
