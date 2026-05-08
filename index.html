@@ -483,7 +483,7 @@
 
       <a href="#paper-pareto" class="featured-card">
         <div class="thumb">
-          <img src="figures/inspection-pareto-front.png" alt="" />
+          <img src="figures/inspection-pareto-full.png" alt="" />
         </div>
         <div class="meta">PAPER · NATURAL HAZARDS '20</div>
         <div class="title">Inspection triage as a Pareto problem</div>
@@ -491,7 +491,7 @@
 
       <a href="#paper-cdcm" class="featured-card">
         <div class="thumb">
-          <img src="figures/cdcm-trade-study.png" alt="" />
+          <img src="figures/habitat-architecture.png" alt="" />
         </div>
         <div class="meta">PAPER · ASME 2022</div>
         <div class="title">Habitat design as portfolio management</div>
@@ -723,7 +723,7 @@
 
       <details class="card">
         <summary>
-          <div class="thumb"><img src="figures/pre-post-fusion-pipeline.png" alt="" loading="lazy" /></div>
+          <div class="thumb"><img src="figures/fusion-pipeline.jpg" alt="" loading="lazy" /></div>
           <div class="card-summary">
             <div class="card-meta">Eng. Structures · 2020 <span class="role-tag first">First author</span></div>
             <div class="card-title">Pre-event and post-event imagery fusion</div>
@@ -741,12 +741,24 @@
             a depth-aware registration that the obvious affine transform fails at.
           </p>
           <figure class="figure">
-            <img src="figures/pre-post-fusion-pipeline.png" alt="" loading="lazy" />
+            <img src="figures/harvey-irma-coverage.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Coverage</span> &nbsp; Reconnaissance across Hurricanes Harvey (Texas Gulf Coast) and Irma (Florida) — the field data this pipeline was built and validated against.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/fusion-pipeline.jpg" alt="" loading="lazy" />
             <figcaption><span class="figref">Fig. 1</span> &nbsp; Two parallel streams. Red extracts pre-event imagery from Street View and infers attributes (story count, material, elevation). Blue detects the same building in post-event reconnaissance and infers damage state. They meet at the output.</figcaption>
           </figure>
           <figure class="figure">
-            <img src="figures/pre-event-detail-stream.png" alt="" loading="lazy" />
+            <img src="figures/pre-post-streetview-pairs.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Pre/post pairs</span> &nbsp; Same buildings, before and after. Left: post-disaster reconnaissance frames. Right: the pre-disaster Google Street View imagery retrieved automatically by the pipeline. The fusion is what turns these pairs into a damage state.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/fusion-pre-stream.png" alt="" loading="lazy" />
             <figcaption><span class="figref">Fig. 6</span> &nbsp; The pre-event stream in detail. Multi-view fusion across n panoramas: per-image attribute classifier outputs are fused into a single posterior <code>p(c<sub>k</sub>|x<sub>1..n</sub>)</code>. The move that makes it robust to occlusion / glare / wrong-building frames.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/fusion-post-stream.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 7</span> &nbsp; The post-event stream in detail. Overview classifier filters out close-ups; per-image damage classifier emits <code>p(c|x<sub>i</sub>)</code>; information fusion produces <code>p(c|x<sub>1..n</sub>)</code> and a final decision: ND / MD / NMD.</figcaption>
           </figure>
           <figure class="figure">
             <video controls preload="metadata" muted playsinline>
@@ -759,7 +771,7 @@
 
       <details class="card" id="paper-pareto">
         <summary>
-          <div class="thumb"><img src="figures/inspection-pareto-front.png" alt="" loading="lazy" /></div>
+          <div class="thumb"><img src="figures/inspection-pareto-full.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
             <div class="card-meta">Natural Hazards · 2020 <span class="role-tag first">First author</span></div>
             <div class="card-title">A resilience-based method for prioritizing post-event building inspections</div>
@@ -775,19 +787,23 @@
             the prioritization.
           </p>
           <figure class="figure">
-            <img src="figures/inspection-pareto-front.png" alt="" loading="lazy" />
+            <img src="figures/holiday-beach-field-site.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Field testbed</span> &nbsp; Holiday Beach, Texas — the case-study site after Hurricane Harvey. Each red dot is a building included in the inspection-prioritization study. The right panel shows the kind of post-disaster reconnaissance the method has to schedule against.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/inspection-pareto-full.png" alt="" loading="lazy" />
             <figcaption><span class="figref">Fig. 6</span> &nbsp; Decision space framed as a portfolio problem. Each point is an inspection plan; the Pareto frontier is what you'd actually consider. From there it's a risk-preference call.</figcaption>
           </figure>
           <figure class="figure">
-            <img src="figures/inspection-non-exceedance.png" alt="" loading="lazy" />
-            <figcaption><span class="figref">Fig. 8</span> &nbsp; Probability the realized cost stays below a threshold, per policy. The shape tells you exactly how much tail risk you're trading off for expected cost.</figcaption>
+            <img src="figures/inspection-pareto-zoom.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 6 (detail)</span> &nbsp; Zoom on the lower-left of the decision space — where the actual Pareto trade-off lives. The frontier separates risk-averse (top-left) from min-Sharpe (bottom-right) regimes; the colored cloud shows how budget moves you along it.</figcaption>
           </figure>
         </div>
       </details>
 
       <details class="card">
         <summary>
-          <div class="thumb"><img src="figures/panorama-building-extraction.png" alt="" loading="lazy" /></div>
+          <div class="thumb"><img src="figures/panorama-pipeline.jpg" alt="" loading="lazy" /></div>
           <div class="card-summary">
             <div class="card-meta">CACAIE · 2019 <span class="role-tag first">First author</span></div>
             <div class="card-title">Automated building image extraction from 360° panoramas</div>
@@ -803,8 +819,16 @@
             and the geometry of the camera position constrains which detections are even plausible.
           </p>
           <figure class="figure">
-            <img src="figures/panorama-building-extraction.png" alt="" loading="lazy" />
+            <img src="figures/streetview-data-collection.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Data source</span> &nbsp; Street View capture vehicle and a representative spherical panorama, plus an aerial of Belaire Dr after Harvey: each red dot is a 360° image GPS location, the red box is the target building. The pipeline starts from this raw Street View input.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/panorama-pipeline.jpg" alt="" loading="lazy" />
             <figcaption><span class="figref">Fig. 1</span> &nbsp; Twelve-step pipeline. Steps 5–8 are the interesting ones: match 2D features across panoramas, estimate projection matrices, triangulate the building's 3D location, transform from camera frame to GPS frame.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/house-detector-rectilinear.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Detector output</span> &nbsp; Once the panorama is reprojected to optimal-angle rectilinear images, a building detector trained on these views localizes the target across all available frames. The earlier steps exist to make this step easy.</figcaption>
           </figure>
         </div>
       </details>
@@ -889,7 +913,7 @@
 
       <details class="card" id="paper-cdcm">
         <summary>
-          <div class="thumb"><img src="figures/cdcm-trade-study.png" alt="" loading="lazy" /></div>
+          <div class="thumb"><img src="figures/habitat-architecture.png" alt="" loading="lazy" /></div>
           <div class="card-summary">
             <div class="card-meta">ASME IDETC · 2022 <span class="role-tag">Co-author</span></div>
             <div class="card-title">Computational platform for trade studies in deep space habitat systems (CDCM)</div>
@@ -907,7 +931,7 @@
             Then trade studies run as risk-return scatter for every candidate configuration.
           </p>
           <figure class="figure">
-            <img src="figures/cdcm-habitat-architecture.png" alt="" loading="lazy" />
+            <img src="figures/habitat-architecture.png" alt="" loading="lazy" />
             <figcaption><span class="figref">Fig. 4</span> &nbsp; The example habitat as wired Markov nodes. Disturbances (meteorite impact, solar radiation, dust) feed in; agent + IHM (dashed) close the loop with repair and cleaning actions.</figcaption>
           </figure>
           <figure class="figure">
