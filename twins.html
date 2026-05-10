@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Digital twins &amp; risk-informed decisions — Ali Lenjani</title>
+  <meta name="description" content="Multi-objective optimization, trade-space analysis, and digital-twin modeling for coupled systems. Pillar II of Ali Lenjani's work." />
+  <meta property="og:title" content="Digital twins &amp; risk-informed decisions — Ali Lenjani" />
+  <meta property="og:description" content="The dilemmas, the approach, the technical concepts, and examples from my work." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://alenjani.github.io/twins.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="/" class="brand">Ali Lenjani<span class="dot">.</span></a>
+    <nav>
+      <a href="detection.html">Detection</a>
+      <a href="twins.html" class="active">Twins</a>
+      <a href="recsys.html">Recsys</a>
+      <a href="/#about">About</a>
+    </nav>
+    <a href="/#contact" class="cta">Get in touch</a>
+  </div>
+</header>
+
+<section class="pillar" id="pillar-2">
+  <div class="wrap">
+    <header class="pillar-head">
+      <div class="num-block">II</div>
+      <div>
+        <div class="pillar-eyebrow">Pillar II</div>
+        <h2>Digital twins &amp; risk-informed decisions for complex systems</h2>
+        <p class="pillar-tag">Multi-objective optimization, trade-space analysis, and digital-twin modeling for coupled systems — ranking candidates and architectures when resources are limited, uncertainty is real, and the cost of being wrong matters.</p>
+      </div>
+    </header>
+
+    <div class="pillar-frame">
+      <div class="pillar-overview">
+        <p>Build a model of a coupled system. Drive it with realistic disturbances. Watch how its configurations behave under uncertainty. Use the resulting risk-return surface to make a decision — <strong>which architecture, which inspection plan, which design margin, which capital allocation</strong>.</p>
+        <p>The same loop applies whether the "system" is an extraterrestrial habitat, a portfolio of inspections after a hurricane, or a hardware-in-the-loop testbed. What unifies them: many subsystems with stochastic interactions, finite resources to act, and a decision under uncertainty. What separates a good answer from a bad one is rarely the math — it's how faithful the twin is, how much of the trade space you can actually search, and how clearly the trade-offs are presented to the people who decide.</p>
+        <p>This work sits at the intersection of two skill stacks that rarely overlap: <em>ML/optimization fluency</em> and <em>engineering complex-systems modeling</em>. That intersection is what makes it transferable — capital allocation, infrastructure investment, claims triage, A/B-test scheduling all reduce to the same loop with different inputs.</p>
+      </div>
+
+      <div class="pillar-lists">
+        <div class="pillar-list">
+          <h4>What's hard about it</h4>
+          <ol>
+            <li><strong>Picking the right level of abstraction.</strong> Too detailed and the simulation is too slow to use for trade studies; too coarse and the decisions are wrong. Choosing the abstraction is half the work.</li>
+            <li><strong>Sim-to-real gap.</strong> All twins lie a little. The question is by how much, where, and whether that affects the decision you'd make. Cyber-physical testing is the bridge.</li>
+            <li><strong>Combinatorial trade space.</strong> Even modest architectures yield thousands of candidate configurations. Brute force isn't always feasible; surrogate models and Pareto-aware sampling are.</li>
+            <li><strong>Conflicting objectives.</strong> Most real decisions trade performance, cost, risk, recovery time. Collapsing them to a scalar discards information; keeping them produces a Pareto frontier.</li>
+            <li><strong>Uncertainty quantification.</strong> A point estimate is dangerous. The interesting questions are about distributions: tails, conditionals, dependences across subsystems.</li>
+            <li><strong>Communicating trade-offs to non-modelers.</strong> A risk-return scatter that an engineer or operator can read is the deliverable. The simulation log is not.</li>
+          </ol>
+        </div>
+        <div class="pillar-list">
+          <h4>How I approach it</h4>
+          <ol>
+            <li><strong>Start with a coarse twin.</strong> Markov or Bayesian-network nodes for subsystems, wired with interactions. Refinement comes after the trade space is understood, not before.</li>
+            <li><strong>Make trade-space exploration a first-class workflow.</strong> Sweep architectures and parameters, rank by Pareto efficiency, drill into the frontier.</li>
+            <li><strong>Decompose resilience.</strong> Passive capacity (margin, redundancy, robust design) and active capacity (repair, reconfigure, mitigate) measure different things and trade off differently.</li>
+            <li><strong>Use cyber-physical loops where stakes warrant.</strong> Hardware-in-the-loop with the rest of the system simulated buys credibility that pure simulation can't.</li>
+            <li><strong>Present results as risk-return.</strong> Mean of value vs. std of value — every candidate is a point, the frontier is what gets chosen from. Hide the simulation; show the decision.</li>
+            <li><strong>Build twins that are testable.</strong> A twin that can't be wrong is a twin that can't be useful. Validate predictions against operational data; quantify residual error.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pillar-topics">
+        <div class="pillar-topics-head">Topics worth understanding</div>
+        <div class="pillar-topics-grid">
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">a</span>
+              <span class="topic-title">What is a digital twin (and what isn't)?</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>A simulator of a real system, updated with operational data, used to predict the system's behavior under conditions you can't directly test. The phrase covers everything from a thermodynamic ODE solver to a deep-network surrogate.</p>
+              <p>The useful question is never "is this a digital twin?" but: <em>what fidelity, what update cadence, what decision is it supporting, and what's its sim-to-real error?</em> Without those answers the term is marketing.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">b</span>
+              <span class="topic-title">Markov / Bayesian models for system behavior</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Discrete states + transition probabilities + observations gets you most of the way for many engineering systems. The art is in the state definition and which transitions are worth modeling.</p>
+              <p>Higher fidelity — continuous-time SDEs, hybrid automata, full physics simulators — buys precision at the cost of tractability and interpretability. For decision support the Markov abstraction is often the sweet spot: fast enough to sweep, faithful enough to rank candidates correctly.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">c</span>
+              <span class="topic-title">Pareto frontiers and how to use them for decisions</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>When two or more objectives conflict, the Pareto frontier is the set of non-dominated trade-offs. Anything off the frontier is strictly worse on at least one axis — those candidates can be eliminated.</p>
+              <p>The decision-maker's job is choosing <em>along</em> the frontier — that's a values question, not a math one. The modeler's job is producing the frontier and characterizing the cost of each move along it.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">d</span>
+              <span class="topic-title">Resilience: passive vs. active capacity</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Most systems engineers conflate "resilience" with "robustness". The decomposition that matters: <em>passive capacity</em> is how much insult the system absorbs without operator action — margins, redundancy, robust design. <em>Active capacity</em> is what operators can do once it's hit — repair, reconfigure, mitigate.</p>
+              <p>They cost differently and fail differently. A system over-invested in passive capacity is heavy and expensive; one over-invested in active capacity needs a sharp operator at all times. The trade is real and worth modeling explicitly.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">e</span>
+              <span class="topic-title">Cyber-physical testing</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Pure simulation is cheap but lies. Pure physical testing is expensive and slow. Cyber-physical splits the difference: real hardware sits in a test cell, the rest of the system is simulated, coupled through sensor and actuator interfaces in real time.</p>
+              <p>The control law sees the hardware's actual response; the simulated environment reacts accordingly. You buy credibility on the parts that matter most without paying the cost of full physical replication.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">f</span>
+              <span class="topic-title">Sim-to-real and twin validation</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>If the twin can't be wrong, it can't be useful. Validation means making predictions that can be checked against later operational data, then quantifying the residual error and where it lives.</p>
+              <p>A twin without a validation regime is a hypothesis dressed up as a tool. The validation pattern that works: predict an outcome before observing it, log the prediction, compare after, attribute residuals to specific subsystems, refine.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="examples-section">
+      <div class="examples-label">Examples from my work</div>
+      <div class="card-grid">
+
+      <details class="card" id="paper-cdcm">
+        <summary>
+          <div class="thumb"><img src="figures/habitat-architecture.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">ASME IDETC · 2022 <span class="role-tag">Co-author</span></div>
+            <div class="card-title">Computational platform for trade studies in deep space habitat systems (CDCM)</div>
+            <p class="card-teaser">Markov subsystem nodes, value metric, risk-return trade studies the way a portfolio manager runs them.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Each subsystem is a coarse input/output Markov node — power, structural, life support,
+            environment, agent, intelligent health management — wired together into configurations.
+            Disturbances drive state transitions; a reflexive health-management subsystem prioritizes
+            recovery actions given limited robotic-agent availability. The output is a value metric
+            decomposing system performance into mission-value and crew-value over the design lifecycle.
+            Then trade studies run as risk-return scatter for every candidate configuration.
+          </p>
+          <figure class="figure">
+            <img src="figures/habitat-architecture.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 4</span> &nbsp; The example habitat as wired Markov nodes. Disturbances (meteorite impact, solar radiation, dust) feed in; agent + IHM (dashed) close the loop with repair and cleaning actions.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/cdcm-trade-study.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Figs. 7–8</span> &nbsp; Trade study outputs as risk-return plots. Mean-of-value vs. std-of-value, colored by candidate parameter. Pareto-efficient designs are the lower-right points.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card" id="paper-pareto">
+        <summary>
+          <div class="thumb"><img src="figures/inspection-pareto-full.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">Natural Hazards · 2020 <span class="role-tag first">First author</span></div>
+            <div class="card-title">A resilience-based method for prioritizing post-event building inspections</div>
+            <p class="card-teaser">Constrained optimization, simulated annealing, and a Pareto frontier that turns triage into a decision rule.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            A resilience-based method for prioritizing post-event building inspections. The method
+            allocates limited inspection resources by ordering buildings to maximize recovery of
+            community function per inspector-hour, with damage-state uncertainty propagated through
+            the prioritization.
+          </p>
+          <figure class="figure">
+            <img src="figures/holiday-beach-field-site.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Field testbed</span> &nbsp; Holiday Beach, Texas — the case-study site after Hurricane Harvey. Each red dot is a building included in the inspection-prioritization study. The right panel shows the kind of post-disaster reconnaissance the method has to schedule against.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/inspection-pareto-full.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 6</span> &nbsp; Decision space framed as a portfolio problem. Each point is an inspection plan; the Pareto frontier is what you'd actually consider. From there it's a risk-preference call.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/inspection-pareto-zoom.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 6 (detail)</span> &nbsp; Zoom on the lower-left of the decision space — where the actual Pareto trade-off lives. The frontier separates risk-averse (top-left) from min-Sharpe (bottom-right) regimes; the colored cloud shows how budget moves you along it.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/cyber-physical-architecture.png" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">ASCE Earth &amp; Space · 2021 <span class="role-tag">Co-author</span></div>
+            <div class="card-title">Role of cyber-physical testing in developing resilient extraterrestrial habitats</div>
+            <p class="card-teaser">Real hardware-in-the-loop coupled to a simulated habitat through sensor/actuator interfaces.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Pure simulation is cheap but lies. Pure physical testing is expensive and slow. Cyber-physical
+            testing splits the difference: real hardware sits in a test cell while the rest of the habitat
+            is simulated in real time, coupled through sensor and actuator interfaces. The control law sees
+            the physical hardware's actual response and the simulated environment reacts accordingly.
+          </p>
+          <figure class="figure">
+            <img src="figures/cyber-physical-architecture.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 3</span> &nbsp; The hybrid loop. Real hardware-in-the-loop on the left, simulated habitat on the right, sensor/actuator interface coupling them in real time.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      </div>
+
+      <details class="pillar-more">
+        <summary>More from this pillar (1)</summary>
+        <div class="card-grid">
+
+          <details class="card">
+            <summary>
+              <div class="thumb"><img src="figures/resilience-design-element.png" alt="" loading="lazy" /></div>
+              <div class="card-summary">
+                <div class="card-meta">AIAA · 2019 <span class="role-tag">Co-author</span></div>
+                <div class="card-title">Resilience-oriented design of extraterrestrial habitat systems</div>
+                <p class="card-teaser">Decompose resilience into what the system absorbs and what operators can do once it's hit.</p>
+              </div>
+              <div class="card-toggle">+</div>
+            </summary>
+            <div class="card-body">
+              <p class="prose">
+                How do you design for resilience without it being a vibes-based adjective? This paper splits
+                the concept into two components: <em>passive capacity</em> (redundancy, margin, robust design)
+                and <em>active capacity</em> (repair, reconfigure, mitigate). Then the case study runs at 90%,
+                63%, and 40% passive capacity to see how the trade space behaves.
+              </p>
+              <figure class="figure">
+                <img src="figures/resilience-design-element.png" alt="" loading="lazy" />
+                <figcaption><span class="figref">Figs. 8–9</span> &nbsp; System performance recovery curves under 90% (left) and 63% (right) passive capacity. The shaded bands are 5/95 percentiles. Different shapes, different stories.</figcaption>
+              </figure>
+            </div>
+          </details>
+
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="pillar-page-nav">
+  <div class="wrap">
+    <a href="detection.html" class="prev">
+      <span class="label">Pillar I</span>
+      <span class="pillar-link-title">Multimodal detection &amp; change detection</span>
+    </a>
+    <a href="recsys.html" class="next">
+      <span class="label">Pillar III</span>
+      <span class="pillar-link-title">Personalization &amp; ranking in production</span>
+    </a>
+    <a href="/" class="home">
+      <span class="label">← Back to home</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; width: 100%;">
+    <span>© Ali Lenjani 2026</span>
+    <span>
+      <a href="https://www.linkedin.com/in/ali-lenjani-34791410a/" target="_blank" rel="noopener">LinkedIn</a>
+      &nbsp;·&nbsp;
+      <a href="https://scholar.google.com/citations?user=vVPC7g0AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/alenjani" target="_blank" rel="noopener">GitHub</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>

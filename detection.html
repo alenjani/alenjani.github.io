@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multimodal detection &amp; change detection — Ali Lenjani</title>
+  <meta name="description" content="Deep-learning systems for automated condition assessment from imagery and other evidence streams — pre/post comparison, anomaly detection, multi-stream fusion. Pillar I of Ali Lenjani's work." />
+  <meta property="og:title" content="Multimodal detection &amp; change detection — Ali Lenjani" />
+  <meta property="og:description" content="The dilemmas, the approach, the technical concepts, and examples from my work." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://alenjani.github.io/detection.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===================== TOP NAV ===================== -->
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="/" class="brand">Ali Lenjani<span class="dot">.</span></a>
+    <nav>
+      <a href="detection.html" class="active">Detection</a>
+      <a href="twins.html">Twins</a>
+      <a href="recsys.html">Recsys</a>
+      <a href="/#about">About</a>
+    </nav>
+    <a href="/#contact" class="cta">Get in touch</a>
+  </div>
+</header>
+
+<!-- ===================== PILLAR I ===================== -->
+<section class="pillar" id="pillar-1">
+  <div class="wrap">
+    <header class="pillar-head">
+      <div class="num-block">I</div>
+      <div>
+        <div class="pillar-eyebrow">Pillar I</div>
+        <h2>Multimodal detection &amp; change detection</h2>
+        <p class="pillar-tag">Deep-learning systems for automated condition assessment from imagery and other evidence streams — pre/post comparison, anomaly and defect detection, multi-stream fusion across heterogeneous data.</p>
+      </div>
+    </header>
+
+    <div class="pillar-frame">
+      <div class="pillar-overview">
+        <p>Detection, classification, and change-detection from imagery — usually with multiple modalities or multiple frames — under the constraint that <strong>the data is yours to collect</strong> and <strong>the deployment is somewhere the model has never seen</strong>.</p>
+        <p>The model is rarely the hard part. What's hard is everything around it: the data pipeline, the alignment of pre/post or multi-view evidence, the calibration of class boundaries with asymmetric costs, the operating threshold the system actually runs at, and the drift you'll see in week three of production that wasn't visible in evaluation.</p>
+        <p>A useful way to read the work below: each example is an answer to <em>"what makes this kind of detection hard in this domain?"</em> — hurricane reconnaissance answers it differently than plant-floor inspection, but the answers fit on the same shelf.</p>
+      </div>
+
+      <div class="pillar-lists">
+        <div class="pillar-list">
+          <h4>What's hard about it</h4>
+          <ol>
+            <li><strong>Drift between training and deployment.</strong> Lighting, viewpoint, sensor, scene composition all change. Most systems fail not because the architecture is wrong but because the training distribution stopped matching reality.</li>
+            <li><strong>Class imbalance with asymmetric costs.</strong> A 99%-accurate defect detector is useless if the 1% it misses are the ones that cost a million dollars.</li>
+            <li><strong>Pre/post or multi-view alignment.</strong> Two views of the same object don't trivially register. Depth-aware homography matters when the scene is 3D — a naive affine transform fails.</li>
+            <li><strong>Decision logic vs. raw model output.</strong> A class probability is not a decision. Threshold choice, hysteresis, multi-shot consensus — that's what turns a model into a system.</li>
+            <li><strong>Custom data collection.</strong> No public dataset matches your deployment surface. You design the collection, including the hard-negative search.</li>
+            <li><strong>Calibration and uncertainty.</strong> Hard labels are easy to ship and easy to misuse. Calibrated probabilities buy you the option to defer ambiguous cases to a human.</li>
+          </ol>
+        </div>
+        <div class="pillar-list">
+          <h4>How I approach it</h4>
+          <ol>
+            <li><strong>Design the data pipeline before the model.</strong> Pose, lighting, occlusion, label quality — solving the data problem buys more performance than any architecture switch.</li>
+            <li><strong>Lean on multi-stream / multi-modal fusion.</strong> A single noisy stream rarely closes the gap; combining noisy streams often does.</li>
+            <li><strong>Treat thresholds as first-class artifacts.</strong> One global threshold leaves signal on the table — per-class, per-condition thresholds are normal in practice.</li>
+            <li><strong>Calibrate, then evaluate at the operating point.</strong> AUC is the wrong number when the deployed threshold is fixed.</li>
+            <li><strong>Build evaluation that mirrors deployment.</strong> Train/val splits that look like the deployment surface predict actual lift; splits that don't, don't.</li>
+            <li><strong>Treat the model as part of a system.</strong> The decision logic, the data pipeline, the monitoring — that's the system; the model is one component.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pillar-topics">
+        <div class="pillar-topics-head">Topics worth understanding</div>
+        <div class="pillar-topics-grid">
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">a</span>
+              <span class="topic-title">Change detection vs. anomaly detection vs. classification</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Three problems people often conflate. <em>Change detection</em> compares two states (pre/post). <em>Anomaly detection</em> asks "is this unusual relative to a background distribution?" <em>Classification</em> asks "which of these N labels?"</p>
+              <p>The same image can answer different questions; how you frame the task determines the data you collect, the labels you produce, and the evaluation that's meaningful. Most production failures come from picking the wrong frame for the problem.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">b</span>
+              <span class="topic-title">Why pre/post alignment is harder than it looks</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Two photos of the same building from different angles, different times, different sensors. An obvious affine transform fails — the geometry of the scene is 3D, not 2D.</p>
+              <p>The work is in the registration: feature matching across viewpoints, depth-aware homography, sometimes triangulation across multiple frames. The classifier downstream is the easy part once the pixels actually correspond. Skipping registration and hoping the network "figures it out" is a recipe for a model that memorizes spurious correlations.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">c</span>
+              <span class="topic-title">Threshold tuning matters more than architecture</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Switching from <code>ResNet-50</code> to <code>ResNet-152</code> typically buys a fraction of a percent. Moving the operating threshold from <code>0.5</code> to whatever the precision-recall curve actually elbows at <em>for your cost asymmetry</em> — that buys a working system.</p>
+              <p>Most teams spend their effort on architecture and forget the threshold; the leverage is reversed. Threshold tuning is a per-class, per-condition exercise, ideally re-run as data drifts.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">d</span>
+              <span class="topic-title">Multi-stream / multi-modal fusion patterns</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p><em>Late fusion</em> (combine class probabilities from each stream) is robust and easy to debug. <em>Early fusion</em> (combine features) is more powerful but easier to break. <em>Probabilistic / Bayesian fusion</em> across heterogeneous evidence is the right move when streams have very different reliability profiles or fail in different ways.</p>
+              <p>The choice depends on how correlated the failure modes of your streams are: if they fail together, fusion buys you nothing; if they fail independently, fusion can lift accuracy substantially.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">e</span>
+              <span class="topic-title">What good data collection looks like</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Cover the deployment surface, not the convenience surface. Label policy that matches the decision boundary you'll actually use at deployment, not whatever's natural to annotate. Hard-negative discovery as part of collection, not an afterthought.</p>
+              <p>The collection plan is half the engineering. A team that spends two months on collection design and one month on modeling almost always beats a team that does the reverse.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">f</span>
+              <span class="topic-title">Calibration in deployed CV</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Sigmoid outputs aren't calibrated probabilities — they're scores that happen to live in <code>[0,1]</code>. Temperature scaling, isotonic regression, or Platt scaling: pick one and use it.</p>
+              <p>A calibrated <code>0.3</code> means something — about 30% of the time, the positive class is true. An uncalibrated <code>0.3</code> means almost nothing, and any decision built on it (e.g., "send to human review if score &gt; 0.3") is a guess dressed up as a rule.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="examples-section">
+      <div class="examples-label">Examples from my work</div>
+      <div class="card-grid">
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/fusion-pipeline.jpg" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">Eng. Structures · 2020 <span class="role-tag first">First author</span></div>
+            <div class="card-title">Pre-event and post-event imagery fusion</div>
+            <p class="card-teaser">Faster R-CNN + depth-aware homography. Fuse Street View pre-event with drone post-event.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            End-to-end pipeline. Input: a building's address. Output: a damage state. Google Street View for
+            pre-event imagery, drone or satellite for post-event, Faster R-CNN to find the building in each
+            frame, a depth model to disambiguate which of several visible buildings is <em>the</em> building,
+            and a homography step to align them. The fusion is the part everyone underestimates — pre-event
+            Street View is sharp but oblique; post-event drone is overhead and noisy; matching them requires
+            a depth-aware registration that the obvious affine transform fails at.
+          </p>
+          <figure class="figure">
+            <img src="figures/harvey-irma-coverage.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Coverage</span> &nbsp; Reconnaissance across Hurricanes Harvey (Texas Gulf Coast) and Irma (Florida) — the field data this pipeline was built and validated against.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/fusion-pipeline.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 1</span> &nbsp; Two parallel streams. Red extracts pre-event imagery from Street View and infers attributes (story count, material, elevation). Blue detects the same building in post-event reconnaissance and infers damage state. They meet at the output.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/pre-post-streetview-pairs.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Pre/post pairs</span> &nbsp; Same buildings, before and after. Left: post-disaster reconnaissance frames. Right: the pre-disaster Google Street View imagery retrieved automatically by the pipeline. The fusion is what turns these pairs into a damage state.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/fusion-pre-stream.png" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 6</span> &nbsp; The pre-event stream in detail. Multi-view fusion across n panoramas: per-image attribute classifier outputs are fused into a single posterior <code>p(c<sub>k</sub>|x<sub>1..n</sub>)</code>. The move that makes it robust to occlusion / glare / wrong-building frames.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/fusion-post-stream.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 7</span> &nbsp; The post-event stream in detail. Overview classifier filters out close-ups; per-image damage classifier emits <code>p(c|x<sub>i</sub>)</code>; information fusion produces <code>p(c|x<sub>1..n</sub>)</code> and a final decision: ND / MD / NMD.</figcaption>
+          </figure>
+          <figure class="figure">
+            <video controls preload="metadata" muted playsinline>
+              <source src="media/panorama-timeline.mp4" type="video/mp4" />
+            </video>
+            <figcaption><span class="figref">Clip 1</span> &nbsp; Historical Street View timeline at one GPS point — pre-event imagery sourcing, in motion.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>
+          <div class="thumb"><img src="figures/panorama-pipeline.jpg" alt="" loading="lazy" /></div>
+          <div class="card-summary">
+            <div class="card-meta">CACAIE · 2019 <span class="role-tag first">First author</span></div>
+            <div class="card-title">Automated building image extraction from 360° panoramas</div>
+            <p class="card-teaser">Panorama-aware detection plus geometric reasoning. The piece that makes pre-event extraction work.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            Panoramas are messy: multiple buildings per frame, occlusions, perspective distortion at the
+            seams. The detector is panorama-aware — it reasons about which face of the sphere corresponds
+            to which side of the street, so the same building doesn't get detected twice across the seam,
+            and the geometry of the camera position constrains which detections are even plausible.
+          </p>
+          <figure class="figure">
+            <img src="figures/streetview-data-collection.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Data source</span> &nbsp; Street View capture vehicle and a representative spherical panorama, plus an aerial of Belaire Dr after Harvey: each red dot is a 360° image GPS location, the red box is the target building. The pipeline starts from this raw Street View input.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/panorama-pipeline.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Fig. 1</span> &nbsp; Twelve-step pipeline. Steps 5–8 are the interesting ones: match 2D features across panoramas, estimate projection matrices, triangulate the building's 3D location, transform from camera frame to GPS frame.</figcaption>
+          </figure>
+          <figure class="figure">
+            <img src="figures/house-detector-rectilinear.jpg" alt="" loading="lazy" />
+            <figcaption><span class="figref">Detector output</span> &nbsp; Once the panorama is reprojected to optimal-angle rectilinear images, a building detector trained on these views localizes the target across all available frames. The earlier steps exist to make this step easy.</figcaption>
+          </figure>
+        </div>
+      </details>
+
+      <details class="card no-thumb">
+        <summary>
+          <div class="thumb"></div>
+          <div class="card-summary">
+            <div class="card-meta">Computer vision · industrial <span class="role-tag first">Shipped</span></div>
+            <div class="card-title">CV on a plant floor that wouldn't stop lying to us</div>
+            <p class="card-teaser">The model trained beautifully and collapsed in prod. The fix was decision logic, not architecture.</p>
+          </div>
+          <div class="card-toggle">+</div>
+        </summary>
+        <div class="card-body">
+          <p class="prose">
+            An end-to-end computer vision inspection framework across multiple CTQ checkpoints —
+            automated defect detection and station health monitoring. Multi-class object detection
+            models in PyTorch, with operational decision logic and inference thresholds tuned to
+            minimize false positives in high-throughput environments.
+          </p>
+          <p class="prose">
+            On the data side: a leakage-safe workflow on GCP/GCS + Label Studio, with targeted
+            hard-negative mining to handle the physical-environment constraints (lighting drift,
+            misalignment, class imbalance).
+          </p>
+        </div>
+      </details>
+
+      </div>
+
+      <details class="pillar-more">
+        <summary>More from this pillar (2)</summary>
+        <div class="card-grid">
+
+          <details class="card">
+            <summary>
+              <div class="thumb"><img src="figures/info-fusion-workflow.png" alt="" loading="lazy" /></div>
+              <div class="card-summary">
+                <div class="card-meta">Eng. Structures · 2022 <span class="role-tag">Co-author</span></div>
+                <div class="card-title">Information fusion to classify post-event building damage state</div>
+                <p class="card-teaser">Per-image probabilities → RC and M lists → iterative thresholding → final damage state.</p>
+              </div>
+              <div class="card-toggle">+</div>
+            </summary>
+            <div class="card-body">
+              <p class="prose">
+                Same problem as the 2020 fusion paper, harder data: the Subject of Interest arrives as
+                <em>a set of images, not one</em>. Per-image classifiers produce class-conditional
+                probabilities for two materials (RC and masonry), then a probability-list filter and an
+                iterative thresholding scheme combine those into a single overall damage state.
+              </p>
+              <figure class="figure">
+                <img src="figures/info-fusion-workflow.png" alt="" loading="lazy" />
+                <figcaption><span class="figref">Fig. 2</span> &nbsp; Three stages: per-image classifier outputs → RC and M probability lists → iterative thresholding criterion (error history converging at K = 0.01).</figcaption>
+              </figure>
+            </div>
+          </details>
+
+          <details class="card">
+            <summary>
+              <div class="thumb"><img src="figures/indoor-localization-overview.png" alt="" loading="lazy" /></div>
+              <div class="card-summary">
+                <div class="card-meta">MDPI Sensors · 2020 <span class="role-tag">Co-author</span></div>
+                <div class="card-title">Automated indoor image localization for post-event assessment</div>
+                <p class="card-teaser">Structure-from-Motion plus a 2D projective transform onto the structural drawing.</p>
+              </div>
+              <div class="card-toggle">+</div>
+            </summary>
+            <div class="card-body">
+              <p class="prose">
+                Indoor images don't get clean GPS. The pipeline runs Structure-from-Motion across a
+                stream of "PathImgs" walked through the building to reconstruct a 3D point cloud and
+                recover camera poses, then aligns the SfM frame onto the structural drawing via a 2D
+                projective transform. Once that map exists, every "InspImg" — the targeted close-up
+                engineers care about — is grounded against a drawing location.
+              </p>
+              <figure class="figure">
+                <img src="figures/indoor-localization-overview.png" alt="" loading="lazy" />
+                <figcaption><span class="figref">Fig. 1</span> &nbsp; Three stages: (a) collect PathImgs and InspImgs, (b) SfM to build a 3D point cloud + camera poses, (c) align onto the drawing via 2D projective transform.</figcaption>
+              </figure>
+            </div>
+          </details>
+
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PILLAR PAGE NAV ===================== -->
+<section class="pillar-page-nav">
+  <div class="wrap">
+    <a href="recsys.html" class="prev">
+      <span class="label">Pillar III</span>
+      <span class="pillar-link-title">Personalization &amp; ranking in production</span>
+    </a>
+    <a href="twins.html" class="next">
+      <span class="label">Pillar II</span>
+      <span class="pillar-link-title">Digital twins &amp; risk-informed decisions</span>
+    </a>
+    <a href="/" class="home">
+      <span class="label">← Back to home</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; width: 100%;">
+    <span>© Ali Lenjani 2026</span>
+    <span>
+      <a href="https://www.linkedin.com/in/ali-lenjani-34791410a/" target="_blank" rel="noopener">LinkedIn</a>
+      &nbsp;·&nbsp;
+      <a href="https://scholar.google.com/citations?user=vVPC7g0AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/alenjani" target="_blank" rel="noopener">GitHub</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
