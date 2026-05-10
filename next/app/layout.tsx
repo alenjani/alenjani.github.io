@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Newsreader, JetBrains_Mono } from "next/font/google";
+import { ViewTransitions } from "next-view-transitions";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Topnav } from "@/components/topnav";
 import { Footer } from "@/components/footer";
@@ -71,22 +72,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${newsreader.variable} ${jetbrainsMono.variable} antialiased`}
-      suppressHydrationWarning
-    >
-      <head>
-        <meta name="logodev-token" content={process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN || ""} />
-        <PersonJsonLd />
-      </head>
-      <body className="min-h-dvh flex flex-col bg-bg text-ink">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Topnav />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html
+        lang="en"
+        className={`${inter.variable} ${newsreader.variable} ${jetbrainsMono.variable} antialiased`}
+        suppressHydrationWarning
+      >
+        <head>
+          <meta name="logodev-token" content={process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN || ""} />
+          <PersonJsonLd />
+        </head>
+        <body className="min-h-dvh flex flex-col bg-bg text-ink">
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Topnav />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

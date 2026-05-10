@@ -1,5 +1,6 @@
 import { Hero } from "@/components/hero";
 import { Proofbar } from "@/components/proofbar";
+import { NowBlock } from "@/components/now-block";
 import { PillarCardPreview } from "@/components/pillar-card-preview";
 import { EmailCopy } from "@/components/email-copy";
 import { PILLARS, PILLAR_ORDER } from "@/lib/pillars";
@@ -9,6 +10,7 @@ export default function Home() {
     <>
       <Hero />
       <Proofbar />
+      <NowBlock />
 
       <section id="work" className="border-b border-line">
         <div className="mx-auto max-w-[1100px] px-8 py-20">
