@@ -133,18 +133,21 @@ export const detectionFieldGuide: FieldGuideContent = {
       domain: "meta.com",
       what: "Promptable segmentation across image and video — point, click, watch the mask track.",
       url: "https://sam2.metademolab.com/",
+      thumb: "/figures/refs/det-sam2.jpg",
     },
     {
       source: "Distill.pub — Feature Visualization",
       domain: "distill.pub",
       what: "Interactive convnet activations; what the network is actually looking at, layer by layer.",
       url: "https://distill.pub/2017/feature-visualization/",
+      thumb: "/figures/refs/det-distill.jpg",
     },
     {
       source: "DINOv2 attention maps",
       domain: "meta.com",
       what: "Self-supervised attention overlays — emergent object segmentation without any labels.",
       url: "https://dinov2.metademolab.com/",
+      thumb: "/figures/refs/det-dinov2.jpg",
     },
     {
       source: "Karpathy — CS231n convnet visualizations",

@@ -160,6 +160,7 @@ export const recsysFieldGuide: FieldGuideContent = {
       domain: "netflix.com",
       what: "The reference industrial-scale offline-eval system; time-travel data + simulated pages compared to actual.",
       url: "https://netflixtechblog.com/page-simulator-fa02069fb269",
+      thumb: "/figures/refs/rcs-netflix.jpg",
     },
     {
       source: "Google Cloud — Two-Tower retrieval architecture",
@@ -184,12 +185,14 @@ export const recsysFieldGuide: FieldGuideContent = {
       domain: "github.com",
       what: "How graph-based ANN actually works under the hood — hierarchical layers and the descent from coarse to fine.",
       url: "https://github.com/nmslib/hnswlib",
+      thumb: "/figures/refs/rcs-hnsw.jpg",
     },
     {
       source: "Eugene Yan — RecSys-LLM convergence diagrams",
       domain: "eugeneyan.com",
       what: "Hand-drawn architecture diagrams for hybrid LLM-recsys patterns; semantic IDs, generative retrieval.",
       url: "https://eugeneyan.com/writing/recsys-llm/",
+      thumb: "/figures/refs/rcs-eugene.jpg",
     },
   ],
 };

@@ -150,36 +150,54 @@ function NotableVisualizationsBlock({ items }: { items: VizItem[] }) {
     <div className="mb-2">
       <h3 className="display-h3 mb-2">Notable visualizations</h3>
       <p className="text-[15px] text-muted max-w-[680px] mb-6">
-        External explainers worth a click — the best work in the field doing the explaining
-        better than I could.
+        External explainers worth a click — the strongest work in the field doing the explaining
+        better than prose could.
       </p>
-      <ul className="border-t border-line max-w-[820px]">
+      <ul className="grid sm:grid-cols-2 gap-4 max-w-[820px]">
         {items.map((it, i) => (
-          <li key={i} className="border-b border-line">
+          <li key={i}>
             <a
               href={it.url}
               target="_blank"
               rel="noopener"
-              className="grid grid-cols-[32px_minmax(0,1fr)_auto] gap-4 items-center py-4 hover:pl-1 transition-[padding] group"
+              className="group block bg-surface border border-line rounded-[12px] overflow-hidden transition-[border-color,transform] duration-150 hover:border-accent hover:-translate-y-px"
             >
-              <span className="shrink-0">
-                {it.domain ? (
-                  <BrandMark domain={it.domain} size={22} className="rounded-[3px]" />
+              <div className="aspect-[16/9] bg-surface-2 overflow-hidden">
+                {it.thumb ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={it.thumb}
+                    alt={it.source}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
                 ) : (
-                  <span className="inline-block w-[22px] h-[22px] rounded-[3px] bg-surface-2" />
+                  <div className="w-full h-full flex items-center justify-center">
+                    {it.domain ? (
+                      <BrandMark domain={it.domain} size={48} className="rounded-[6px]" />
+                    ) : (
+                      <span className="font-mono text-[12px] text-muted-2">no preview</span>
+                    )}
+                  </div>
                 )}
-              </span>
-              <div className="min-w-0">
-                <div className="text-[15.5px] font-semibold text-ink group-hover:text-accent transition-colors">
+              </div>
+              <div className="p-4">
+                <div className="flex items-center gap-2 mb-1.5">
+                  {it.domain && (
+                    <BrandMark domain={it.domain} size={16} className="rounded-[3px]" />
+                  )}
+                  <span className="text-[13px] font-mono text-muted">
+                    {it.domain || "external"}
+                  </span>
+                  <span className="ml-auto font-mono text-[11px] text-muted-2 group-hover:text-accent transition-colors">
+                    Visit →
+                  </span>
+                </div>
+                <div className="text-[15px] font-semibold text-ink group-hover:text-accent transition-colors mb-1.5 leading-snug">
                   {it.source}
                 </div>
-                <div className="text-[13.5px] text-muted leading-snug mt-0.5">
-                  {it.what}
-                </div>
+                <p className="text-[13.5px] text-muted leading-snug">{it.what}</p>
               </div>
-              <span className="font-mono text-[11px] text-muted-2 shrink-0 group-hover:text-accent transition-colors">
-                Visit →
-              </span>
             </a>
           </li>
         ))}

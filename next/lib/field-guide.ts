@@ -32,6 +32,8 @@ export type VizItem = {
   /** One-line tease of what you'll see */
   what: string;
   url: string;
+  /** Optional path to a local thumbnail under /public, e.g. "/figures/refs/det-sam2.jpg" */
+  thumb?: string;
 };
 
 export type FieldGuideContent = {
