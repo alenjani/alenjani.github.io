@@ -16,8 +16,8 @@ export const PILLARS: Record<PillarId, PillarMeta> = {
   detection: {
     id: "detection",
     num: "I",
-    title: "Multimodal detection & change detection",
-    tag: "Deep-learning systems that fuse imagery and other evidence streams to produce reliable detections, classifications, and risk scores under real-world data constraints.",
+    title: "Visual inspection in the wild",
+    tag: "Deep-learning systems that inspect, classify, and detect change in real-world imagery — multimodal fusion, custom data collection, calibrated decisions under noisy conditions.",
     slug: "detection",
     href: "/detection",
     thumb: { src: "/figures/fusion-pipeline.jpg", alt: "Pre/post imagery fusion pipeline" },

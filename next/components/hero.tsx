@@ -12,11 +12,11 @@ export function Hero() {
           <h1 className="display-h1 text-ink mb-6">Ali Lenjani</h1>
           <p className="text-[20px] md:text-[22px] leading-[1.45] text-muted max-w-[640px] mb-8 [&_strong]:text-ink [&_strong]:font-semibold">
             Production ML where ranking, detection, and decisions have to
-            survive real-world data. Three lanes: <strong>recommender systems
-            and ranking evaluation</strong> at scale, <strong>multimodal
-            vision and change-detection</strong> across noisy collection
-            pipelines, <strong>digital-twin and trade-space modeling</strong>
-            for complex coupled systems.
+            survive real-world data. Three lanes: <strong>visual inspection
+            in the wild</strong> across noisy collection pipelines,{" "}
+            <strong>digital twins and trade-space modeling</strong> for
+            complex coupled systems, and <strong>personalization and
+            ranking systems</strong> in production.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link
