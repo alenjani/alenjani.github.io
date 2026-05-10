@@ -15,7 +15,7 @@ export function PillarLists({
   return (
     <div className="md:ml-[160px] max-w-[820px] mt-9 pt-7 border-t border-line grid md:grid-cols-2 gap-8">
       <PillarList title="What's hard" items={hard} />
-      <PillarList title="What I focus on" items={approach} />
+      <PillarList title="What works" items={approach} />
     </div>
   );
 }

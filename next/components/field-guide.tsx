@@ -6,7 +6,7 @@ export function FieldGuide({ content }: { content: FieldGuideContent }) {
     <section className="mt-16 pt-12 border-t-2 border-line">
       <div className="eyebrow eyebrow-accent mb-2">Field guide</div>
       <p className="text-[15.5px] text-muted leading-snug max-w-[680px] mb-9">
-        Open questions in this lane, the reading I'd point a serious newcomer to, and external
+        Open questions in this lane, the strongest reading for going deeper, and external
         visualizations worth a click. Last reviewed {content.lastReviewed}.
       </p>
 
