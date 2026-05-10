@@ -1,236 +1,319 @@
-# Next.js Migration Plan — alenjani.github.io
+# Next.js Migration & Site Upgrade Plan
 
-Working doc. Review and lock the open decisions before Phase 0 starts.
+This is the moment to do it right — not a 1:1 port. Migration = framework upgrade **+** design refresh **+** content revisit, executed together so we don't re-litigate later.
+
+Lock the open decisions before Phase 0 starts.
 
 ---
 
 ## Goals
 
-1. **Move from static HTML+CSS+vanilla-JS** (4 hand-written HTML files, 1 CSS file, 1 JS file) **to Next.js** so we can:
-   - Reuse components (topnav, footer, pillar header, topic accordion, card)
-   - Type-check everything (TypeScript)
-   - Optimize images (next/image)
-   - Optionally use server-side features later (Brand Search API with `sk_` key, MCP integrations, dynamic OG images)
-   - Lean on the UI/UX Pro Max skill's Next.js + shadcn guidance
-
-2. **Preserve the locked positioning and content.** No re-litigation of pillar names, hero copy, topic explainers, or examples. Migration is structural, not a re-write.
-
-3. **Preserve URLs.** `/` → home, `/detection` → Pillar I, `/twins` → Pillar II, `/recsys` → Pillar III. Existing deep-link patterns continue working (`#about`, `#contact`).
+1. **Migrate the framework** to Next.js 15 (App Router) + TypeScript + Tailwind + shadcn/ui — modern, idiomatic, future-proof, ready for the eventual Brand Search / sk_-key / API-route work.
+2. **Refresh the design** to a more distinctive editorial-research register. The current site is already coherent but uses generic indigo + Inter-only — we can push it to a register that visually says "senior research practitioner" the moment a buyer lands.
+3. **Revisit the content** while we're in the file anyway: sharpen pillar tags, write the Stanford card, add the first 2–3 industry references (Etsy / Pinterest / Spotify / OpenAI / Anthropic on relevant topics), tighten any prose that drifted long.
+4. **Production hygiene** — Lighthouse 100s where possible, WCAG AA across all components, JSON-LD structured data, sitemap.xml, robots.txt, OG images, View Transitions API.
 
 ## Non-goals
 
-- New content pillars or new topic explainers (separate work)
-- Server-side rendering of database-backed content (we're a static portfolio)
-- Authentication / accounts / dashboards
-- E-commerce / payments
-- Marketing automation / analytics beyond the lightest possible
+- New pillars. The three are locked.
+- New features beyond what's clearly useful (e.g., no contact form, no calendar booking, no testimonials wall — see locked tone in `POSITIONING.md`).
+- Auth, accounts, payments, e-commerce.
+- A blog / writing route in Phase 1. (Could be added in Phase 6 if you want — see Open Decision N.)
 
-## Locked design intent (do not drift)
+## Locked from `POSITIONING.md` (do not drift)
 
-From `POSITIONING.md` (already locked):
-- **Tone:** quiet authority. Identity-forward. Dry, technical, precise. *"The page IS the marketing precisely because it doesn't look like marketing."*
-- **Three pillars:** I. Detection · II. Twins · III. Personalization
-- **Per-pillar shape:** overview → dilemmas → approach → topic explainers → examples-from-my-work
-- **Visuals:** single accent color, real artifacts not stock illustrations, large editorial typography, no marketing-funnel widgets
-
-UI/UX Pro Max style families that match this intent: **Swiss Modernism 2.0**, **Exaggerated Minimalism**, **Editorial Grid / Magazine** — all reinforce the editorial-research register.
+- Three pillars: I. Detection · II. Twins · III. Personalization (names final).
+- Tone: quiet authority. Identity-forward. Dry, technical, precise. *"The page IS the marketing precisely because it doesn't look like marketing."*
+- Per-pillar shape: `overview → dilemmas → approach → topic explainers → examples-from-my-work`.
+- No marketing-funnel widgets, no testimonials, no booking links, no inflated metrics.
+- Email is the contact channel; click-to-copy widget stays.
+- Proof bar (Stanford / NASA / Purdue·RETHi) — earned credibility, official wordmarks stay.
 
 ---
 
-## Tech stack (proposal)
+## Tech stack (locked unless you say otherwise)
 
 | Concern | Choice | Why |
 |---|---|---|
-| Framework | **Next.js 15 (App Router)** | Skill recommends App Router; matches modern best practice |
-| Language | **TypeScript** | Type-checks the content schema (pillar metadata, topic IDs, etc.) |
-| Styling | **Tailwind CSS** + CSS variables for design tokens | Skill recommends; tokens map cleanly from current `style.css` `:root` vars |
-| Component library | **shadcn/ui** | Skill recommends; ships unstyled-default Radix primitives we copy into the repo. Use `Accordion` for topic explainers, `Button`, `Separator`, `Card` |
-| Content for topic explainers | **MDX** via `@next/mdx` | Topic bodies are 100–200 word chunks of prose; MDX lets you write them as Markdown with embedded JSX (e.g. for `<TopicRef>` callouts and `<code>` snippets) |
-| Images | **next/image** + `figures/` moved to `public/figures/` | Auto-optimized, lazy-loaded |
-| Dark mode | **next-themes** | Wraps `prefers-color-scheme`; enables system + manual toggle |
-| Fonts | **next/font** with Inter + JetBrains Mono | Self-hosted, no FOUT, no external request to fonts.googleapis |
-| Brand marks | small `<BrandMark>` component wrapping `img.logo.dev` | Replaces current `data-logo-domain` hydration; reads `NEXT_PUBLIC_LOGO_DEV_TOKEN` at build time |
-| Analytics | **None initially**; if later, Plausible or Vercel Analytics (privacy-friendly) | Quiet-authority site doesn't need tracking |
-
-## Why this stack and not something simpler
-
-- **Vite + React** would also work and is lighter, but you'd reinvent Next's image optimization, font handling, MDX integration, file-based routing, and (later) API routes. Next is the right call given the explicit goal "best practices like Next.js and React."
-- **Astro** is excellent for content-heavy sites and arguably *better* than Next for this exact use case (pillar pages with mostly static content, minimal client JS). It's a real alternative — see *Open Decision A* below.
-- **Pure shadcn + Tailwind without MDX** keeps content in JSX files. Faster to migrate, harder to edit. MDX is the right call for the long-form topic explainers; everything else stays in TSX.
+| Framework | **Next.js 15 App Router** | Skill recommends; future-proof |
+| Language | **TypeScript** | Type-checks pillar metadata, content schema, brand-mark props |
+| Styling | **Tailwind CSS** + design-token CSS variables | Tokens map cleanly from current `style.css` `:root` vars |
+| UI primitives | **shadcn/ui** | Skill recommends; copy-into-repo (we own + customize) |
+| Long-form content | **MDX** via `@next/mdx` | Topic explainers as Markdown with embedded JSX (`<TopicRef>`, `<code>`) |
+| Images | **next/image** + `public/figures/` | Auto-optimized, lazy-loaded |
+| Fonts | **next/font** (locally hosted, no FOUT) | Fonts: see Open Decision E |
+| Theme | **next-themes** for system + manual light/dark toggle | Editorial sites benefit from dark-mode option |
+| Brand marks | `<BrandMark>` component wrapping `img.logo.dev` (publishable token from `NEXT_PUBLIC_LOGO_DEV_TOKEN`) | Already wired in static; same pattern in Next |
+| Page transitions | **View Transitions API** + `next-view-transitions` | Smooth pillar→pillar nav; reduced-motion-respectful |
+| Structured data | **JSON-LD** (`Person` schema, `Article` for pillar pages) | SEO + LinkedIn/Google rich results |
+| OG images | **`opengraph-image.tsx`** (file convention) | Auto-generated per-route social cards |
+| Analytics | **None initially**; later Plausible if needed | Quiet-authority site doesn't need tracking |
+| Hosting | **Vercel** (recommended; see Open Decision A) | Native Next host, server-side later |
 
 ---
 
-## Hosting decision matrix (Open Decision B)
+## Design refresh — proposed direction (skill-grounded)
 
-| Option | Pros | Cons |
-|---|---|---|
-| **Vercel (recommended)** | Native Next.js host. Free tier covers this site easily. Server-side features available later (sk_ key, Brand Search, dynamic OG). Branch previews. Edge functions. Custom domain free. | New URL (`alenjani.vercel.app` until DNS); requires Vercel account |
-| **GitHub Pages with `output: 'export'`** | URL stays `alenjani.github.io`; current Pages config keeps working | No server-side features. `next/image` requires custom loader (or you skip it). Slightly clunkier. |
-| **Cloudflare Pages** | Generous free tier; fast edge | Less Next.js-specific tooling than Vercel |
+The UI/UX Pro Max skill, queried with `"senior research practitioner consulting editorial swiss minimalism quiet authority technical writing"`, returns:
 
-My recommendation: **Vercel.** The future Brand Search / sk_ key / API route work is much easier with Vercel; preview deployments per PR will be useful for the inevitable copy iteration. Domain can be customized later (you have `nropy.com` and `leansupplai.com` already in your logo.dev allowed list — could one of them become the canonical home, or do we want to pick up something like `alilenjani.com`?).
+- **Pattern:** *Trust & Authority + Minimal* — exactly the register we want.
+- **Suggested palette:** Authority Navy `#0F172A` primary, slate `#334155` secondary, warm gold `#CA8A04` accent, off-white `#F8FAFC` background.
+- **Style avoid-list:** AI purple/pink gradients (your current `#4f46e5` accent leans that way), generic content, decorative animation.
 
-If we go Vercel, we can keep `alenjani.github.io` as a redirect (the old static files keep serving; we add a `<meta http-equiv="refresh">` or DNS-level redirect). Or we can just leave it dormant.
+### What I propose to change visually
+
+| Element | Current | Proposed | Why |
+|---|---|---|---|
+| **Accent color** | Indigo `#4f46e5` (generic SaaS) | Authority Navy `#0F172A` for primary + warm Gold `#CA8A04` accent | Distinct from every recsys/SaaS template; signals editorial seriousness |
+| **Typography pairing** | Inter (UI) + Inter (display) + JetBrains Mono | **Newsreader** (display, editorial serif) + **Inter** (body/UI) + **JetBrains Mono** (eyebrows, code, numerals) — or *Söhne / Untitled Sans* if we go subscription | Adds editorial weight to headings without crowding UI |
+| **Display sizes** | H1 clamp(48–92px) | H1 clamp(56–120px) with tighter `letter-spacing: -0.04em` | Real editorial scale, not safe-default |
+| **Eyebrows** | Mono uppercase, accent-colored | Same, but smaller and gold-accented | Refined, not loud |
+| **Hero layout** | 1fr + 320px portrait, side-by-side | More editorial: very large name, lede flows below, portrait floats inline at smaller scale (or moves to footer-of-hero) | Lets the *name* be the visual anchor; current hero feels "card-shaped" |
+| **Pillar cards (home)** | Image + num + title + tag + CTA, 3-up | Same 3-up but with a serif numeral, more typography, less padding around image | More editorial chrome |
+| **Pillar deep-dive header** | Roman num + title + tag, 88px num column | Larger Roman num as decorative element, title in serif | Hero of the pillar page |
+| **Topic accordion** | HTML `<details>` with custom CSS | shadcn Accordion with refined chrome (no rounded-lg, more typographic) | Better keyboard a11y, animation-aware |
+| **Cards** | Same | Slightly tighter; show role tag in mono accent | Editorial polish |
+| **Page transitions** | None | View Transitions API for pillar→pillar nav | Modern best practice; respects reduced-motion |
+| **Dark mode** | System-only (one accent doesn't quite work in dark) | System + manual toggle, tokens designed for both modes | Critical for editorial sites; many readers prefer dark |
+| **Spacing scale** | Mixed (lots of `28px`, `36px`) | 4/8 system: `4 8 12 16 24 32 48 64 96 128` exclusively | Consistency = perceived quality |
+| **Borders & shadows** | Generic | Per-token (e.g. `--border-subtle`, `--border-strong`) | Token-driven theming |
+
+### What stays the same
+
+- Information architecture (4 pages: home + 3 pillars)
+- The three-pillar narrative shape (overview → dilemmas → approach → topics → examples)
+- Click-to-copy email pattern
+- Real institutional logos in proof bar
+- Industry-reference callout pattern (Netflix Page Simulator + future ones)
 
 ---
 
-## Open decisions (lock these before I start coding)
+## Content revisits — proposed scope
 
-- [ ] **A. Framework** — *Next.js* (default, what you asked for) vs. *Astro* (arguably better for this content type, less JS shipped to client). My recommendation: **Next.js** since you said it explicitly. Astro is the smarter answer if minimum-bundle-size matters more than ecosystem familiarity.
-- [ ] **B. Hosting** — *Vercel* (recommended), *GitHub Pages static export*, or *Cloudflare Pages*.
-- [ ] **C. Domain** — keep `alenjani.github.io`, or move to `nropy.com` / `leansupplai.com` / a new `.com`? (DNS work is yours; I just need to know the canonical domain for OG tags, sitemap, robots.txt.)
-- [ ] **D. shadcn/ui** — yes (recommended) or build primitives from scratch?
-- [ ] **E. MDX for topic explainers** — yes (recommended; easier to edit later) or keep them inline in TSX?
-- [ ] **F. Component library color tokens** — keep current accent purple `#4f46e5` or switch to a different accent (tie-in with new positioning, e.g., a more editorial blue/charcoal)?
-- [ ] **G. Migration approach** — *in-place* (replace current files in main; one big PR) vs. *parallel-then-cutover* (build under `next/` subdirectory or `feature/nextjs` branch, cut over when done). My recommendation: **branch + cutover** so the live site stays untouched until we're ready.
-- [ ] **H. Dark mode** — system-only (`prefers-color-scheme`) or manual toggle in topnav too?
+### Sharpen
+
+- **Hero lede.** Current: 60-word run-on naming all three pillars inline. Proposed: 2 short sentences. Sentence 1 = identity. Sentence 2 = the three pillars as a parallel list. Still preserves *"production ML where ranking, detection, and decisions have to survive real-world data."*
+- **About paragraph 2.** Current restates the three pillars with the same words as the hero. Proposed: drop the listing (the hero + pillar pages already do that) and replace with one paragraph about the *posture* — what makes the way you work distinctive across all three.
+- **Pillar tags** (the `pillar-tag` 1-liner under each title). Current ones are good but could be tighter — each should be one strong sentence, not a list.
+
+### Add
+
+- **Stanford global-health card** in Pillar I (currently a placeholder; you flagged this in the original positioning round). I'll need 3–5 sentences from you on *what was actually built*. See Open Decision F.
+- **Industry references** in 2–3 topic explainers per pillar. Concrete starting set:
+  - Pillar I: *industrial CV* topic → Roboflow / Lambda Labs case studies. *Multi-stream fusion* topic → Tesla/Waymo / DJI / Wing perception stack pieces.
+  - Pillar II: *cyber-physical testing* topic → DARPA / NASA RETHi public docs. *Pareto* topic → operations-research classics or Goldman / BlackRock public quant pieces.
+  - Pillar III: *counterfactual sim* already has Netflix. Add *LLM-as-judge* → Anthropic / OpenAI evals papers; *Two-tower* → Pinterest/Etsy retrieval engineering posts; *Hard-negative mining* → Spotify / YouTube engineering blog.
+- **`Now` block** at the bottom of the home page (an [nownownow.com](https://nownownow.com/about)-style "what I'm working on right now" line, dated). Tiny but high-signal for buyers checking if you're active.
+- **CV / Resume PDF** download in the contact section (`/cv.pdf`).
+- **JSON-LD structured data** (`Person`, `Article`) — invisible content, but real SEO value.
+
+### Don't add (unless you push back)
+
+- A `/writing` or `/blog` route. Real writing makes a real difference, but maintaining a blog is a commitment. If you want one, see Open Decision N.
+- A `/projects` route separate from pillars. Pillars are projects.
+- Testimonials, case studies (in the marketing sense), client logos beyond the earned proof bar.
 
 ---
 
-## Proposed file structure (post-migration)
+## Proposed file structure
 
 ```
 alenjani.github.io/
 ├── app/
-│   ├── layout.tsx              # Root layout: <html>, <body>, fonts, theme provider
-│   ├── page.tsx                # Home (hero · proof bar · pillar cards · about · contact)
-│   ├── detection/page.tsx      # Pillar I deep-dive
-│   ├── twins/page.tsx          # Pillar II deep-dive
-│   ├── recsys/page.tsx         # Pillar III deep-dive
-│   ├── globals.css             # Tailwind directives + design-token CSS variables
-│   ├── opengraph-image.tsx     # Auto-generated OG image for all pages (file convention)
-│   └── icon.svg                # favicon
+│   ├── layout.tsx                  # Root layout: <html>, <body>, fonts, theme + transitions provider
+│   ├── page.tsx                    # Home (hero · proof bar · pillar cards · now · about · contact)
+│   ├── detection/page.tsx          # Pillar I deep-dive
+│   ├── twins/page.tsx              # Pillar II deep-dive
+│   ├── recsys/page.tsx             # Pillar III deep-dive
+│   ├── globals.css                 # Tailwind directives + design-token CSS variables
+│   ├── opengraph-image.tsx         # Default OG (used as fallback)
+│   ├── detection/opengraph-image.tsx  # per-pillar OG variants
+│   ├── twins/opengraph-image.tsx
+│   ├── recsys/opengraph-image.tsx
+│   ├── icon.svg
+│   ├── apple-icon.png
+│   ├── robots.ts                   # robots.txt at build time
+│   └── sitemap.ts                  # sitemap.xml at build time
 │
 ├── components/
 │   ├── topnav.tsx
 │   ├── footer.tsx
 │   ├── hero.tsx
 │   ├── proofbar.tsx
-│   ├── pillar-card-preview.tsx     # Home tile linking to a pillar page
-│   ├── pillar-page.tsx             # Full-pillar layout: header+frame+examples+nav
+│   ├── now-block.tsx               # New: "currently working on" 2-liner
+│   ├── pillar-card-preview.tsx
+│   ├── pillar-page.tsx             # Wraps a pillar page's full layout
 │   ├── pillar-header.tsx
 │   ├── pillar-overview.tsx
-│   ├── pillar-lists.tsx            # Two-column "what's hard" / "how I approach"
-│   ├── pillar-topics.tsx           # Wraps the Accordion of topic explainers
-│   ├── topic.tsx                   # AccordionItem with topic-num, title, body
-│   ├── topic-ref.tsx               # The styled "See also" callout
+│   ├── pillar-lists.tsx
+│   ├── pillar-topics.tsx
+│   ├── topic.tsx                   # Single AccordionItem
+│   ├── topic-ref.tsx
 │   ├── examples-section.tsx
-│   ├── work-card.tsx               # Expandable card (paper or shipped)
-│   ├── pillar-page-nav.tsx         # Prev / next / home strip at bottom of pillars
-│   ├── email-copy.tsx              # Click-to-copy email
-│   └── brand-mark.tsx              # logo.dev wrapper
+│   ├── work-card.tsx               # Renamed from "card"
+│   ├── pillar-page-nav.tsx
+│   ├── email-copy.tsx
+│   ├── brand-mark.tsx              # logo.dev wrapper
+│   ├── theme-toggle.tsx            # Sun/moon button in topnav
+│   └── ui/                         # shadcn primitives go here
+│       ├── accordion.tsx
+│       ├── button.tsx
+│       ├── separator.tsx
+│       └── ...
 │
 ├── content/
-│   ├── pillars.ts                  # Pillar metadata: id, num, title, tag, slug
+│   ├── pillars.ts                  # Pillar metadata: id, num, title, tag, slug, route
+│   ├── now.ts                      # The current "now" line (one place to edit)
 │   ├── detection/
 │   │   ├── overview.mdx
 │   │   ├── topics/
 │   │   │   ├── 01-change-vs-anomaly.mdx
 │   │   │   ├── 02-prepost-alignment.mdx
-│   │   │   └── ...
+│   │   │   ├── ...
 │   │   └── examples/
 │   │       ├── prepost-fusion.mdx
 │   │       ├── panorama-extraction.mdx
-│   │       └── ...
+│   │       ├── industrial-cv.mdx
+│   │       └── stanford-global-health.mdx   # NEW — needs your input
 │   ├── twins/...                   # same shape
-│   └── recsys/...
+│   └── recsys/...                  # same shape, plus refs/ for industry citations
 │
 ├── lib/
 │   ├── content.ts                  # Read MDX content from filesystem
-│   ├── logodev.ts                  # Build img.logo.dev URLs
-│   └── pillars.ts                  # Helper to load pillar metadata
+│   ├── logodev.ts                  # Build img.logo.dev URLs (typed)
+│   ├── pillars.ts                  # Pillar metadata helpers
+│   └── jsonld.ts                   # JSON-LD generators for Person / Article
 │
 ├── public/
 │   ├── figures/                    # Existing figures, moved
 │   ├── logos/                      # Stanford / NASA / Purdue SVGs
 │   ├── headshot.jpg
+│   ├── cv.pdf                      # NEW — drop your CV here
 │   └── favicon.ico
 │
 ├── styles/
-│   └── tokens.css                  # Design tokens (CSS vars; mirrored in tailwind.config.ts)
+│   └── tokens.css                  # CSS custom properties; mirrored in tailwind.config.ts
 │
-├── next.config.ts
+├── next.config.ts                  # Includes @next/mdx + view transitions
 ├── tailwind.config.ts
 ├── tsconfig.json
 ├── package.json
 ├── .env.local                      # NEXT_PUBLIC_LOGO_DEV_TOKEN (gitignored)
-├── .env.example                    # Documents what env vars to set
+├── .env.example                    # Documents env vars
 ├── README.md
-└── (legacy)
-    ├── index.html, detection.html, twins.html, recsys.html  # Kept until cutover, then deleted
-    ├── style.css
-    ├── assets/js/logodev.js
-    └── .claude/, figures/, etc. — all preserved
+├── POSITIONING.md                  # Existing positioning doc, kept
+├── MIGRATION.md                    # This file
+└── (legacy)                        # Static files, deleted at cutover
 ```
 
 ---
 
 ## Phased plan
 
-### Phase 0 — Plan approval & scaffold (0.5 day)
+Estimates assume focused work, not calendar days.
 
-**Wait for the open decisions above to be locked.** Then:
+### Phase 0 — Decisions & scaffold (0.5 day)
+
+**Wait for the open decisions to be locked.** Then:
 
 1. Create branch `feature/nextjs-migration`
-2. `npx create-next-app@latest .` with TypeScript, Tailwind, App Router, src dir disabled
-3. Install: `next-themes`, `@next/mdx`, `clsx`, `lucide-react` (for icons), shadcn CLI
-4. Configure Tailwind to mirror current design tokens (read `style.css` `:root` vars; map to `tailwind.config.ts` theme.extend.colors)
-5. Add fonts via `next/font` (Inter + JetBrains Mono, locally hosted)
+2. `npx create-next-app@latest` with TypeScript, Tailwind, App Router
+3. Install: `next-themes`, `@next/mdx`, `next-view-transitions`, `clsx`, `lucide-react`
+4. Init shadcn (`npx shadcn@latest init`); add Accordion, Button, Separator, ThemeToggle primitives
+5. Configure design tokens in `styles/tokens.css` + `tailwind.config.ts` (Authority Navy / Gold / Newsreader / Inter)
 6. Set up `.env.local` and `.env.example`
 
-**Outcome:** clean Next 15 + Tailwind + shadcn project, dark/light tokens working, no content yet.
+**Outcome:** clean scaffold with new tokens, dark/light working, no content yet.
 
-### Phase 1 — Layout, components, home page (1 day)
+### Phase 1 — Layout + home (1 day)
 
-1. Build `app/layout.tsx` with topnav + footer
-2. Build `<Topnav>`, `<Footer>` components
-3. Build `<Hero>`, `<Proofbar>`, `<EmailCopy>` components
-4. Build home page (`app/page.tsx`) end-to-end with the locked copy
-5. Build `<PillarCardPreview>` component for the 3-card grid
-6. Verify visual parity with current `index.html`
+1. Build `<Topnav>`, `<Footer>`, `<ThemeToggle>` components
+2. Build `<Hero>` (revised editorial layout)
+3. Build `<Proofbar>` (existing logos, refined chrome)
+4. Build home page (`app/page.tsx`)
+5. Build `<PillarCardPreview>` for the 3-card grid
+6. Add `<NowBlock>` and `<EmailCopy>`
 
-**Outcome:** `/` is migrated and pixel-close to current.
+**Outcome:** `/` migrated, refreshed visually, ready to demo.
 
-### Phase 2 — Pillar page shell (1 day)
+### Phase 2 — Pillar shell (1 day)
 
-1. Build `<PillarPage>`, `<PillarHeader>`, `<PillarFrame>`, `<PillarLists>`, `<PillarTopics>`, `<Topic>`, `<TopicRef>`, `<ExamplesSection>`, `<WorkCard>`, `<PillarPageNav>` components
+1. Build `<PillarPage>` and all pillar sub-components
 2. Use shadcn `<Accordion>` for `<PillarTopics>`
-3. Wire pillar metadata (`content/pillars.ts`)
+3. Wire `content/pillars.ts` metadata
+4. Stub all three pillar pages with placeholder content
 
-**Outcome:** Component library complete; ready to wire content.
+**Outcome:** Component library complete; pillar pages render with placeholders.
 
-### Phase 3 — Content migration (1 day)
+### Phase 3 — Content migration + sharpening (1.5 days)
 
-1. Extract topic explainers from `detection.html` / `twins.html` / `recsys.html` into MDX files (one per topic, ~6–8 per pillar)
-2. Extract example cards into MDX files (one per example, 3–5 per pillar)
-3. Build `lib/content.ts` to read MDX from filesystem at build time
-4. Wire each pillar page to its content directory
-5. Verify visual parity with current `detection.html` / `twins.html` / `recsys.html`
+1. Extract topic explainers to MDX (one per topic, ~6–8 per pillar)
+2. Extract example cards to MDX (one per example, 3–5 per pillar)
+3. **Sharpen:** rewrite hero lede, About paragraph 2, all pillar tags
+4. **Add:** Stanford global-health card (requires your input — see Open Decision F)
+5. **Add:** first round of industry references (2–3 per pillar; I'll draft, you approve)
 
-**Outcome:** All three pillar pages rebuilt as Next.js pages; content lives in MDX.
+**Outcome:** All three pillar pages rebuilt as Next.js pages; content lives in MDX; refreshed copy.
 
-### Phase 4 — Integrations & polish (0.5 day)
+### Phase 4 — Polish, perf, a11y (0.5 day)
 
-1. `<BrandMark>` component wrapping `img.logo.dev` with the publishable token from env
-2. Dark-mode polish (test all components)
-3. `next/image` migration for figures
-4. Open Graph image (auto-generated via `app/opengraph-image.tsx`)
-5. Lighthouse pass (perf, a11y); fix issues
+1. `<BrandMark>` component using `NEXT_PUBLIC_LOGO_DEV_TOKEN`
+2. View Transitions API wired to pillar nav
+3. JSON-LD `Person` + per-page `Article` data
+4. `app/sitemap.ts` and `app/robots.ts`
+5. Per-page OG image generation (`opengraph-image.tsx`)
+6. Lighthouse pass — target 100s for Performance, A11y, Best Practices, SEO
 
-**Outcome:** Production-ready Next.js site, faster than current.
+**Outcome:** Production-ready, all green.
 
 ### Phase 5 — Deploy & cutover (0.5 day)
 
-1. Deploy preview to Vercel (or chosen host) from feature branch
-2. Verify all pages, all anchors, all logos render
-3. Merge to main
-4. Update DNS / GitHub Pages settings
-5. Delete legacy HTML/CSS/JS files in a follow-up commit
-6. Update `README.md` with the new build/dev workflow
+1. Deploy preview to Vercel from the feature branch
+2. Verify all pages, anchors, logos, transitions
+3. Update logo.dev allowed domains for the chosen production domain
+4. Merge to main
+5. Move legacy static files to `legacy/` (one commit), then delete (next commit)
+6. Update `README.md` with new dev workflow
 
-**Outcome:** New site is live; old static files removed from main.
+**Outcome:** New site live; old artifacts removed.
 
-**Total: ~3.5 working days of focused work.**
+### Phase 6 (optional, later) — `/writing` or `/now-page`
+
+If you want a writing/notes route, add it after cutover. Trivial to add later (one new MDX directory + one new route).
+
+**Total: ~5 working days of focused work** (was 3.5 before; the design refresh + content sharpening adds ~1.5 days).
+
+---
+
+## Open decisions — lock these before I start
+
+### Critical (block Phase 0)
+
+- [ ] **A. Hosting** — *Vercel* (my pick), GitHub Pages static export, or Cloudflare Pages?
+- [ ] **B. Domain** — keep `alenjani.github.io`, or move to `nropy.com` / `leansupplai.com` / something new (`alilenjani.com`)? I need this for OG / sitemap / canonical URLs and to update logo.dev allowed-domains.
+- [ ] **C. Migration approach** — *branch + cutover* (my pick) vs in-place. Branch keeps the live site untouched until ready.
+
+### Design direction (block Phase 1)
+
+- [ ] **D. Accent palette** — go with the skill-recommended *Authority Navy + Gold* (my pick), keep current indigo, or pick something else (deep editorial blue, burgundy, forest green)?
+- [ ] **E. Typography pairing** — *Newsreader (display) + Inter (body) + JetBrains Mono (mono)* (my pick, free Google Fonts), keep all-Inter, or invest in subscription fonts (Söhne / Untitled / Editorial New)?
+- [ ] **F. Hero shape** — keep current side-by-side portrait, or move to *editorial layout with the name as the visual anchor and portrait inline* (my pick)?
+- [ ] **G. Dark mode** — system-only, or system **+ manual toggle** in topnav (my pick)?
+
+### Content (block Phase 3)
+
+- [ ] **H. Stanford global-health card** — write a 3–5 sentence description *now* so I can draft a card. Required: what was built, modalities, dataset/cohort character, output type (classification, risk score, triage rank), is there a paper/preprint URL.
+- [ ] **I. Industry-references first batch** — ok to add 2–3 references per pillar (Netflix already in, plus draft Etsy / Pinterest / Spotify / OpenAI / Anthropic / NASA RETHi)? I'll draft each, you approve before they ship.
+- [ ] **J. Hero copy revision** — ok to tighten the current 60-word lede into 2 short sentences? I'll draft for review.
+- [ ] **K. About copy revision** — ok to drop the listing in paragraph 2 and replace with a *posture* paragraph?
+- [ ] **L. `Now` block** — yes/no, and if yes, one short line for what you're currently working on (1 sentence).
+- [ ] **M. CV PDF** — drop one in `public/cv.pdf` and add a download link in contact section?
+- [ ] **N. `/writing` route** — yes/no for Phase 6. (Yes commits to occasional writing; no keeps the site static.)
+
+### Hygiene
+
+- [ ] **O. Sitemap & robots** — auto-generate (my pick) or hand-controlled?
+- [ ] **P. Analytics** — none initially (my pick), Plausible (privacy-friendly paid), or Vercel Analytics (free with Vercel)?
 
 ---
 
@@ -238,30 +321,19 @@ alenjani.github.io/
 
 | Risk | Mitigation |
 |---|---|
-| MDX rendering breaks on a topic body that has weird HTML | Test each MDX file against its expected output; keep a small `<RawHtml>` escape hatch |
-| Tailwind CSS-vars setup feels over-engineered | Stick to a single `tokens.css` + matching `tailwind.config.ts` and don't add a third source of truth |
-| shadcn primitives don't match the editorial register | Customize the copied primitive (it's just code, you own it) |
-| logo.dev domain restriction blocks the new domain when we switch | Update the dashboard *before* DNS cutover |
-| Migration takes longer than 3.5 days | Branch is isolated; live site keeps working; ship Phase 1+2 together as a "preview", finish Phase 3+ at any pace |
-| Visual regression vs current site | Take screenshots of every page on current production before starting; diff after each phase |
-
----
-
-## Open questions for you (in addition to the lock-in checkboxes above)
-
-1. **Anything you want to *change* in content during this migration?** I'll preserve the locked positioning by default — but if there's anything you want to revise (Stanford card content, employer-specific details, current employer line, headshot), now is the time. Otherwise it's pure 1:1 content migration.
-2. **Anything to *add*?** Industry references for Etsy/Pinterest/Spotify/etc, additional cards, a "Now" section, a blog? Or strictly migrate-then-evolve?
-3. **Sitemap & robots.txt** — auto-generate (recommended) or do you want explicit control?
-4. **Want a /blog or /writing route?** Trivial to add now, harder retro-fitted.
-
----
-
-## What happens to the existing files
-
-Current static files are **untouched** during Phases 0–4 (work happens on a branch). At Phase 5 cutover, the legacy HTML/CSS/JS are moved to a `legacy/` folder for one commit, then deleted in the next. Git history preserves them forever; rolling back is `git revert`.
+| Visual regression — new design doesn't land | Branch + preview deploys; iterate before merge. Take screenshots of every current page first |
+| MDX parsing breaks on existing prose with weird HTML | Each MDX file tested; small `<RawHtml>` escape hatch ready |
+| Tailwind CSS-vars setup gets over-engineered | Single `tokens.css` + matching `tailwind.config.ts`; no third source of truth |
+| shadcn primitives feel too generic | Customize copies (you own them; that's the point of shadcn) |
+| logo.dev domain restriction blocks new domain | Update dashboard *before* DNS cutover |
+| Migration takes longer than estimate | Phases are independent; ship Phase 1+2 as preview, finish at any pace |
+| The new accent (gold) reads cheap if implemented wrong | Use it sparingly — only on eyebrow, accent strokes, and one CTA. Never as primary surface or large fill |
+| Editorial typography (Newsreader) feels too formal for your dry voice | We can dial it down: smaller display sizes, lighter weights, or fall back to a sans-serif display like Inter Display weight 800 |
 
 ---
 
 ## Ready to start when
 
-You answer the locks (A–H) above. The minimum I need is **B (hosting)**, **G (migration approach)**, and explicit **yes** to A, D, E. The rest I can default per my recommendations and you can override later.
+You answer the **Critical** locks (A, B, C) and the **Design direction** locks (D, E, F, G). Content and hygiene decisions can be answered during Phase 1–2 if you want to think on them.
+
+Minimum to greenlight Phase 0: **A, B, C** answered + explicit **yes** to D, E, F, G with whatever picks.
