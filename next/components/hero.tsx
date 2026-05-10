@@ -16,7 +16,7 @@ export function Hero() {
             in the wild</strong> across noisy collection pipelines,{" "}
             <strong>digital twins and trade-space modeling</strong> for
             complex coupled systems, and <strong>personalization and
-            ranking systems</strong> in production.
+            recommender systems</strong> at scale.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link

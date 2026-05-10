@@ -34,8 +34,8 @@ export const PILLARS: Record<PillarId, PillarMeta> = {
   recsys: {
     id: "recsys",
     num: "III",
-    title: "Personalization & ranking in production",
-    tag: "Large-scale ranking and retrieval systems plus the evaluation discipline that comes with them — offline/online metric alignment, LLM-based judging, counterfactual simulation.",
+    title: "Personalization & recommender systems",
+    tag: "Recommender systems at production scale, plus the evaluation discipline that comes with them — offline/online metric alignment, LLM-based judging, counterfactual simulation.",
     slug: "recsys",
     href: "/recsys",
     thumb: { src: "/figures/two-tower-thumb.svg", alt: "Two-tower retrieval diagram" },
