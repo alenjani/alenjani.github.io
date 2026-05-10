@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fef3c7" />
+      <stop offset="100%" stop-color="#fde68a" />
+    </linearGradient>
+  </defs>
+  <rect width="480" height="300" fill="url(#g)" />
+  <g stroke="#92400e" stroke-width="1.5" fill="none" stroke-linecap="round">
+    <rect x="60" y="70" width="120" height="50" rx="6" />
+    <rect x="60" y="180" width="120" height="50" rx="6" />
+    <rect x="290" y="125" width="130" height="50" rx="6" fill="#92400e" fill-opacity="0.9" stroke="none" />
+    <line x1="180" y1="95" x2="290" y2="145" stroke-dasharray="3 3" />
+    <line x1="180" y1="205" x2="290" y2="155" stroke-dasharray="3 3" />
+  </g>
+  <g font-family="Inter, sans-serif" font-size="13" fill="#92400e" font-weight="600" text-anchor="middle">
+    <text x="120" y="100">User Tower</text>
+    <text x="120" y="210">Item Tower</text>
+    <text x="355" y="155" fill="#fef3c7">HNSW index</text>
+  </g>
+  <g font-family="JetBrains Mono, monospace" font-size="10" fill="#b45309" text-anchor="middle">
+    <text x="235" y="115">similarity</text>
+  </g>
+</svg>
