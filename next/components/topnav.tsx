@@ -6,8 +6,8 @@ import { ThemeToggle } from "./theme-toggle";
 import { cn } from "@/lib/cn";
 
 const NAV_ITEMS = [
-  { href: "/detection", label: "Detection" },
-  { href: "/twins", label: "Twins" },
+  { href: "/detection", label: "Inspection" },
+  { href: "/twins", label: "Digital twins" },
   { href: "/recsys", label: "Recsys" },
   { href: "/#about", label: "About" },
 ];
