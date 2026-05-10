@@ -596,6 +596,175 @@
     .pillar-narrative p + p { margin-top: 12px; }
     .pillar-narrative em { color: var(--ink); font-style: normal; font-weight: 500; }
 
+    /* ----- Pillar framing content (overview → dilemmas → approach → topics → examples) ----- */
+    .pillar-frame {
+      max-width: 820px;
+      margin: 32px 0 48px 120px;
+    }
+    @media (max-width: 720px) { .pillar-frame { margin-left: 0; } }
+    .pillar-overview p {
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 740px;
+    }
+    .pillar-overview p + p { margin-top: 14px; }
+    .pillar-overview em { color: var(--accent); font-style: normal; font-weight: 500; }
+    .pillar-overview strong { color: var(--ink); font-weight: 600; }
+
+    .pillar-lists {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+    @media (max-width: 760px) { .pillar-lists { grid-template-columns: 1fr; gap: 28px; } }
+    .pillar-list h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .pillar-list ol {
+      list-style: none;
+      counter-reset: pl;
+      padding: 0;
+    }
+    .pillar-list ol li {
+      counter-increment: pl;
+      position: relative;
+      padding: 10px 0 10px 32px;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+    }
+    .pillar-list ol li:last-child { border-bottom: 0; }
+    .pillar-list ol li::before {
+      content: counter(pl, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      top: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .pillar-list ol li strong { color: var(--ink); font-weight: 600; }
+
+    .pillar-topics {
+      margin-top: 56px;
+      padding-top: 36px;
+      border-top: 1px solid var(--line);
+    }
+    .pillar-topics-head {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .pillar-topics-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+    details.topic {
+      border-bottom: 1px solid var(--line);
+    }
+    details.topic > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px 0;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      transition: padding-left 0.15s;
+    }
+    details.topic > summary::-webkit-details-marker { display: none; }
+    details.topic > summary:hover { padding-left: 6px; }
+    details.topic .topic-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      flex-shrink: 0;
+      width: 32px;
+    }
+    details.topic .topic-title {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      flex: 1;
+    }
+    details.topic .topic-toggle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      color: var(--muted);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    details.topic[open] .topic-toggle { transform: rotate(45deg); color: var(--accent); }
+    details.topic[open] .topic-title { color: var(--accent); }
+    details.topic .topic-body {
+      padding: 0 0 22px 50px;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.65;
+      max-width: 760px;
+      animation: fadeIn 0.25s ease;
+    }
+    @media (max-width: 540px) { details.topic .topic-body { padding-left: 0; } }
+    details.topic .topic-body p + p { margin-top: 10px; }
+    details.topic .topic-body em { color: var(--ink); font-style: normal; font-weight: 500; }
+    details.topic .topic-body code { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; background: var(--surface-2); padding: 1px 5px; border-radius: 3px; }
+    details.topic .topic-body p.topic-ref {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-left: 2px solid var(--accent);
+      background: var(--accent-soft);
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--ink);
+      border-radius: 0 6px 6px 0;
+    }
+    details.topic .topic-body p.topic-ref a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 500;
+    }
+
+    .examples-section {
+      margin-top: 56px;
+      padding-top: 36px;
+      border-top: 1px solid var(--line);
+    }
+    .examples-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .examples-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
     .pillar-more {
       margin-top: 24px;
     }
@@ -737,11 +906,121 @@
         <p class="pillar-tag">Deep-learning systems for automated condition assessment from imagery and other evidence streams — pre/post comparison, anomaly and defect detection, multi-stream fusion across heterogeneous data.</p>
       </div>
     </header>
-    <div class="pillar-narrative">
-      <p>The unifying problem: take noisy, heterogeneous, real-world data — often collected by a pipeline you also had to build — and produce a reliable detection, classification, or risk score. The systems below tackle this across post-event reconnaissance imagery, plant-floor inspection, and multimodal data in low-resource health settings. The methodological stack is the same — custom data collection, multi-stream fusion, calibrated thresholds, evaluation that matches the deployed conditions.</p>
-      <p>None of the work is domain-locked: the same fusion machinery that classifies hurricane damage from pre/post imagery would classify defects on a plant floor or risk in a clinical workup with different inputs, the same code paths.</p>
+    <div class="pillar-frame">
+      <div class="pillar-overview">
+        <p>Detection, classification, and change-detection from imagery — usually with multiple modalities or multiple frames — under the constraint that <strong>the data is yours to collect</strong> and <strong>the deployment is somewhere the model has never seen</strong>.</p>
+        <p>The model is rarely the hard part. What's hard is everything around it: the data pipeline, the alignment of pre/post or multi-view evidence, the calibration of class boundaries with asymmetric costs, the operating threshold the system actually runs at, and the drift you'll see in week three of production that wasn't visible in evaluation.</p>
+        <p>A useful way to read the work below: each example is an answer to <em>"what makes this kind of detection hard in this domain?"</em> — hurricane reconnaissance answers it differently than plant-floor inspection, but the answers fit on the same shelf.</p>
+      </div>
+
+      <div class="pillar-lists">
+        <div class="pillar-list">
+          <h4>What's hard about it</h4>
+          <ol>
+            <li><strong>Drift between training and deployment.</strong> Lighting, viewpoint, sensor, scene composition all change. Most systems fail not because the architecture is wrong but because the training distribution stopped matching reality.</li>
+            <li><strong>Class imbalance with asymmetric costs.</strong> A 99%-accurate defect detector is useless if the 1% it misses are the ones that cost a million dollars.</li>
+            <li><strong>Pre/post or multi-view alignment.</strong> Two views of the same object don't trivially register. Depth-aware homography matters when the scene is 3D — a naive affine transform fails.</li>
+            <li><strong>Decision logic vs. raw model output.</strong> A class probability is not a decision. Threshold choice, hysteresis, multi-shot consensus — that's what turns a model into a system.</li>
+            <li><strong>Custom data collection.</strong> No public dataset matches your deployment surface. You design the collection, including the hard-negative search.</li>
+            <li><strong>Calibration and uncertainty.</strong> Hard labels are easy to ship and easy to misuse. Calibrated probabilities buy you the option to defer ambiguous cases to a human.</li>
+          </ol>
+        </div>
+        <div class="pillar-list">
+          <h4>How I approach it</h4>
+          <ol>
+            <li><strong>Design the data pipeline before the model.</strong> Pose, lighting, occlusion, label quality — solving the data problem buys more performance than any architecture switch.</li>
+            <li><strong>Lean on multi-stream / multi-modal fusion.</strong> A single noisy stream rarely closes the gap; combining noisy streams often does.</li>
+            <li><strong>Treat thresholds as first-class artifacts.</strong> One global threshold leaves signal on the table — per-class, per-condition thresholds are normal in practice.</li>
+            <li><strong>Calibrate, then evaluate at the operating point.</strong> AUC is the wrong number when the deployed threshold is fixed.</li>
+            <li><strong>Build evaluation that mirrors deployment.</strong> Train/val splits that look like the deployment surface predict actual lift; splits that don't, don't.</li>
+            <li><strong>Treat the model as part of a system.</strong> The decision logic, the data pipeline, the monitoring — that's the system; the model is one component.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pillar-topics">
+        <div class="pillar-topics-head">Topics worth understanding</div>
+        <div class="pillar-topics-grid">
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">a</span>
+              <span class="topic-title">Change detection vs. anomaly detection vs. classification</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Three problems people often conflate. <em>Change detection</em> compares two states (pre/post). <em>Anomaly detection</em> asks "is this unusual relative to a background distribution?" <em>Classification</em> asks "which of these N labels?"</p>
+              <p>The same image can answer different questions; how you frame the task determines the data you collect, the labels you produce, and the evaluation that's meaningful. Most production failures come from picking the wrong frame for the problem.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">b</span>
+              <span class="topic-title">Why pre/post alignment is harder than it looks</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Two photos of the same building from different angles, different times, different sensors. An obvious affine transform fails — the geometry of the scene is 3D, not 2D.</p>
+              <p>The work is in the registration: feature matching across viewpoints, depth-aware homography, sometimes triangulation across multiple frames. The classifier downstream is the easy part once the pixels actually correspond. Skipping registration and hoping the network "figures it out" is a recipe for a model that memorizes spurious correlations.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">c</span>
+              <span class="topic-title">Threshold tuning matters more than architecture</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Switching from <code>ResNet-50</code> to <code>ResNet-152</code> typically buys a fraction of a percent. Moving the operating threshold from <code>0.5</code> to whatever the precision-recall curve actually elbows at <em>for your cost asymmetry</em> — that buys a working system.</p>
+              <p>Most teams spend their effort on architecture and forget the threshold; the leverage is reversed. Threshold tuning is a per-class, per-condition exercise, ideally re-run as data drifts.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">d</span>
+              <span class="topic-title">Multi-stream / multi-modal fusion patterns</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p><em>Late fusion</em> (combine class probabilities from each stream) is robust and easy to debug. <em>Early fusion</em> (combine features) is more powerful but easier to break. <em>Probabilistic / Bayesian fusion</em> across heterogeneous evidence is the right move when streams have very different reliability profiles or fail in different ways.</p>
+              <p>The choice depends on how correlated the failure modes of your streams are: if they fail together, fusion buys you nothing; if they fail independently, fusion can lift accuracy substantially.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">e</span>
+              <span class="topic-title">What good data collection looks like</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Cover the deployment surface, not the convenience surface. Label policy that matches the decision boundary you'll actually use at deployment, not whatever's natural to annotate. Hard-negative discovery as part of collection, not an afterthought.</p>
+              <p>The collection plan is half the engineering. A team that spends two months on collection design and one month on modeling almost always beats a team that does the reverse.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">f</span>
+              <span class="topic-title">Calibration in deployed CV</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Sigmoid outputs aren't calibrated probabilities — they're scores that happen to live in <code>[0,1]</code>. Temperature scaling, isotonic regression, or Platt scaling: pick one and use it.</p>
+              <p>A calibrated <code>0.3</code> means something — about 30% of the time, the positive class is true. An uncalibrated <code>0.3</code> means almost nothing, and any decision built on it (e.g., "send to human review if score &gt; 0.3") is a guess dressed up as a rule.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
     </div>
-    <div class="card-grid">
+
+    <div class="examples-section">
+      <div class="examples-label">Examples from my work</div>
+      <div class="card-grid">
 
       <details class="card">
         <summary>
@@ -905,6 +1184,7 @@
 
       </div>
     </details>
+    </div>
   </div>
 </section>
 
@@ -919,10 +1199,120 @@
         <p class="pillar-tag">Multi-objective optimization, trade-space analysis, and digital-twin modeling for coupled systems — ranking candidates and architectures when resources are limited, uncertainty is real, and the cost of being wrong matters.</p>
       </div>
     </header>
-    <div class="pillar-narrative">
-      <p>Build a model of the coupled system. Drive it with disturbances. Watch the configurations behave under uncertainty. Use the resulting risk-return surface to make a decision — which architecture, which inspection plan, which design margin. The same loop applies whether the "system" is an extraterrestrial habitat, a portfolio of inspections after a hurricane, or a hardware-in-the-loop testbed.</p>
-      <p>The work below sits at the intersection of two skill stacks that rarely overlap: <em>ML/optimization fluency</em> and <em>engineering complex-systems modeling</em>. It generalizes naturally to capital allocation, infrastructure investment, claims triage, A/B-test scheduling — anywhere candidates compete for limited slots under uncertainty.</p>
+    <div class="pillar-frame">
+      <div class="pillar-overview">
+        <p>Build a model of a coupled system. Drive it with realistic disturbances. Watch how its configurations behave under uncertainty. Use the resulting risk-return surface to make a decision — <strong>which architecture, which inspection plan, which design margin, which capital allocation</strong>.</p>
+        <p>The same loop applies whether the "system" is an extraterrestrial habitat, a portfolio of inspections after a hurricane, or a hardware-in-the-loop testbed. What unifies them: many subsystems with stochastic interactions, finite resources to act, and a decision under uncertainty. What separates a good answer from a bad one is rarely the math — it's how faithful the twin is, how much of the trade space you can actually search, and how clearly the trade-offs are presented to the people who decide.</p>
+        <p>This work sits at the intersection of two skill stacks that rarely overlap: <em>ML/optimization fluency</em> and <em>engineering complex-systems modeling</em>. That intersection is what makes it transferable — capital allocation, infrastructure investment, claims triage, A/B-test scheduling all reduce to the same loop with different inputs.</p>
+      </div>
+
+      <div class="pillar-lists">
+        <div class="pillar-list">
+          <h4>What's hard about it</h4>
+          <ol>
+            <li><strong>Picking the right level of abstraction.</strong> Too detailed and the simulation is too slow to use for trade studies; too coarse and the decisions are wrong. Choosing the abstraction is half the work.</li>
+            <li><strong>Sim-to-real gap.</strong> All twins lie a little. The question is by how much, where, and whether that affects the decision you'd make. Cyber-physical testing is the bridge.</li>
+            <li><strong>Combinatorial trade space.</strong> Even modest architectures yield thousands of candidate configurations. Brute force isn't always feasible; surrogate models and Pareto-aware sampling are.</li>
+            <li><strong>Conflicting objectives.</strong> Most real decisions trade performance, cost, risk, recovery time. Collapsing them to a scalar discards information; keeping them produces a Pareto frontier.</li>
+            <li><strong>Uncertainty quantification.</strong> A point estimate is dangerous. The interesting questions are about distributions: tails, conditionals, dependences across subsystems.</li>
+            <li><strong>Communicating trade-offs to non-modelers.</strong> A risk-return scatter that an engineer or operator can read is the deliverable. The simulation log is not.</li>
+          </ol>
+        </div>
+        <div class="pillar-list">
+          <h4>How I approach it</h4>
+          <ol>
+            <li><strong>Start with a coarse twin.</strong> Markov or Bayesian-network nodes for subsystems, wired with interactions. Refinement comes after the trade space is understood, not before.</li>
+            <li><strong>Make trade-space exploration a first-class workflow.</strong> Sweep architectures and parameters, rank by Pareto efficiency, drill into the frontier.</li>
+            <li><strong>Decompose resilience.</strong> Passive capacity (margin, redundancy, robust design) and active capacity (repair, reconfigure, mitigate) measure different things and trade off differently.</li>
+            <li><strong>Use cyber-physical loops where stakes warrant.</strong> Hardware-in-the-loop with the rest of the system simulated buys credibility that pure simulation can't.</li>
+            <li><strong>Present results as risk-return.</strong> Mean of value vs. std of value — every candidate is a point, the frontier is what gets chosen from. Hide the simulation; show the decision.</li>
+            <li><strong>Build twins that are testable.</strong> A twin that can't be wrong is a twin that can't be useful. Validate predictions against operational data; quantify residual error.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pillar-topics">
+        <div class="pillar-topics-head">Topics worth understanding</div>
+        <div class="pillar-topics-grid">
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">a</span>
+              <span class="topic-title">What is a digital twin (and what isn't)?</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>A simulator of a real system, updated with operational data, used to predict the system's behavior under conditions you can't directly test. The phrase covers everything from a thermodynamic ODE solver to a deep-network surrogate.</p>
+              <p>The useful question is never "is this a digital twin?" but: <em>what fidelity, what update cadence, what decision is it supporting, and what's its sim-to-real error?</em> Without those answers the term is marketing.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">b</span>
+              <span class="topic-title">Markov / Bayesian models for system behavior</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Discrete states + transition probabilities + observations gets you most of the way for many engineering systems. The art is in the state definition and which transitions are worth modeling.</p>
+              <p>Higher fidelity — continuous-time SDEs, hybrid automata, full physics simulators — buys precision at the cost of tractability and interpretability. For decision support the Markov abstraction is often the sweet spot: fast enough to sweep, faithful enough to rank candidates correctly.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">c</span>
+              <span class="topic-title">Pareto frontiers and how to use them for decisions</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>When two or more objectives conflict, the Pareto frontier is the set of non-dominated trade-offs. Anything off the frontier is strictly worse on at least one axis — those candidates can be eliminated.</p>
+              <p>The decision-maker's job is choosing <em>along</em> the frontier — that's a values question, not a math one. The modeler's job is producing the frontier and characterizing the cost of each move along it.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">d</span>
+              <span class="topic-title">Resilience: passive vs. active capacity</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Most systems engineers conflate "resilience" with "robustness". The decomposition that matters: <em>passive capacity</em> is how much insult the system absorbs without operator action — margins, redundancy, robust design. <em>Active capacity</em> is what operators can do once it's hit — repair, reconfigure, mitigate.</p>
+              <p>They cost differently and fail differently. A system over-invested in passive capacity is heavy and expensive; one over-invested in active capacity needs a sharp operator at all times. The trade is real and worth modeling explicitly.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">e</span>
+              <span class="topic-title">Cyber-physical testing</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Pure simulation is cheap but lies. Pure physical testing is expensive and slow. Cyber-physical splits the difference: real hardware sits in a test cell, the rest of the system is simulated, coupled through sensor and actuator interfaces in real time.</p>
+              <p>The control law sees the hardware's actual response; the simulated environment reacts accordingly. You buy credibility on the parts that matter most without paying the cost of full physical replication.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">f</span>
+              <span class="topic-title">Sim-to-real and twin validation</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>If the twin can't be wrong, it can't be useful. Validation means making predictions that can be checked against later operational data, then quantifying the residual error and where it lives.</p>
+              <p>A twin without a validation regime is a hypothesis dressed up as a tool. The validation pattern that works: predict an outcome before observing it, log the prediction, compare after, attribute residuals to specific subsystems, refine.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
     </div>
+
+    <div class="examples-section">
+      <div class="examples-label">Examples from my work</div>
     <div class="card-grid">
 
       <details class="card" id="paper-cdcm">
@@ -1043,6 +1433,7 @@
 
       </div>
     </details>
+    </div>
   </div>
 </section>
 
@@ -1057,11 +1448,146 @@
         <p class="pillar-tag">Large-scale ranking and retrieval systems and the evaluation discipline that comes with them — offline/online metric alignment, LLM-based judging, counterfactual simulation.</p>
       </div>
     </header>
-    <div class="pillar-narrative">
-      <p>Shipping a model isn't done until the latency budget, the retraining cadence, and the offline-online correlation are all solved. Most of the lift in production recsys comes after the architecture is settled — hard-negative mining for the right kind of discrimination, a serving stack that holds at scale, an evaluation layer that tells you whether a candidate model is <em>actually</em> better, not better-on-this-offline-metric.</p>
-      <p>The recurring move below: build a faithful enough offline simulator that decisions made there hold up online. That is digital-twin thinking applied to ranking — and the reason this pillar shares more DNA with Pillar II than it looks.</p>
+    <div class="pillar-frame">
+      <div class="pillar-overview">
+        <p>Serve a useful set of items to a user, under a tight latency budget, with a finite retraining cadence, while telling true offline wins from spurious ones. <strong>The full pipeline is rarely the model itself</strong> — it's everything around it.</p>
+        <p>Two-tower retrieval is a pattern, not a magic answer; the work is in the negatives, the serving stack, the eval, and the retrain cadence. The deeper move — and the one that ties this pillar to the digital-twin work in Pillar II — is building an offline simulator faithful enough that the decisions made there hold up online. Counterfactual sim plus LLM-based judging is the closest a recsys ever gets to a digital twin.</p>
+        <p>The patterns generalize past consumer recsys: search, ads, content ranking, agent evaluation — anywhere a model produces ranked output that has to be evaluated and tuned without breaking what's already working in production.</p>
+      </div>
+
+      <div class="pillar-lists">
+        <div class="pillar-list">
+          <h4>What's hard about it</h4>
+          <ol>
+            <li><strong>Retrieval at low latency over millions of items.</strong> Brute-force scoring doesn't scale. Approximate nearest-neighbor indexing (HNSW, IVF, etc.) is the standard answer; choosing index parameters is its own discipline.</li>
+            <li><strong>The offline-online gap.</strong> Offline metrics that don't predict online behavior. Logged-policy bias, distribution shift, the metric you optimized isn't the one users care about.</li>
+            <li><strong>Cold start.</strong> New users with no history, new items with no interactions, new intents with no precedent. Each gets its own treatment.</li>
+            <li><strong>Exposure bias and feedback loops.</strong> The model learns from items it surfaces; rare-but-good items never get the chance. Without correction the system narrows over time.</li>
+            <li><strong>Defining "good".</strong> Relevance is product-specific. Pointwise metrics miss complementarity, novelty, taste, list quality. Most teams ship the wrong objective and discover it months later.</li>
+            <li><strong>Counterfactual evaluation.</strong> When you can't run a clean A/B test (regulated domains, small populations, expensive interventions), how do you know if a change helps?</li>
+          </ol>
+        </div>
+        <div class="pillar-list">
+          <h4>How I approach it</h4>
+          <ol>
+            <li><strong>Negatives over architecture.</strong> Hard-negative mining inside the same taxonomy node is where the real lift lives — random negatives only teach coarse discrimination.</li>
+            <li><strong>ANN-based serving as default.</strong> HNSW or equivalent, indexed over the item-tower output, behind a thin user-tower service. Fast retrieval first; ranking on top.</li>
+            <li><strong>LLM-as-judge for what metrics miss.</strong> Multi-dimensional CoT judging schemas for taste, complementarity, novelty — the dimensions pointwise offline metrics can't see.</li>
+            <li><strong>Counterfactual offline simulators.</strong> Time-travel sampling, LLM user agents, sim-to-real adaptive metrics. Build the twin; close the offline-online gap.</li>
+            <li><strong>Cadence-aware retrains.</strong> Warm-start from yesterday's model rather than cold-starting; iteration cost matters as much as model quality.</li>
+            <li><strong>Treat retrieval, ranking, and eval as one system.</strong> Each component's choices propagate. Optimizing them in isolation is how teams ship plausible regressions.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pillar-topics">
+        <div class="pillar-topics-head">Topics worth understanding</div>
+        <div class="pillar-topics-grid">
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">a</span>
+              <span class="topic-title">What is a recommender system, really?</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>A system that, given a user and a context, produces a ranked list of items the user is likely to want. Almost every concrete decision after that — collaborative vs. content-based, retrieval vs. ranking, sequential vs. session-based — is a choice about <em>what signal you have</em> and <em>what objective you're optimizing</em>.</p>
+              <p>The interesting work isn't in the model class; it's in defining the user, the context, the item space, and the objective so that the resulting system actually serves the product. Most "recsys" failures are objective-definition failures dressed up as modeling failures.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">b</span>
+              <span class="topic-title">Two-tower retrieval, explained</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>The standard pattern for cold-retrieval at scale: a user tower and an item tower, each producing an embedding. Similarity (typically dot product or cosine) between them retrieves top-K items from an ANN index over all item embeddings. Trained with contrastive losses (InfoNCE, sampled-softmax) using user-item interactions as supervision.</p>
+              <p>The architecture itself is rarely the differentiator — what matters is the negatives the towers train against, the serving stack you build around them, and how you handle drift between training and serving distributions. The pattern works because user-item interaction <em>is</em> the supervised signal; the towers are just learned hash functions for that signal.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">c</span>
+              <span class="topic-title">ANN serving (HNSW, IVF) and why it matters</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Once item embeddings are dense vectors, retrieval becomes "find the K nearest neighbors of the query embedding". Brute-force is <code>O(N·d)</code> per query — fine for thousands of items, infeasible for millions.</p>
+              <p>Approximate nearest-neighbor structures (HNSW for graph-based, IVF for inverted-file, ScaNN for product-quantization) trade a little recall for orders of magnitude in latency. The tuning game: <code>efSearch</code>, <code>M</code>, the number of probes — each parameter pushes you along a recall/latency frontier. Production teams that ignore this tuning ship slow systems and blame the model.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">d</span>
+              <span class="topic-title">The offline-online gap</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>You evaluate a candidate model on logged data and the metric goes up. You ship it; the online metric goes down or sideways. Why?</p>
+              <p>Logged-policy bias (the data was generated by an old policy that won't see the new policy's distribution), label leakage (the offline label encoded information the online model can't get), reward misspecification (you optimized clicks; users wanted something else), and Goodhart's law (any metric optimized hard enough stops measuring what it measured). Closing this gap is the central problem of production recsys, not architecture.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">e</span>
+              <span class="topic-title">LLM-as-judge: what it does well, what it doesn't</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>For dimensions that pointwise metrics can't see — complementarity, novelty, taste alignment, list quality — an LLM scoring CoT-style across multiple latent dimensions is often closer to ground truth than any classical offline metric. Especially when human judging is the gold standard but expensive.</p>
+              <p>What LLM judges do badly: they're sensitive to prompt phrasing, they have their own biases (length, position, model-of-the-author), and they're surprisingly bad at detecting their own confidence calibration. The right pattern: structured multi-dimensional schemas, several model votes, audit against human ratings periodically.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">f</span>
+              <span class="topic-title">Counterfactual offline simulation</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>Build a simulator of how users would have responded to recommendations the system <em>didn't</em> show — the candidate model's outputs replayed against historical context, with a user-behavior model standing in for the real user.</p>
+              <p>The user-behavior model can be anything from a logged-data IPS estimator to an LLM agent that "browses" the catalog. The point is to break the chicken-and-egg dependency between deploying the model to learn its effect and learning its effect to decide whether to deploy. Properly built, counterfactual sim is a digital twin of your recsys — same loop as Pillar II, different domain.</p>
+              <p class="topic-ref">See also: Netflix's <a href="https://netflixtechblog.com/page-simulator-fa02069fb269" target="_blank" rel="noopener">Page Simulator for Better Offline Metrics</a> — the same pattern at industrial scale: time-travel data reconstruction, system-level (not model-level) offline evaluation, simulated homepages compared against what members actually saw. Their setup and the principles it surfaces map almost directly onto the work I do in this lane.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">g</span>
+              <span class="topic-title">Hard-negative mining</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p>A two-tower model trained on random negatives learns to distinguish "the good item" from "any random item" — that's a coarse discrimination. The model never learns the fine-grained attributes that matter, because it never has to.</p>
+              <p>Hard negatives — items the model currently thinks are similar to the positive but aren't — force fine-grained discrimination. Same-taxonomy negatives (sample within the same category as the positive) are the standard move; in-batch hard mining works in many setups too. The lift from this is often larger than any architecture change.</p>
+            </div>
+          </details>
+
+          <details class="topic">
+            <summary>
+              <span class="topic-num">h</span>
+              <span class="topic-title">Cold start &amp; exposure bias</span>
+              <span class="topic-toggle">+</span>
+            </summary>
+            <div class="topic-body">
+              <p><em>Cold start</em>: a new user, item, or intent with no interaction history. Treatments range from content-based fallbacks to bandits with a deliberate exploration budget.</p>
+              <p><em>Exposure bias</em>: the model trains on items it has shown; items it never showed never get a chance. Without correction the system narrows over time, and "popular" items dominate. Inverse-propensity weighting, off-policy correction, or explicit exploration arms are the standard mitigations. Both problems are easy to ignore in benchmarks and painful to ignore in production.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
     </div>
-    <div class="card-grid">
+
+    <div class="examples-section">
+      <div class="examples-label">Examples from my work</div>
+      <div class="card-grid">
 
       <details class="card" id="thing-recsys">
         <summary>
@@ -1211,6 +1737,7 @@
         </div>
       </details>
 
+    </div>
     </div>
   </div>
 </section>
