@@ -146,7 +146,7 @@ const EXAMPLES: Example[] = [
     thumb: { src: "/figures/inspection-pareto-full.png", alt: "Pareto frontier" },
     body: (
       <>
-        <p>A resilience-based method for prioritizing post-event building inspections. The method allocates limited inspection resources by ordering buildings to maximize recovery of community function per inspector-hour, with damage-state uncertainty propagated through the prioritization.</p>
+        <p>The method allocates limited inspection resources by ordering buildings to maximize recovery of community function per inspector-hour, with damage-state uncertainty propagated through the prioritization.</p>
         <figure>
           <img src="/figures/holiday-beach-field-site.jpg" alt="" loading="lazy" />
           <figcaption><span className="figref">Field testbed</span> &nbsp; Holiday Beach, Texas — the case-study site after Hurricane Harvey.</figcaption>
@@ -227,10 +227,8 @@ export default function TwinsPage() {
               presented to the people who decide.
             </p>
             <p>
-              This work sits at the intersection of two skill stacks that rarely overlap:{" "}
-              <em>ML/optimization fluency</em> and <em>engineering complex-systems modeling</em>.
-              That intersection is what makes it transferable — capital allocation, infrastructure
-              investment, claims triage, A/B-test scheduling all reduce to the same loop with
+              The same loop generalizes — capital allocation, infrastructure investment, claims
+              triage, A/B-test scheduling all reduce to the same trade-space exercise with
               different inputs.
             </p>
           </PillarOverview>

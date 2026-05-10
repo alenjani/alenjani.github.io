@@ -38,9 +38,9 @@
   --muted-2: #64748b;
   --line: #1e293b;
   --line-strong: #334155;
-  --accent: #fbbf24;          /* warmer gold reads better on dark */
-  --accent-soft: #422006;
-  --accent-strong: #fde68a;
+  --accent: #facc15;          /* gold — slightly cooler than amber, reads more editorial */
+  --accent-soft: #3a2a06;
+  --accent-strong: #fde047;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);

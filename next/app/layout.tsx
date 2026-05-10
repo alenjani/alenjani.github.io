@@ -68,6 +68,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

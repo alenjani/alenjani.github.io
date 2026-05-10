@@ -52,6 +52,7 @@ const TOPICS: Topic[] = [
       <>
         <p>Three problems people often conflate. <em>Change detection</em> compares two states (pre/post). <em>Anomaly detection</em> asks &ldquo;is this unusual relative to a background distribution?&rdquo; <em>Classification</em> asks &ldquo;which of these N labels?&rdquo;</p>
         <p>The same image can answer different questions; how you frame the task determines the data you collect, the labels you produce, and the evaluation that&apos;s meaningful. Most production failures come from picking the wrong frame for the problem.</p>
+        <p>The most common mistake in the field is framing as classification when it&apos;s actually change detection — teams reach for a labeled classifier when the real signal is in the delta between two states. The data, the labels, and the eval all have to be designed differently.</p>
       </>
     ),
   },
@@ -182,8 +183,8 @@ const EXAMPLES: Example[] = [
     teaser: "The model trained beautifully and collapsed in prod. The fix was decision logic, not architecture.",
     body: (
       <>
-        <p>An end-to-end computer vision inspection framework across multiple CTQ checkpoints — automated defect detection and station health monitoring. Multi-class object detection models in PyTorch, with operational decision logic and inference thresholds tuned to minimize false positives in high-throughput environments.</p>
-        <p>On the data side: a leakage-safe workflow on GCP/GCS + Label Studio, with targeted hard-negative mining to handle the physical-environment constraints (lighting drift, misalignment, class imbalance).</p>
+        <p>An end-to-end computer vision inspection framework across multiple CTQ checkpoints — automated defect detection and station health monitoring. Multi-class object detection in PyTorch, with operational decision logic and inference thresholds tuned to minimize false positives in high-throughput environments.</p>
+        <p>On the data side: a leakage-safe label/train/eval split, plus targeted hard-negative mining for the physical-environment constraints — lighting drift, misalignment, class imbalance — that break naive deployments.</p>
       </>
     ),
   },
@@ -201,24 +202,6 @@ const EXAMPLES: Example[] = [
         <figure>
           <img src="/figures/info-fusion-workflow.png" alt="" loading="lazy" />
           <figcaption><span className="figref">Fig. 2</span> &nbsp; Three stages: per-image classifier outputs → RC and M probability lists → iterative thresholding criterion (error history converging at K = 0.01).</figcaption>
-        </figure>
-      </>
-    ),
-  },
-  {
-    id: "indoor-localization",
-    meta: "MDPI Sensors · 2020",
-    role: "co-author",
-    title: "Automated indoor image localization for post-event assessment",
-    teaser: "Structure-from-Motion plus a 2D projective transform onto the structural drawing.",
-    thumb: { src: "/figures/indoor-localization-overview.png", alt: "Indoor localization" },
-    hidden: true,
-    body: (
-      <>
-        <p>Indoor images don&apos;t get clean GPS. The pipeline runs Structure-from-Motion across a stream of &ldquo;PathImgs&rdquo; walked through the building to reconstruct a 3D point cloud and recover camera poses, then aligns the SfM frame onto the structural drawing via a 2D projective transform. Once that map exists, every &ldquo;InspImg&rdquo; — the targeted close-up engineers care about — is grounded against a drawing location.</p>
-        <figure>
-          <img src="/figures/indoor-localization-overview.png" alt="" loading="lazy" />
-          <figcaption><span className="figref">Fig. 1</span> &nbsp; Three stages: (a) collect PathImgs and InspImgs, (b) SfM to build a 3D point cloud + camera poses, (c) align onto the drawing via 2D projective transform.</figcaption>
         </figure>
       </>
     ),
