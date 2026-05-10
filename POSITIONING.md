@@ -2,6 +2,16 @@
 
 Working doc for shaping how the site presents you. Not deployed.
 
+## Tooling installed for the Next.js migration
+
+`.claude/skills/ui-ux-pro-max/` carries the [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) skill (auto-invokes on UI/UX work). When we migrate to Next.js / React / shadcn, Claude Code will pull design recommendations from this skill's databases — 161 product types, 67 styles, 161 color palettes, 57 font pairings, 99 UX rules, plus stack-specific guidelines for `react`, `nextjs`, `shadcn`. Generate a tailored design system anytime with:
+
+```bash
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system -p "Project Name" [--persist]
+```
+
+The `--persist` flag writes a `design-system/MASTER.md` (single source of truth) plus per-page override files under `design-system/pages/` — the migration target should adopt that pattern.
+
 ---
 
 ## Goal & tone
