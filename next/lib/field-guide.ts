@@ -36,6 +36,18 @@ export type VizItem = {
   thumb?: string;
 };
 
+export type EventItem = {
+  name: string;
+  url?: string;
+  domain?: string;
+  /** Display date string, e.g. "Jun 3-7, 2026" */
+  date: string;
+  /** City + region, e.g. "Denver, CO" or "Bay Area" */
+  location: string;
+  /** Optional tag: "International" | "Bay Area" | "Online" */
+  tag?: string;
+};
+
 export type FieldGuideContent = {
   /** Open Questions prose — JSX so we can embed <a>, <em>, <strong> */
   openQuestions: ReactNode;
@@ -48,4 +60,6 @@ export type FieldGuideContent = {
     awesome?: AwesomeItem[];
   };
   visualizations: VizItem[];
+  /** Upcoming conferences / meetups in the field */
+  events?: EventItem[];
 };

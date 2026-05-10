@@ -1,5 +1,5 @@
 import { BrandMark } from "./brand-mark";
-import type { FieldGuideContent, ReadingItem, ToolItem, AwesomeItem, VizItem } from "@/lib/field-guide";
+import type { FieldGuideContent, ReadingItem, ToolItem, AwesomeItem, VizItem, EventItem } from "@/lib/field-guide";
 
 export function FieldGuide({ content }: { content: FieldGuideContent }) {
   return (
@@ -15,7 +15,75 @@ export function FieldGuide({ content }: { content: FieldGuideContent }) {
       <ReadingListBlock reading={content.reading} />
 
       <NotableVisualizationsBlock items={content.visualizations} />
+
+      {content.events && content.events.length > 0 && (
+        <UpcomingEventsBlock items={content.events} />
+      )}
     </section>
+  );
+}
+
+function UpcomingEventsBlock({ items }: { items: EventItem[] }) {
+  return (
+    <div className="mt-14 pt-9 border-t border-line">
+      <h3 className="display-h3 mb-2">Upcoming events</h3>
+      <p className="text-[15px] text-muted max-w-[680px] mb-6">
+        Where the field gathers next — international conferences and Bay Area meetups likely
+        worth a flight or a BART ride.
+      </p>
+      <ul className="border-t border-line max-w-[820px]">
+        {items.map((it, i) => (
+          <li key={i} className="border-b border-line">
+            {it.url ? (
+              <a
+                href={it.url}
+                target="_blank"
+                rel="noopener"
+                className="grid grid-cols-[26px_minmax(0,1fr)_auto] gap-4 items-center py-4 hover:pl-1 transition-[padding] group"
+              >
+                <EventRow item={it} />
+                <span className="font-mono text-[11px] text-muted-2 shrink-0 group-hover:text-accent transition-colors">
+                  Visit →
+                </span>
+              </a>
+            ) : (
+              <div className="grid grid-cols-[26px_minmax(0,1fr)_auto] gap-4 items-center py-4">
+                <EventRow item={it} />
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function EventRow({ item }: { item: EventItem }) {
+  return (
+    <>
+      <span className="shrink-0">
+        {item.domain ? (
+          <BrandMark domain={item.domain} size={18} className="rounded-[3px]" />
+        ) : (
+          <span className="inline-block w-[18px] h-[18px] rounded-[3px] bg-surface-2" />
+        )}
+      </span>
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5">
+          <span className="text-[15px] font-semibold text-ink leading-snug">
+            {item.name}
+          </span>
+          {item.tag && (
+            <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-accent">
+              {item.tag}
+            </span>
+          )}
+        </div>
+        <div className="text-[13px] text-muted font-mono mt-0.5">
+          {item.date} · {item.location}
+        </div>
+      </div>
+    </>
   );
 }
 
