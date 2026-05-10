@@ -4,10 +4,12 @@ import { PillarOverview } from "@/components/pillar-overview";
 import { PillarLists } from "@/components/pillar-lists";
 import { PillarTopics } from "@/components/pillar-topics";
 import { ExamplesSection } from "@/components/examples-section";
+import { FieldGuide } from "@/components/field-guide";
 import { PillarPageNav } from "@/components/pillar-page-nav";
 import { TopicRef } from "@/components/topic-ref";
 import { ArticleJsonLd } from "@/components/json-ld";
 import { PILLARS, neighbors, type Topic, type Example } from "@/lib/pillars";
+import { twinsFieldGuide } from "@/content/twins/field-guide";
 
 const pillar = PILLARS.twins;
 const { prev, next } = neighbors("twins");
@@ -235,6 +237,7 @@ export default function TwinsPage() {
           <PillarLists hard={HARD} approach={APPROACH} />
           <PillarTopics topics={TOPICS} />
           <ExamplesSection examples={EXAMPLES} />
+          <FieldGuide content={twinsFieldGuide} />
         </div>
       </section>
       <PillarPageNav prev={prev} next={next} />
