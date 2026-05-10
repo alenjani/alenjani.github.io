@@ -753,6 +753,25 @@ details.topic .topic-body p.topic-ref a {
 .pillar-more[open] > summary { color: var(--ink); border-bottom: 1px solid var(--line); margin-bottom: 18px; }
 .pillar-more .card-grid { margin-top: 18px; }
 
+/* ----- Brand marks (logo.dev or static SVG) ----- */
+.brand-mark {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 4px;
+  background: var(--surface-2);
+}
+.brand-mark.inline-logo {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+  margin-bottom: -3px;
+  border-radius: 3px;
+}
+.brand-mark.row-logo {
+  width: 32px;
+  height: 32px;
+}
+
 /* ----- Pillar-page navigation (between-pillar nav at bottom of each pillar page) ----- */
 .pillar-page-nav {
   border-top: 1px solid var(--line);

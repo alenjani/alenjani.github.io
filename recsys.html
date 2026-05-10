@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <meta name="logodev-token" content="" />
 </head>
 <body>
 
@@ -145,7 +146,7 @@
             <div class="topic-body">
               <p>Build a simulator of how users would have responded to recommendations the system <em>didn't</em> show — the candidate model's outputs replayed against historical context, with a user-behavior model standing in for the real user.</p>
               <p>The user-behavior model can be anything from a logged-data IPS estimator to an LLM agent that "browses" the catalog. The point is to break the chicken-and-egg dependency between deploying the model to learn its effect and learning its effect to decide whether to deploy. Properly built, counterfactual sim is a digital twin of your recsys — same loop as Pillar II, different domain.</p>
-              <p class="topic-ref">See also: Netflix's <a href="https://netflixtechblog.com/page-simulator-fa02069fb269" target="_blank" rel="noopener">Page Simulator for Better Offline Metrics</a> — the same pattern at industrial scale: time-travel data reconstruction, system-level (not model-level) offline evaluation, simulated homepages compared against what members actually saw. Their setup and the principles it surfaces map almost directly onto the work I do in this lane.</p>
+              <p class="topic-ref"><img data-logo-domain="netflix.com" alt="Netflix" class="brand-mark inline-logo" />See also: Netflix's <a href="https://netflixtechblog.com/page-simulator-fa02069fb269" target="_blank" rel="noopener">Page Simulator for Better Offline Metrics</a> — the same pattern at industrial scale: time-travel data reconstruction, system-level (not model-level) offline evaluation, simulated homepages compared against what members actually saw. Their setup and the principles it surfaces map almost directly onto the work I do in this lane.</p>
             </div>
           </details>
 
@@ -363,5 +364,6 @@
   </div>
 </footer>
 
+<script defer src="assets/js/logodev.js"></script>
 </body>
 </html>

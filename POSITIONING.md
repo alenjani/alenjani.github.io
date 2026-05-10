@@ -12,6 +12,28 @@ python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<query>" --design-system
 
 The `--persist` flag writes a `design-system/MASTER.md` (single source of truth) plus per-page override files under `design-system/pages/` — the migration target should adopt that pattern.
 
+## Logo.dev integration (wired, dormant until key)
+
+`assets/js/logodev.js` + a `<meta name="logodev-token" content="">` tag in every HTML head. To activate:
+
+1. Get a publishable key (`pk_…`) from the [logo.dev dashboard](https://www.logo.dev/dashboard/api-keys).
+2. Paste it into the `content=""` of the meta tag in **all four** HTML files (index, detection, twins, recsys).
+3. Optionally enable **Allowed Domains Only** in the dashboard and add `alenjani.github.io` to lock the key to this site.
+4. Add a small attribution link to the footer of each page (free-tier requirement): `<a href="https://logo.dev">Logos provided by Logo.dev</a>`. Skip if you upgrade to a paid plan.
+
+After that, any element marked `<img data-logo-domain="example.com" class="brand-mark" />` renders the logo automatically. Without a key, those elements are hidden — no broken images.
+
+Already wired: a Netflix mark inside the Page Simulator callout in `recsys.html`. Add more by inserting `<img data-logo-domain="<their-domain>.com" class="brand-mark inline-logo" />` next to other industry references as we cite them.
+
+Useful logo data attributes:
+- `data-logo-size="32"` — pixel size (default 128)
+- `data-logo-theme="dark"` — invert for dark backgrounds (only works on transparent logos)
+- `data-logo-greyscale="true"` — desaturate
+- `data-logo-fallback="404"` — return 404 instead of a monogram if the brand isn't found
+- `data-logo-format="png"` — image format (default webp)
+
+Free tier: 500K req/mo. The site's logo usage will stay well under that.
+
 ---
 
 ## Goal & tone
