@@ -18,7 +18,7 @@ export function PillarPageNav({ prev, next }: { prev: PillarMeta; next: PillarMe
         </Link>
         <Link
           href={next.href}
-          className="px-5 py-4 border border-line rounded-[12px] bg-bg flex flex-col gap-1 text-right transition-[border-color,transform] duration-150 hover:border-accent hover:-translate-y-px"
+          className="px-5 py-4 border border-line rounded-[12px] bg-bg flex flex-col gap-1 md:text-right transition-[border-color,transform] duration-150 hover:border-accent hover:-translate-y-px"
         >
           <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">
             Pillar {next.num} →
