@@ -21,6 +21,8 @@ export function PersonJsonLd() {
       "Computer vision in the wild",
       "Digital twins",
       "Risk-informed decision-making",
+      "Decisions under uncertainty",
+      "Trade-space analysis",
       "Counterfactual evaluation",
       "LLM-as-judge evaluation",
     ],

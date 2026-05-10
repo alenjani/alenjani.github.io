@@ -25,8 +25,8 @@ export const PILLARS: Record<PillarId, PillarMeta> = {
   twins: {
     id: "twins",
     num: "II",
-    title: "Digital twins & risk-informed decisions",
-    tag: "Multi-objective optimization, trade-space analysis, and digital-twin modeling for coupled systems — ranking architectures and design candidates under uncertainty.",
+    title: "Digital twins & decisions under uncertainty",
+    tag: "Trade-space analysis and digital-twin modeling for complex coupled systems — ranking architectures and design candidates when the math has to support a real call.",
     slug: "twins",
     href: "/twins",
     thumb: { src: "/figures/habitat-architecture.png", alt: "Coupled-system architecture diagram" },
