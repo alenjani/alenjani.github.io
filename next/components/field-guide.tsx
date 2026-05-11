@@ -3,7 +3,7 @@ import type { FieldGuideContent, ReadingItem, ToolItem, AwesomeItem, VizItem, Ev
 
 export function FieldGuide({ content }: { content: FieldGuideContent }) {
   return (
-    <section className="mt-16 pt-12 border-t-2 border-line">
+    <section id="field-guide" className="mt-16 pt-12 border-t-2 border-line scroll-mt-20">
       <div className="eyebrow eyebrow-accent mb-2">Field guide</div>
       <p className="text-[15.5px] text-muted leading-snug max-w-[680px] mb-9">
         Open questions in this lane, the strongest reading for going deeper, and external

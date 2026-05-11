@@ -2,6 +2,7 @@ import { Hero } from "@/components/hero";
 import { Proofbar } from "@/components/proofbar";
 import { NowBlock } from "@/components/now-block";
 import { PillarCardPreview } from "@/components/pillar-card-preview";
+import { HomeEvents } from "@/components/home-events";
 import { EmailCopy } from "@/components/email-copy";
 import { PILLARS, PILLAR_ORDER } from "@/lib/pillars";
 
@@ -22,6 +23,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <HomeEvents />
 
       <section className="py-6">
         <div className="mx-auto max-w-[1100px] px-8">
